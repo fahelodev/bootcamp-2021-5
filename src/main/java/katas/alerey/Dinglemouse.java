@@ -1,4 +1,4 @@
-package katas;
+package katas.alerey;
 import java.util.*;
 
 public class Dinglemouse {

@@ -1,5 +1,6 @@
-package katas;
+package katas.alerey;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.assertArrayEquals;
@@ -16,7 +17,7 @@ public class HungerGamesTest {
                 "sheep eats grass",
                 "fox eats sheep",
                 "fox"};
-        assertArrayEquals(expected, Dinglemouse.whoEatsWho(input));
+        Assert.assertArrayEquals(expected, Dinglemouse.whoEatsWho(input));
     }
 
 }

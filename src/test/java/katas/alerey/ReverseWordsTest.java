@@ -1,5 +1,6 @@
-package katas;
+package katas.alerey;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -14,7 +15,7 @@ public class ReverseWordsTest {
 
     @Test
     public void datoEntradaRetornaStringRevesSignosOrtograficos() {
-        assertEquals(",aloh odot ?neib",ReverseWords.reverseWords("hola, todo bien?"));
+        Assert.assertEquals(",aloh odot ?neib", ReverseWords.reverseWords("hola, todo bien?"));
     }
 
     @Test

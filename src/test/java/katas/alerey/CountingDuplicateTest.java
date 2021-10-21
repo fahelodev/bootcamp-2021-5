@@ -1,5 +1,6 @@
-package katas;
+package katas.alerey;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -8,7 +9,7 @@ public class CountingDuplicateTest {
 
     @Test
     public void datoEntradaRetornarCero(){
-        assertEquals(0,CountingDuplicates.duplicateCount("abcde"));
+        Assert.assertEquals(0, CountingDuplicates.duplicateCount("abcde"));
     }
 
     @Test

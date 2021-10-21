@@ -1,4 +1,4 @@
-package katas;
+package katas.alerey;
 
 public class ReverseWords {
     public static String reverseWords(final String original)

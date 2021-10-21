@@ -1,4 +1,4 @@
-package katas.fightersKata;
+package katas.alerey.fightersKata;
 public class Fighter {
     public String name;
     public int health, damagePerAttack;

@@ -1,5 +1,6 @@
-package katas;
+package katas.alerey;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -8,7 +9,7 @@ public class AlternatingCaseTest {
 
     @Test
     public void fixedTests() {
-        assertEquals("HELLO WORLD", AlternatingCase.toAlternativeString("hello world"));
+        Assert.assertEquals("HELLO WORLD", AlternatingCase.toAlternativeString("hello world"));
         assertEquals("hello world", AlternatingCase.toAlternativeString("HELLO WORLD"));
         assertEquals("HELLO world", AlternatingCase.toAlternativeString("hello WORLD"));
         assertEquals("hEllO wOrld", AlternatingCase.toAlternativeString("HeLLo WoRLD"));
