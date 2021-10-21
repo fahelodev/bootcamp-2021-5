@@ -1,4 +1,4 @@
-package katas.alerey.fightersKata;
+package katas.arey.fightersKata;
 
 public class Fighters {
     public static String declareWinner(Fighter fighter1, Fighter fighter2, String firstAttacker) {

@@ -1,4 +1,4 @@
-package katas.alerey;
+package katas.arey;
 
 import org.junit.Assert;
 import org.junit.Test;

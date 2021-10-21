@@ -1,4 +1,4 @@
-package katas.alerey;
+package katas.arey;
 
 public class AlternatingCase {
     public static String toAlternativeString(String string) {

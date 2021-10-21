@@ -1,7 +1,7 @@
-package katas.alerey;
+package katas.arey;
 
-import katas.alerey.fightersKata.Fighter;
-import katas.alerey.fightersKata.Fighters;
+import katas.arey.fightersKata.Fighter;
+import katas.arey.fightersKata.Fighters;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
