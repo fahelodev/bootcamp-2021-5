@@ -24,3 +24,6 @@
 /.idea
 /target
 *.iml
+
+# Compiled class file
+*.pom.xml
