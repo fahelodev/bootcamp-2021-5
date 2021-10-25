@@ -15,7 +15,7 @@ public class DinglemouseTest {
     public void example() {
         final String input = "fox,bug,chicken,grass,sheep";
         final String[] expected = 	{
-                "fox,bug,chicken,grass,sheep",ig
+                "fox,bug,chicken,grass,sheep",
                 "chicken eats bug",
                 "fox eats chicken",
                 "sheep eats grass",

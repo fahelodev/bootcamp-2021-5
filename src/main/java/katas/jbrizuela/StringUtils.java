@@ -1,6 +1,6 @@
 package katas.jbrizuela;
 
-import org.jetbrains.annotations.NotNull;
+import com.sun.istack.internal.NotNull;
 
 public class StringUtils {
     public String toAlternativeString(@NotNull String text){
