@@ -1,7 +1,6 @@
 package katas.jbrizuela;
 
-
-import org.jetbrains.annotations.NotNull;
+import com.sun.istack.internal.NotNull;
 
 public class CountingDuplicates {
 
