@@ -36,6 +36,7 @@ public class atc00_SetupInicial {
 //        SI QUERES INTERACTUAR CON LA PAGINA WEB, TENES QUE USAR LA FUNCION FINDELEMENT(BY.~~)
 //        ADENTRO DEL BY VAN LA ID, CLASS(sin espacios, se tendria que usar xpath o css), NAME, LINKTEXT (mandas el texto de un tag a),
 //        XPATH (click derecho copiar xpath) O CSS (lo mismo que xpath pero aparece css selector)
+
         driver.findElement(By.id("username")).sendKeys("MODS");
         driver.findElement(By.name("pw")).sendKeys("iofnweiofwe");
         driver.findElement(By.xpath("//*[@id=\"Login\"]")).click();
