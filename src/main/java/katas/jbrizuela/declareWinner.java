@@ -1,6 +1,6 @@
 package katas.jbrizuela;
 
-import org.jetbrains.annotations.NotNull;
+import com.sun.istack.internal.NotNull;
 
 public class declareWinner {
     public String declareWinner(Fighter fighter1, @NotNull Fighter fighter2, @NotNull String firstAttacker) {
