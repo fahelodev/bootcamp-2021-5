@@ -1,10 +1,9 @@
-package katas.earaya;
+package katas.arey;
 
-import static org.junit.Assert.*;
-
-import katas.CountingDuplicates;
 import org.junit.Assert;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class CountingDuplicateTest {
 
