@@ -1,4 +1,4 @@
-package katas;
+package katas.lfuentes;
 
 public class BuyCar {
     public static final double LOSS_PERCENT_INCREASE = 0.5;

@@ -1,2 +1,3 @@
-package katas.lfuentes;public class DigPow {
+package katas.lfuentes;
+public class DigPow {
 }

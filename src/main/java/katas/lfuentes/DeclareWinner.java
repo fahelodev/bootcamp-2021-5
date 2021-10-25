@@ -1,4 +1,4 @@
-package katas;
+package katas.lfuentes;
 
 class Fighter {
     public String name;

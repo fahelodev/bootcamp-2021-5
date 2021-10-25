@@ -1,4 +1,4 @@
-package katas;
+package katas.lfuentes;
 import static org.junit.Assert.*;
 
 import org.junit.Before;

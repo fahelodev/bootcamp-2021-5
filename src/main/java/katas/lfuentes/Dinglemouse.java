@@ -1,4 +1,4 @@
-package katas;
+package katas.lfuentes;
 
 import java.util.ArrayList;
 import java.util.Arrays;

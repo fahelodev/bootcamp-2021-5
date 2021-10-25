@@ -1,5 +1,6 @@
-package katas;
+package katas.lfuentes;
 
+import katas.lfuentes.Dinglemouse;
 import org.junit.Test;
 import static org.junit.Assert.assertArrayEquals;
 
