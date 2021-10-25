@@ -1,0 +1,34 @@
+package katas.gortego;
+
+import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
+public class CountingDuplicateTest {
+
+    @Test
+    public void datoEntradaRetornarCero(){
+        assertEquals(0,CountingDuplicates.duplicateCount("abcde"));
+    }
+
+    @Test
+    public void datoEntradaRetornaDos(){
+        assertEquals(2, CountingDuplicates.duplicateCount("aabbcde"));
+    }
+
+    @Test
+    public void datoEntradaRetornaDosCaseSensitive(){
+        assertEquals(2, CountingDuplicates.duplicateCount("aabBcde"));
+    }
+    @Test
+    public void datoEntradaLimiteAlfabetico() {
+        assertEquals(-1, CountingDuplicates.duplicateCount("##aabb%%^^"));
+    }
+
+    @Test
+    public void datoEntradaretornaUno() {
+        assertEquals(1, CountingDuplicates.duplicateCount("iiiiii"));
+    }
+
+}
