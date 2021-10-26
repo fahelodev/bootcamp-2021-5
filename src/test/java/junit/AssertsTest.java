@@ -1,11 +1,12 @@
 package junit;
 
 
-import static org.junit.Assert.*;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Date;
+
+import static org.junit.Assert.*;
 
 public class AssertsTest {
 
@@ -28,7 +29,7 @@ public class AssertsTest {
 
     @Test
     public void arrays(){
-        ArrayList<String> arrayList1 = new ArrayList<String>();
+        ArrayList<String> arrayList1 = new ArrayList<>();
         ArrayList<String> arrayList2 = new ArrayList<String>();
 
         for (int i = 0; i <10 ; i++) {
