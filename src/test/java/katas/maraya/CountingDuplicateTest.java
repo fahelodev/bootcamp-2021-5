@@ -1,6 +1,5 @@
 package katas.maraya;
 
-import katas.CountingDuplicates;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

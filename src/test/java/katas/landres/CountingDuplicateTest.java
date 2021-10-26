@@ -1,4 +1,4 @@
-package katas.mcarrillo;
+package katas.landres;
 
 import org.junit.Test;
 
