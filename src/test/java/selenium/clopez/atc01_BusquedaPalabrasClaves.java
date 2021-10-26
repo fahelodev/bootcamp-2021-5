@@ -19,8 +19,8 @@ public class atc01_BusquedaPalabrasClaves {
     public static void Setup(){
         System.out.println("Setup necesario antes de Instanciar");
         WebDriverManager.firefoxdriver().setup();
-
     }
+
     @Before
     public void init() throws InterruptedException {
         System.out.println("init para instanciar");
@@ -55,12 +55,10 @@ public class atc01_BusquedaPalabrasClaves {
         if(driver != null){
             driver.close();
         }
-
     }
 
     @AfterClass
     public static void closeAll(){
         System.out.println("closeAll :: Cerrar otras conexiones que fueron utilizadas en el test");
-
     }
 }

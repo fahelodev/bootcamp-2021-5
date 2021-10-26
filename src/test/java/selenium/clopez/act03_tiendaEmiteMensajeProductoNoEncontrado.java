@@ -5,15 +5,12 @@ import org.junit.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import java.util.List;
-
 import static org.junit.Assert.assertTrue;
+import static org.openqa.selenium.Keys.*;
 
-public class atc02_busquedaDirectaProductoExistente {
+public class act03_tiendaEmiteMensajeProductoNoEncontrado {
 
     private WebDriver driver;
 
@@ -28,6 +25,7 @@ public class atc02_busquedaDirectaProductoExistente {
         System.out.println("init para instanciar");
         driver = new FirefoxDriver();
         driver.manage().window().maximize();
+        // 1.- Cargar Home
         driver.get("http://automationpractice.com//");
         // Esperamos
         Thread.sleep(2000);
@@ -40,12 +38,18 @@ public class atc02_busquedaDirectaProductoExistente {
 
     @Test
     public void atc02_busquedaDirectaProductoExistente() throws InterruptedException {
-        driver.findElement(By.cssSelector("#search_query_top")).sendKeys("printed chiffon dress");
-        driver.findElement(By.cssSelector("button.btn:nth-child(5)")).click();
-        // Espera
+        // 2.- Introdrucir "liquido matapulgas"
+        // 3.- Hacer la búsqueda introduciendo Enter en el campo de búsqueda
+        driver.findElement(By.cssSelector("#search_query_top")).sendKeys("liquido matapulgas"+ Keys.ENTER);
+        // 4.- Esperar a que cargue la página de Resultados.
         Thread.sleep(2000);
-        // Tomamos el nombre del primer elemento
-        Assert.assertEquals( "Printed Chiffon Dress", driver.findElement(By.cssSelector("a.product-name")).getText());
+        // Tomamos la frase encontrada y la pasamos a un String
+        String frase = driver.findElement(By.cssSelector("p.alert.alert-warning")).getText();
+        // System.out.println("frase: "+frase);
+        // Reemplazamos comillas dobles por simples de la frase para luego poder comparar
+        frase = frase.replaceAll("\"", "\'");
+        // 5.- Si muestra el mensaje el test es positivo
+        Assert.assertEquals( "No results were found for your search 'liquido matapulgas'", frase);
     }
 
     @After
