@@ -1,15 +1,13 @@
 package selenium.foliva;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
-import java.util.List;
-
-public class Atc01 {
+public class Atc03 {
     private WebDriver driver;
     @BeforeClass
     public static void Setup(){
@@ -23,12 +21,17 @@ public class Atc01 {
         driver.get("http://automationpractice.com/");
     }
     @Test
-    public void searchDress(){
-        driver.findElement(By.xpath("//*[@id=\"search_query_top\"]")).sendKeys("dress");
-        driver.findElement(By.xpath("//*[@id=\"searchbox\"]/button")).click();
-        List<WebElement> products = driver.findElements(By.xpath("//*[@id=\"center_column\"]/ul/li"));
+    public void resultNotFound(){
+        WebElement inputSearch = driver.findElement(By.cssSelector("#search_query_top"));
+        inputSearch.sendKeys("liquido matapulgas");
 
-        Assert.assertTrue(products.size() > 2);
+        WebElement buttonSearch = driver.findElement(By.cssSelector("#searchbox > button"));
+        buttonSearch.click();
+
+        WebElement messageElement = driver.findElement(By.xpath("//*[@id=\"center_column\"]/p"));
+        String message = messageElement.getText();
+
+        Assert.assertEquals("No results were found for your search \"liquido matapulgas\"", message);
     }
     @After
     public void after(){

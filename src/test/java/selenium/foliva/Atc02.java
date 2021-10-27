@@ -1,10 +1,7 @@
 package selenium.foliva;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,10 +11,15 @@ import java.util.List;
 
 public class Atc02 {
     private WebDriver driver;
+    @BeforeClass
+    public static void Setup(){
+        WebDriverManager.chromedriver().setup();
+
+    }
     @Before
     public void before(){
-        WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
+        driver.manage().window().maximize();
         driver.get("http://automationpractice.com/");
     }
     @Test
@@ -30,6 +32,8 @@ public class Atc02 {
     }
     @After
     public void after(){
-        driver.close();
+        if(driver != null){
+            driver.close();
+        }
     }
 }
