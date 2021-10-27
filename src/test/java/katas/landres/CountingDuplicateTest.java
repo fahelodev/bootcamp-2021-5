@@ -1,16 +1,14 @@
-package katas.earaya;
+package katas.landres;
 
-import static org.junit.Assert.*;
-
-import katas.CountingDuplicates;
-import org.junit.Assert;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class CountingDuplicateTest {
 
     @Test
     public void datoEntradaRetornarCero(){
-        Assert.assertEquals(0, CountingDuplicates.duplicateCount("abcde"));
+        assertEquals(0, CountingDuplicates.duplicateCount("abcde"));
     }
 
     @Test

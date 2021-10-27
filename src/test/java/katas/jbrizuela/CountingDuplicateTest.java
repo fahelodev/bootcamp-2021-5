@@ -1,6 +1,5 @@
 package katas.jbrizuela;
 
-import katas.CountingDuplicates;
 import org.junit.Before;
 import org.junit.Test;
 
