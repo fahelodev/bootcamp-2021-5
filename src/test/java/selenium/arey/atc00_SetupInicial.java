@@ -3,6 +3,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
 
 public class atc00_SetupInicial {
 
@@ -39,12 +40,17 @@ public class atc00_SetupInicial {
 
         driver.findElement(By.id("username")).sendKeys("MODS");
         driver.findElement(By.name("pw")).sendKeys("iofnweiofwe");
+        Thread.sleep(2000);
         driver.findElement(By.xpath("//*[@id=\"Login\"]")).click();
         Thread.sleep(3000);
         driver.findElement(By.linkText("Probar de forma gratuita")).click(); // si necesitas escribir, es con sendKeys("texto")
         driver.findElement(By.id("onetrust-accept-btn-handler")).click();
+        Thread.sleep(2000);
         driver.quit(); // driver.quit y .close -- quit cierra todas las pestañas abiertas por selenium y close cierra la pestaña que se trabaja actualmente
 
+
+        Select s = new Select(driver.findElement(By.id("hola"))); // Select sirve para dropdowns (select)
+        s.selectByValue("2");
     }
 
 }

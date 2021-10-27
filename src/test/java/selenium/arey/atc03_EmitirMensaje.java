@@ -9,11 +9,11 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.List;
 
-public class atc01_AutomationPracticeDress {
+public class atc03_EmitirMensaje {
 
     private WebDriver driver;
 
-        //Inicialización del WebDriver con Chrome
+    //Inicialización del WebDriver con Chrome
     @BeforeClass
     public static void setup()
     {
@@ -31,18 +31,20 @@ public class atc01_AutomationPracticeDress {
     }
 
     @Test
-    public void atc01SearchDress()
-    {
-        driver.findElement(By.xpath("//*[@id=\"search_query_top\"]")).sendKeys("dress");
+    public void atc03EmitirMensaje(){
+        while(driver.getTitle()==" 508 Resource Limit Is Reached")
+        {
+            driver.navigate().refresh();
+        }
+        String strBusqueda = "liquido matapulgas";
+        driver.findElement(By.xpath("//*[@id=\"search_query_top\"]")).sendKeys(strBusqueda);
         driver.findElement(By.xpath("//*[@id=\"searchbox\"]/button")).click();
-        List<WebElement> products = driver.findElements(By.xpath("//*[@id=\"center_column\"]/ul/li"));
-
-        Assert.assertTrue(products.size() > 2);
     }
 
     @After
-    public void close(){
+    public void close() throws InterruptedException {
         if (driver != null){
+            Thread.sleep(2500);
             driver.close();
         }
     }
@@ -51,7 +53,6 @@ public class atc01_AutomationPracticeDress {
     public static void closeAll()
     {
         System.out.println("closeAll :: Cerrar otras conexiones que fueron utilizados en el test");
-
     }
 
 }
