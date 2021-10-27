@@ -1,5 +1,6 @@
 package selenium.landres;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.junit.BeforeClass;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -7,11 +8,14 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class atc00_SetupInicial {
 
         public static void main(String[] args) throws InterruptedException {
-            WebDriver driver;
+             WebDriver driver;
 
-            //Inicialización del WebDriver con Chrome
-            WebDriverManager.chromedriver().setup();
-            driver = new ChromeDriver();
+
+
+                //Inicialización del WebDriver con Chrome
+                WebDriverManager.chromedriver().setup();
+                driver = new ChromeDriver();
+
 
 
             //Cargar la página
