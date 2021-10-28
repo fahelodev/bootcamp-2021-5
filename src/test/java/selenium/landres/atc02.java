@@ -29,9 +29,10 @@ public class atc02 {
 
         driver.findElement(By.id("search_query_top")).sendKeys("liquido matapulga");
         driver.findElement(By.xpath("//*[@id='searchbox']/button")).sendKeys(Keys.ENTER);
-        System.out.println(driver.findElement(By.cssSelector("#center_column > p")).getText());
-        String palabra="No results were found for your search liquido matapulga";
-        assertEquals("No results were found for your search liquido matapulga",palabra);
+        String error=driver.findElement(By.cssSelector("#center_column > p")).getText();
+
+        assertEquals("No results were found for your search \"liquido matapulga\"",error);
+
 
 
     }
