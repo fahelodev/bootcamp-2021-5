@@ -1,4 +1,4 @@
-package katas;
+package katas.arey;
 
 public class CountingDuplicates {
 
