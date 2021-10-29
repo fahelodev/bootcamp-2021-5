@@ -71,11 +71,14 @@ public class Tests {
     public void atc04() {
         driver.findElement(By.id("search_query_top")).sendKeys("blo");
         WebDriverWait wait = new WebDriverWait(driver, 15);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='index']/div[2]/ul/li")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#index > div.ac_results > ul > li")));
         WebElement busqueda = driver.findElement(By.xpath("//*[@id='search_query_top']"));
         // WebElement busqueda = driver.findElement(By.id("'search_query_top'"));
+        String selected = driver.findElement(By.cssSelector("#index > div.ac_results > ul > li")).getText();
         busqueda.sendKeys(Keys.ARROW_DOWN);
+        Assert.assertEquals("Blouses > Blouse",selected);
         busqueda.sendKeys(Keys.ENTER);
+
 
         String blousa = driver.findElement(By.xpath("//*[@id='product_reference']")).getText();
         Assert.assertEquals("Model demo_2", blousa);
@@ -87,8 +90,12 @@ public class Tests {
         WebDriverWait wait = new WebDriverWait(driver, 15);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='index']/div[2]/ul/li")));
         WebElement b = driver.findElement(By.xpath("//*[@id='search_query_top']"));
+
+        String selected = driver.findElement(By.cssSelector("#index > div.ac_results > ul > li")).getText();
         b.sendKeys(Keys.ARROW_DOWN);
+        Assert.assertEquals("Blouses > Blouse",selected);
         b.sendKeys(Keys.ENTER);
+
 
         driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 
@@ -96,7 +103,6 @@ public class Tests {
         Select Talla = new Select(driver.findElement(By.id("group_1")));
         Talla.selectByValue("3");
 
-        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 
         driver.findElement(By.xpath("//*[@id='color_8']")).click();
 
@@ -109,7 +115,7 @@ public class Tests {
     @After
     public void close(){
         if(driver != null){
-           // driver.close();
+            driver.close();
         }
 
     }
