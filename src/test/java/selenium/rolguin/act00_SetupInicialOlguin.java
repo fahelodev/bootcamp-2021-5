@@ -1,11 +1,10 @@
-package selenium.fluzon;
+package selenium.rolguin;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
-public class atc00_SetupInicial {
-
+public class act00_SetupInicialOlguin {
 
     public static void main(String[] args) throws InterruptedException
     {
@@ -26,5 +25,4 @@ public class atc00_SetupInicial {
         driver.close();
 
     }
-
 }
