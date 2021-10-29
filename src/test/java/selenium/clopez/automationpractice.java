@@ -46,7 +46,8 @@ public class automationpractice {
         Thread.sleep(2000);
         limit_Is_Reached(driver);
     }
-    @Ignore
+
+    //@Ignore
     @Test
     public void atc01_BusquedaPalabrasClaves() throws InterruptedException {
         driver.findElement(By.xpath("//*[@id=\'search_query_top\']")).sendKeys("dress");
@@ -63,7 +64,7 @@ public class automationpractice {
         Assert.assertTrue(dress.size() > 2);
     }
 
-    @Ignore
+    //@Ignore
     @Test
     public void atc02_busquedaDirectaProductoExistente() throws InterruptedException {
         driver.findElement(By.cssSelector("#search_query_top")).sendKeys("printed chiffon dress");
@@ -76,7 +77,7 @@ public class automationpractice {
         Assert.assertEquals( "Printed Chiffon Dress", driver.findElement(By.cssSelector("a.product-name")).getText());
     }
 
-    @Ignore
+    // @Ignore
     @Test
     public void atc03_tiendaEmiteMensajeProductoNoEncontrado() throws InterruptedException {
         // 2.- Introdrucir "liquido matapulgas"
@@ -94,7 +95,7 @@ public class automationpractice {
         Assert.assertEquals( "No results were found for your search 'liquido matapulgas'", frase);
     }
 
-    @Ignore
+    // @Ignore
     @Test
     public void atc04_encontrarProductoListaDinamica() throws InterruptedException {
         WebElement busqueda = driver.findElement(By.cssSelector("#search_query_top"));
