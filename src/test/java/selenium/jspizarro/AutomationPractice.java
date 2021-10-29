@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.concurrent.TimeUnit;
@@ -71,10 +72,44 @@ public class AutomationPractice {
         WebElement resultadoBusqueda = driver.findElement(By.id("product_reference"));
         Assert.assertTrue(resultadoBusqueda.getText().equals(resultadoEsperado));
     }
-//    @Test
-//    public void atc05_agregarProductoCambiandoTallaYColor(){
+    @Test
+    public void atc05_agregarProductoCambiandoTallaYColor(){
+        WebDriverWait wait = new WebDriverWait(driver,15);
+        WebElement cajaBusqueda = driver.findElement(By.xpath("//*[@id='search_query_top']"));
+        cajaBusqueda.sendKeys("blo");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#index .ac_results")));
 
-//    }
+        cajaBusqueda.sendKeys(Keys.ARROW_DOWN);
+        cajaBusqueda.sendKeys(Keys.ENTER);
+
+        Select s = new Select(driver.findElement(By.id("group_1")));
+        s.selectByVisibleText("L");
+
+        int count = driver.findElements(By.cssSelector("#color_to_pick_list .color_pick")).size();
+
+        for (int i = 0; i < count; i++) {
+           boolean colorSelect = driver.findElements(By.cssSelector("#color_to_pick_list .color_pick")).get(i).isSelected();
+            if(colorSelect == false){
+                driver.findElements(By.cssSelector("#color_to_pick_list .color_pick")).get(i).click();
+                break;
+            }
+        }
+
+        driver.findElement(By.cssSelector("#add_to_cart .exclusive")).click();
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#layer_cart")));
+        WebElement checkAddProduct = driver.findElement(By.cssSelector("#layer_cart .layer_cart_product h2"));
+        WebElement productName = driver.findElement(By.cssSelector("#layer_cart_product_title"));
+        WebElement productAttributes = driver.findElement(By.cssSelector("#layer_cart_product_attributes"));
+
+        String checkTextAddProduct = "Product successfully added to your shopping cart";
+        String checkTextProductName = "Blouse";
+        String checkTextProductAttributes = "White, L";
+
+        Assert.assertEquals(checkTextAddProduct,checkAddProduct.getText());
+        Assert.assertEquals(checkTextProductName,productName.getText());
+        Assert.assertEquals(checkTextProductAttributes,productAttributes.getText());
+    }
 
 
     @After
