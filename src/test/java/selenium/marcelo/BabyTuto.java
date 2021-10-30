@@ -48,7 +48,7 @@ public class BabyTuto {
             System.out.println("cerrando pantalla de pop");
               }
 
-        List<WebElement>listMenu = driver.findElements(By.xpath("/html/body/div[2]/div[2]/div[2]/div/div/ul/li[1]"));
+        List<WebElement>listMenu = driver.findElements(By.cssSelector("div.bar-2-products ul li a"));
    for (WebElement l: listMenu){
 
        if(l.getText().contains("COCHES")){
@@ -79,7 +79,7 @@ public class BabyTuto {
 
 
 
-             Assert.assertEquals(2,contadorfinal);
+             Assert.assertEquals(contP,contadorfinal);
 
 
          }
