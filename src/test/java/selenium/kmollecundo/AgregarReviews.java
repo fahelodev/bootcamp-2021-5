@@ -63,7 +63,7 @@ public class AgregarReviews {
         //Le hago click a summit
         driver.findElement(By.cssSelector("#submit")).click();
 
-        //Verifico que la pagina muestre el mensaje especificado de exito
+        //Verifico que la pagina muestre el mensaje especificado de exito.
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("dfn, cite, em, i")));
         WebElement check = driver.findElement(By.cssSelector("dfn, cite, em, i"));
