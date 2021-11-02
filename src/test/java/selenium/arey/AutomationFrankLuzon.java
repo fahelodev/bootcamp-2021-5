@@ -30,22 +30,28 @@ public class AutomationFrankLuzon{
             System.out.println("init para instanciar");
             driver = new ChromeDriver();
             driver.manage().window().maximize();
-//            driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);      // MANERA IMPLICITA DE INTRODUCIR TIEMPO MAXIMO QUE LE DA AL TEST PARA CARGAR EL ATRIBUTO
+            driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);      // MANERA IMPLICITA DE INTRODUCIR TIEMPO MAXIMO QUE LE DA AL TEST PARA CARGAR EL ATRIBUTO
             driver.get("http://automation.frankluzon.com//");
         }
 
         @Test
         public void EnviarResena()
         {
-            driverElement("  //*[@id=\"post-27\"]/div/div[3]/ul/li[10]/a/div[1]").click();
+            driverElement("//*[@id=\"post-27\"]/div/div[3]/ul/li[10]/a/div[1]").click();
             WebDriverWait wait = new WebDriverWait(driver, 5);
             wait.until(ExpectedConditions.urlMatches("http://automation.frankluzon.com/product/cap/"));
+            Assert.assertEquals("http://automation.frankluzon.com/product/cap/",driver.getCurrentUrl());
             driverElement("//*[@id=\"tab-title-reviews\"]").click();
             driverElement("//*[@id=\"commentform\"]/div/p/span/a[5]").click();
             driverElement("//*[@id=\"comment\"]").sendKeys("Very good cap");
             driverElement("//*[@id=\"author\"]").sendKeys("Alejandro");
             driverElement("//*[@id=\"email\"]").sendKeys("ale@gmail.com");
             driverElement("//*[@id=\"submit\"]").click();
+            if(driver.getCurrentUrl().equals("http://automation.frankluzon.com/wp-comments-post.php")){
+
+            } else{
+                Assert.assertEquals("Your review is awaiting approval",driver.findElement(By.className("meta")).getText());
+            }
         }
 
         @After
