@@ -1,4 +1,4 @@
-package katas.landres;
+/*package katas.landres;
 
 import java.util.HashMap;
 import java.util.ArrayList;
@@ -22,3 +22,4 @@ public class ZooDingleMouseTest {
 
     }
 }
+*/
