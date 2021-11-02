@@ -13,7 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
-public class AumatationPractice {
+public class AutomationPractice {
     private WebDriver driver;
     @BeforeClass
     public static void Setup(){
@@ -105,9 +105,12 @@ public class AumatationPractice {
                 .getText();
 
 
-       Assert.assertEquals("Product successfully added to your shopping cart", textSuccessfully);
-       Assert.assertEquals(selectedColor+", L", colorAndSizeText);
+        Assert.assertEquals("Product successfully added to your shopping cart", textSuccessfully);
+        Assert.assertEquals(selectedColor+", L", colorAndSizeText);
     }
+
+
+
     @After
     public void after(){
         if(driver != null){
