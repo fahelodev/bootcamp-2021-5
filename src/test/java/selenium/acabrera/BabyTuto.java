@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import static org.junit.Assert.assertEquals;
+
 public class BabyTuto {
 
     private WebDriver driver;
@@ -58,8 +60,14 @@ public class BabyTuto {
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(),'Accesorios para coches')]")));
         driver.findElement(By.xpath("//a[contains(text(),'Accesorios para coches')]")).click();
 
-        //driver.findElement(By.xpath("//ul/li/a/span[contains(text(),'BBpro')]")).click();
-        driver.findElement(By.xpath("//a/span[contains(text(),'BBpro')]")).click();
+        driver.findElement(By.xpath("//span[contains(text(),'BBpro')]")).click();
+
+        String resultado = driver.findElement(By.xpath("//a[contains(text(),'BBpro')]")).getText();
+
+        String resultadoEsperado = "BBPRO";
+
+        assertEquals(resultadoEsperado,resultado);
+
 
 
 
