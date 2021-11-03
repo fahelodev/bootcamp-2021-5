@@ -14,7 +14,7 @@ import org.openqa.selenium.support.ui.Select;
 import java.util.Objects;
 import static org.junit.Assert.*;
 
-public class TestPagina {
+public class AutomationPractice {
     private WebDriver driver;
 
     @BeforeClass
