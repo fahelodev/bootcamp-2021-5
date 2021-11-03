@@ -34,25 +34,39 @@ public class BabyTutos {
     @Test
     public void atc01() {
 
-
-        WebDriverWait wait = new WebDriverWait(driver, 10);
+        WebDriverWait espera = new WebDriverWait(driver, 15);
         driver.manage().deleteAllCookies();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#newsletter")));
+        espera.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#newsletter")));
         driver.findElement(By.xpath("//*[@id='newsletter']/button")).click();
         List<WebElement> options_list = driver.findElements(By.cssSelector("div.bar-2-products ul li a"));
         for (WebElement l : options_list) {
-            //se recorre la lista hasta encontrar la opcion requerida
+
+        //se recorre la lista hasta encontrar la opcion requerida
+
             if (l.getText().contains("COCHES")) {
                 l.click();
                 break;
             }
         }
-        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("body > div.main-container > div.header-3.sup.section-products > div.header-bar > div > div > ul > li:nth-child(1) > div > table > tbody > tr > td:nth-child(1) > ul > li:nth-child(1) > a")));
-        driver.findElement(By.cssSelector("body > div.main-container > div.header-3.sup.section-products > div.header-bar > div > div > ul > li:nth-child(1) > div > table > tbody > tr > td:nth-child(1) > ul > li:nth-child(1) > a")).click();
-        driver.findElement(By.xpath("//span[contains(text(),'BBpro')]")).click();
+        espera.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(),'Accesorios para coches')]")));
+        driver.findElement(By.xpath("//a[contains(text(),'Accesorios para coches')]")).click();
+        driver.findElement(By.cssSelector("div.filter:nth-child(6) > ul:nth-child(2) > li:nth-child(3) > a:nth-child(1) > span:nth-child(2)")).click();
 
-        String marca = driver.findElement(By.xpath("//a[@itemprop='brand']")).getText();
-        Assert.assertEquals("BBPRO", marca);
+        List<WebElement> productos = driver.findElements(By.cssSelector("div.items div.item.sq div.merchant-name"));
+        System.out.println("Cantidad de items: "+productos.size());
+
+
+        int contador = 0;
+        for (WebElement l: productos){
+            if (l.getText().contains("BBPRO")){
+                contador++;
+            }
+        }
+
+        Assert.assertTrue(productos.size() > 0);
+        Assert.assertEquals(contador,productos.size());
+
+
     }
     @After
     public void close(){
