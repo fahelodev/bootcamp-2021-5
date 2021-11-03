@@ -78,7 +78,7 @@ public class BabyTutoTest {
 
 
 
-        Assert.assertEquals(1,ProductosValidados);
+        Assert.assertEquals(cantidadProd,ProductosValidados);
 
 
     }
