@@ -37,16 +37,17 @@ public class AutomationFrankluzon {
     @Test
     public void atc01_AgregarReview() {
         WebDriverWait wait = new WebDriverWait(driver, 15);
+        int numero = (int) ((Math.random() * 1000) + 1);
         driver.findElement(By.cssSelector("#woocommerce-product-search-field-0")).sendKeys("CAP");
         driver.findElement(By.cssSelector("#woocommerce-product-search-field-0")).sendKeys(Keys.ENTER);
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#tab-title-reviews > a"))).click();
         driver.findElement(By.cssSelector("#commentform > div > p > span > a.star-5")).click();
-        driver.findElement(By.xpath("//*[@id='comment']")).sendKeys("Muy buena calidad, lindo color, recomendable!!");
+        driver.findElement(By.xpath("//*[@id='comment']")).sendKeys("Muuuy buena calidad, lindo color, recomendable. La usaria" +" "+ numero +" veces");
         driver.findElement(By.cssSelector("#author")).sendKeys("Franco Javier");
         driver.findElement(By.cssSelector("#email")).sendKeys("chuck_ledbetter@hotmail.com");
         driver.findElement(By.cssSelector("#submit")).click();
-        String aprobacion = driver.findElement(By.cssSelector("em.woocommerce-review__awaiting-approval")).getText();
-        Assert.assertEquals("Your review is awaiting approval", aprobacion);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("em.woocommerce-review__awaiting-approval")));
+        assertEquals("Your review is awaiting approval", driver.findElement(By.cssSelector("em.woocommerce-review__awaiting-approval")).getText());
     }
     @After
     public void close() {
