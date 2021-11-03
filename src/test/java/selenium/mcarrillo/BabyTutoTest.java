@@ -64,7 +64,7 @@ public class BabyTutoTest {
         List <WebElement> Productos = driver.findElements(By.cssSelector("div[class=merchant-name] > a[itemprop=brand]"));
         int cantidadProd = Productos.size();
 
-        System.out.println(cantidadProd);
+
 
         int ProductosValidados= 0;
 
@@ -78,7 +78,7 @@ public class BabyTutoTest {
 
 
 
-        Assert.assertEquals(1,ProductosValidados);
+        Assert.assertEquals(cantidadProd,ProductosValidados);
 
 
     }
