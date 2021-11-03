@@ -8,9 +8,11 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.concurrent.TimeUnit;
+
 import static org.junit.Assert.assertFalse;
 
-class BabyTuto {
+public class BabyTuto {
 
     private WebDriver driver;
 
@@ -30,6 +32,8 @@ class BabyTuto {
 
     @Test
     public void atc06_FiltrarProductosPorMarca() {
+        driver.get("https://www.babytuto.com/");
+        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
         WebDriverWait wait = new WebDriverWait(driver,15);
         driver.manage().deleteAllCookies();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#newsletter")));
