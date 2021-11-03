@@ -1,13 +1,12 @@
-package katas.maraya;
-
+package katas.bbarreto;
 
 import org.junit.Test;
-  import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertArrayEquals;
 
-public class ZooDisasterTest {
+public class DingleMouseTest {
 
     @Test
-    public void TestDeZoo() {
+    public void PruebaJuegosTest1() {
         final String input = "fox,bug,chicken,grass,sheep";
         final String[] expected = 	{
                 "fox,bug,chicken,grass,sheep",
@@ -16,7 +15,6 @@ public class ZooDisasterTest {
                 "sheep eats grass",
                 "fox eats sheep",
                 "fox"};
-        assertArrayEquals(expected, ZooDisaster.whoEatsWho(input));
+        assertArrayEquals(expected, Dinglemouse.whoEatsWho(input));
     }
-
 }
