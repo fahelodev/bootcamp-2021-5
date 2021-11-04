@@ -49,11 +49,22 @@ public class BabyTuto {
         }
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(),'Accesorios para coches')]")));
         driver.findElement(By.xpath("//a[contains(text(),'Accesorios para coches')]")).click();
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(text(),'BBpro')]")));
         driver.findElement(By.xpath("//span[contains(text(),'BBpro')]")).click();
 
-        String marca = driver.findElement(By.xpath("//a[@itemprop='brand']")).getText();
-        Assert.assertEquals("BBPRO", marca);
+        List<WebElement> listaMarca = driver.findElements(By.xpath("//a[@itemprop='brand']"));
 
+        int tamañoLista = listaMarca.size();
+        int contador = 0;
+
+        for (WebElement l : listaMarca) {
+            //se recorre la lista hasta encontrar la opcion requerida
+            if (l.getText().equalsIgnoreCase("BBpro")) {
+                contador = contador + 1;
+            }
+        }
+
+        Assert.assertTrue(tamañoLista == contador);
     }
 
     @After
