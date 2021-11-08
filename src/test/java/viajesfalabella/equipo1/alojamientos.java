@@ -314,7 +314,12 @@ public class alojamientos {
         WebElement mensaje = driver.findElement(By.cssSelector("div.eva-3-message.-success.-eva-3-mb-md.-eva-3-mt-md div.message-header span"));
         String mensajeObtenido = mensaje.getText();
 
-        assertEquals("¡Felicitaciones! Seleccionaste la habitación más económica del South Point Suites. ¡No te la pierdas! Confirma ahora tu reserva", mensajeObtenido);
+        Pattern patron = Pattern.compile("¡Felicitaciones! Seleccionaste la habitación más económica");
+        Matcher m = patron.matcher(mensajeObtenido);
+        boolean e = m.find();
+        String res = String.valueOf(e);
+
+        assertEquals("true",res);
 
     }
 
