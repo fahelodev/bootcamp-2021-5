@@ -218,11 +218,6 @@ public class paquetes {
 
     }
 
-
-
-
-
-
     private void seleccionarPaquete(String paquete){
 
         int s = driver.findElements(By.cssSelector("span.sbox-bundle input")).size();
