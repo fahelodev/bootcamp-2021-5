@@ -103,10 +103,10 @@ public class AutomationVuelosFalabella {
         Thread.sleep(5000);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//select[@id='eva-select']"))).click();
         driver.findElement(By.xpath("//option[contains(.,'Dólares estadounidenses')]")).click();
-        Thread.sleep(5000);
+        Thread.sleep(6000);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div[id='order'] select[id='eva-select']"))).click();
         driver.findElement(By.xpath("//option[contains(.,'Más convenientes')]")).click();
-        Thread.sleep(7000);
+        Thread.sleep(8000);
         driver.findElement(By.xpath("//div[@id='clusters']/span[1]//em[@class='btn-text']")).click();
 
     }
