@@ -3,6 +3,7 @@ package viajesfalabella.equipo2;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.*;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -10,7 +11,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -32,7 +32,6 @@ public class ServicioAlojamientosTest {
         driver.manage().window().maximize();
         driver.get("https://www.viajesfalabella.cl");
         espera = new WebDriverWait(driver, 7);
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 
     }
 
@@ -82,12 +81,12 @@ public class ServicioAlojamientosTest {
         driver.findElement(By.cssSelector("input.input-tag.sbox-checkin-date")).click();
 
         //selecciona el dia 8 del mes actual
-        driver.findElement(By.xpath("//span[contains(text(),'8')]")).click();
+        driver.findElement(By.xpath("//span[contains(text(),'22')]")).click();
 
         //selecciona el campo de salida
         driver.findElement(By.cssSelector(" input.input-tag.sbox-checkout-date")).click();
         //selecciona el dia 12 del mes actual
-        driver.findElement(By.xpath("//span[contains(text(),'12')]")).click();
+        driver.findElement(By.xpath("//span[contains(text(),'26')]")).click();
 
         //click en el boton buscar
         driver.findElement(By.xpath("//em[contains(text(),'Buscar')]")).click();
@@ -119,28 +118,34 @@ public class ServicioAlojamientosTest {
         //Seleccion de la fecha de entrada
         driver.findElement(By.cssSelector("input.input-tag.sbox-checkin-date")).click();
 
-        //ingresa el dia 8 del mes actual
-        driver.findElement(By.xpath("//span[contains(text(),'8')]")).click();
+        //seleccion la fecha de entrada 22 de noviembre
+        driver.findElement(By.xpath("//span[contains(text(),'22')]")).click();
 
         //Seleccion de la fecha de salida
         driver.findElement(By.cssSelector(" input.input-tag.sbox-checkout-date")).click();
 
-        //ingresa el dia 12 del mes actual
-        driver.findElement(By.xpath("//span[contains(text(),'12')]")).click();
+        //seleccion fecha de salida 26 noviembre
+        driver.findElement(By.xpath("//span[contains(text(),'26')]")).click();
 
         //Click en el boton buscar
         driver.findElement(By.xpath("//em[contains(text(),'Buscar')]")).click();
 
+
         //seleccion de la moneda en Dolares
         Select moneda = new Select(driver.findElement(By.cssSelector("Select.select-tag")));
         moneda.selectByValue("USD");
-        espera.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@class='input-tag' and @placeholder=@min]")));
 
+        espera.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@class='input-tag' and @placeholder=@min]")));
         //se ingresa en el campo de valor minimo
         driver.findElement(By.xpath("//input[@class='input-tag' and @placeholder=@min]")).sendKeys("110");
-        espera.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@class='input-tag' and @placeholder=@max]")));
+
+
+
         //ingresamos el valor maximo
+        driver.findElement(By.xpath("//input[@class='input-tag' and @placeholder=@max]")).sendKeys(Keys.CONTROL,"a",Keys.DELETE);
         driver.findElement(By.xpath("//input[@class='input-tag' and @placeholder=@max]")).sendKeys("400");
+       // espera.until(ExpectedConditions.textToBe( By.xpath("//input[@class='input-tag' and @placeholder=@max]"),"400"));
+
         //Click en el boton aplicar
         driver.findElement(By.xpath("//em[contains(text(),'Aplicar')]")).click();
 
@@ -157,6 +162,7 @@ public class ServicioAlojamientosTest {
             }
         }
 
+        espera.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(("//ul[@class='eva-3-dropdown']//ul[@class='dropdown-subcontent']/li[@class='dropdown-subitem']//span[contains(.,'Centro')]//span [@class='filters-quantity']"))));
         String resultadoFinal = driver.findElement(By.xpath("//ul[@class='eva-3-dropdown']//ul[@class='dropdown-subcontent']/li[@class='dropdown-subitem']//span[contains(.,'Centro')]//span [@class='filters-quantity']")).getText();
         System.out.println(resultadoFinal);
         Integer res = Integer.valueOf(resultadoFinal);
@@ -166,7 +172,7 @@ public class ServicioAlojamientosTest {
     @After
     public void close() {
         if (driver != null) {
-             driver.close();
+            driver.close();
         }
 
     }
