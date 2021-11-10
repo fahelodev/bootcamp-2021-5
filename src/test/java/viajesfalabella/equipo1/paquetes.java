@@ -3,12 +3,10 @@ package viajesfalabella.equipo1;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.*;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.Calendar;
@@ -289,7 +287,6 @@ public class paquetes {
         busqueda(options2, "convenientes");
 
         // CLICK EN SIGUIENTE EN LA PRIMERA OPCIÓN
-        // driver.findElement(By.cssSelector("#trips-cluster-selected-position > trips-cluster-selected > span > cluster > div > div > div.CLUSTER.cluster-pricebox-container > fare > span > span > div.mobile-container > buy-button > a > div")).click();
         espera.until(ExpectedConditions.elementToBeClickable(By.xpath("//em[contains(text(),'Siguiente')]")));
         Thread.sleep(2000);
         driver.findElement(By.xpath("//em[contains(text(),'Siguiente')]")).click();
