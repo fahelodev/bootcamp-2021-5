@@ -53,6 +53,7 @@ public class Alojamientos {
         WebElement seccionAlojamiento = driver.findElement(By.linkText("Alojamientos"));
         seccionAlojamiento.click();
 
+
         WebElement inputDestino = driver.findElement(By.xpath("//*[@id=\"searchbox\"]//label[text()='Destino']/following::input[1]")),
                 inputFechaEntrada = driver.findElement(By.xpath("//*[@id=\"searchbox\"]//input[@placeholder='Entrada']")),
                 inputFechaSalida = driver.findElement(By.xpath("//*[@id=\"searchbox\"]//input[@placeholder='Salida']")),
