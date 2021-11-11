@@ -27,13 +27,13 @@ public class babytuto {
     @BeforeClass
     public static void Setup(){
         System.out.println("Setup necesario antes de Instanciar");
-        WebDriverManager.firefoxdriver().setup();
+        WebDriverManager.chromedriver().setup();
     }
 
     @Before
     public void init() throws InterruptedException {
         System.out.println("init para instanciar");
-        driver = new FirefoxDriver();
+        driver = new ChromeDriver();
         // driver.manage().deleteAllCookies(); //borrar cookies
         driver.manage().window().maximize();
         driver.get("https://www.babytuto.com/");
@@ -54,7 +54,7 @@ public class babytuto {
         WebDriverWait espera = new WebDriverWait(driver,10);
         // 3.- SELECCIONAR CATEGORIA COCHES
         // CREAMOS LISTA
-        List<WebElement> categorias = driver.findElements(By.cssSelector("div.bar-2-products menu-cats ul li a"));
+        List<WebElement> categorias = driver.findElements(By.cssSelector("div.bar-2-products ul li a"));
         // CICLO FOR PARA SELECCIONAR LA CATEGORIA COCHES
         for (WebElement l: categorias){
             // RECORREMOS LA LISTA HASTA ENCONTRAR LA PALABRA REQUERIDA
@@ -62,12 +62,12 @@ public class babytuto {
                 System.out.println("Categoria COCHES encontrada");
                 // HACEMOS CLICK EN LA CATEGORIA SELECCIONADA
                 l.click();
+                System.out.println("Esperamos que se despliegue la categoria");
+                // ESPERAMOS A QUE SE DESPLIEGUE EL CONTENIDO DE LA CATEGORIA
+                espera.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(),'Accesorios para coches')]")));
                 break;
             }
         }
-        System.out.println("Esperamos que se despliegue la categoria");
-        // ESPERAMOS A QUE SE DESPLIEGUE EL CONTENIDO DE LA CATEGORIA
-        espera.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(),'Accesorios para coches')]")));
         // ELEMENTO SEÑALADO HACEMOS CLICK
         System.out.println("Click en la categoria");
         // LE DAMOS CLICK A LA CATEGORIA
