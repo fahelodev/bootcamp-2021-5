@@ -150,38 +150,82 @@ public class Alojamientos{
 
     @Test
     public void T_Aloj_Alto() throws InterruptedException {
-
+        //Obtenemos una lista con todas las categorias y le hacemos click cuando encuentre Alojamientos
         busqueda(categorias,"Alojamientos");
 
+        //Ingresamos montego bay en la caja de busqueda Destino
         WebElement destino = driver.findElement(By.cssSelector("div.input-container .sbox-destination"));
         destino.sendKeys("montego bay");
+        //Esperamos a que se despliegue la lista y le damos ENTER a la primera opcion
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("li.item")));
         destino.sendKeys(Keys.ENTER);
 
-
+        //click en la caja de Entrada de la seccion fechas
         driver.findElement(By.cssSelector("div.input-container .sbox-checkin-date")).click();
+        //Obtenemos la lista de las fechas disponibles, Luego clickeamos la fecha ingresada de Entrada y luego la fecha ingresada de Salida
+        //Luego click en aplicar
         busquedaFecha("1","8");
 
+        //Click en la seccion Habitaciones
         driver.findElement(By.cssSelector("div.sbox-distri-container")).click();
+
+        //Agrega la cantidad ingresada en la seccion menores
         agregarMenores(3);
 
+
+        //Agregamos la edad de los menores uno por uno
         for (int i = 0; i < 3; i++) {
-            int count = driver.findElements(By.xpath("//div[@class='_pnlpk-minors-age-select-wrapper']//select[@class='select-tag'] ")).size();
-            driver.findElements(By.xpath("//div[@class='_pnlpk-minors-age-select-wrapper']//select[@class='select-tag'] ")).get(i).click();
+            driver.findElements(By.xpath("//div[@class='_pnlpk-minors-age-select-wrapper']//select[@class='select-tag']")).get(i).click();
             driver.findElements(By.xpath("//select[@class='select-tag'] //option[@value='4']")).get(i).click();
         }
+
+        //Click boton Aplicar
         driver.findElement(By.cssSelector("a._pnlpk-apply-button")).click();
+        //Click boton Buscar
         driver.findElement(By.xpath("//em[contains(text(),'Buscar')]")).click();
 
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//label[starts-with(@class,'checkbox-label')]")));
+        //Filtramos los resultados por moneda Dolar
         Select s = new Select(driver.findElement(By.xpath("//div[@class='currency-selection'] //select[@class='select-tag']")));
-        s.selectByValue("USD");
+        s.selectByVisibleText("Dólar");
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//label[starts-with(@class,'checkbox-label')]")));
+
+        //Filtramos el precio maximo
+        driver.findElements(By.xpath("//input[@class='input-tag' and @type='number']")).get(1).sendKeys("5000");
+        //Click en aplicar el filtro de precio
+        driver.findElement(By.xpath("//button[@class='eva-3-btn -md -primary']//following::em[1]")).click();
+
+        //Si se despliega una ventana emergente la cerramos
+        if(driver.findElement(By.xpath("//div[contains(@class,'tooltip-container -eva-3-shadow-1')]"))!=null) {
+            driver.findElement(By.xpath("//i[contains(@class,'tooltip-close eva-3-icon-close')]")).click();
+        }
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class,'results-cluster-container')]")));
+        //Click en el alojamiento ingresado y cambio de pestana
+        busquedaAlojamientoGlobal("Iberostar Rose Hall Beach");
 
 
-        busquedaAlojamiento("Iberostar Rose Hall Beach");
+        //Capturamos el titulo del alojamiento seleccionado
+        String TituloHotel = driver.findElement(By.xpath("//*[@class='accommodation-name eva-3-h2']")).getText();
+        String checkTituloHotel = "Iberostar Rose Hall Beach";
 
+        //click en el boton Reservar Ahora
+        driver.findElement(By.xpath("//button[@class='eva-3-btn -md -secondary -eva-3-fwidth']//following::em[1]")).click();
 
+        //Cambiar Aeropuerto
+        Select s1 = new Select(driver.findElement(By.id("select-test")));
+        s1.selectByVisibleText("OCJ, Aeropuerto Boscobel");
 
-        assertTrue(true);
+        //click en boton buscar
+        driver.findElement(By.xpath("//em[contains(text(),'Buscar')]")).click();
+
+        //Validamos que no busca resultados sin especificar la hora
+        String msjErrorHora = driver.findElement(By.xpath("//span[text()='Ingresa una hora']")).getText();
+        String checkMsjErrorHora = "Ingresa una hora";
+
+        Assert.assertEquals(checkMsjErrorHora,msjErrorHora);
+        Assert.assertEquals(checkTituloHotel,TituloHotel);
     }
 
     private void busqueda(List<WebElement> lista, String palabra){
@@ -214,25 +258,18 @@ public class Alojamientos{
         }
     }
 
-    private void busquedaDireccion(String direccion){
-        int count = driver.findElements(By.cssSelector("div.ac-container span")).size();
-
-        for (int i = 0; i < count; i++) {
-            String direcciones = driver.findElements(By.cssSelector("div.ac-container span")).get(i).getText();
-            if (direcciones.equals(direccion)){
-                driver.findElements(By.cssSelector("div.ac-container span")).get(i).click();
-                break;
-            }
-        }
-    }
-
-
     private void busquedaAlojamiento(String alojamiento) throws InterruptedException {
         Thread.sleep(1500);
         driver.findElement(By.xpath("//a[contains(text(),'"+alojamiento+"')]")).click();
         Thread.sleep(1500);
         selectPestana(1);
         }
+    private void busquedaAlojamientoGlobal(String alojamiento) throws InterruptedException {
+        Thread.sleep(1500);
+        driver.findElement(By.xpath("//*[contains(text(),'"+alojamiento+"')]")).click();
+        Thread.sleep(1500);
+        selectPestana(1);
+    }
 
 
     public void selectPestana(int index) {
