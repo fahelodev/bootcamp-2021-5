@@ -60,8 +60,6 @@ public class Paquetes{
         select5Stars();
         Thread.sleep(2000);
         clickFirstHotel(true);
-        isClicked("//button[@class='eva-3-btn -md -primary -eva-3-fwidth']");
-        isClicked("//div[@class='mobile-container']/buy-button/a");
         isClicked("//div[@id=\"carousel_5\"]//div[@data-swiper-slide-index='0' and @style='width: 301.25px; margin-right: 25px;']");
         Thread.sleep(3000);
         isClicked("//div[@class='toggle -eva-3-tc-purple-3 -eva-3-bold -eva-3-mt-xlg']/span");

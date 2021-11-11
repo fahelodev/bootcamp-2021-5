@@ -63,24 +63,24 @@ public class Traslados {
         public void ShowPuntosCanjeYFormasPago() throws InterruptedException {
             fillOriginDestinyInput("origin","ezeiza");
             fillOriginDestinyInput("destination","hilton");
-            isClicked("//div[@class='sbox-radio-buttons']//span[2]//i");
-            selectArriboOPartida('p',"1");
-            selectDropDown("//select[@class='select-tag sbox-time-departure']","420");
-            isClicked("//div[@class='sbox-distri-container']");
-            isClicked("//div[@class='_pnlpk-itemRow__item _pnlpk-stepper-minors -medium-down-to-lg']//a[@class='steppers-icon-right sbox-3-icon-plus']");
-            isClicked("//div[@class='_pnlpk-itemRow__item _pnlpk-stepper-minors -medium-down-to-lg']//a[@class='steppers-icon-right sbox-3-icon-plus']");
-            selectDropDown("//div[@class='_pnlpk-minors-age-select-wrapper']//select[@class='select-tag']","8");
-            selectDropDown("//div[@class='_pnlpk-itemRow _pnlpk-minor-age-select _pnlpk-minor-age-select-last-item']//select[@class='select-tag']","12");
-            isClicked("//a[@class='_pnlpk-apply-button sbox-3-btn -primary _pnlpk-panel__button--link-right -lg']");
-            clickBuscar(false);
+            isClicked("//div[@class='sbox-radio-buttons']//span[2]//i"); // cambiar desde el aeropuerto hasta el aeropuerto
+            selectArriboOPartida('p',"1"); // selecciona si es el calendario de arribo o partida, y selecciona el dia de diciembre
+            selectDropDown("//select[@class='select-tag sbox-time-departure']","420"); // selecciona horario a las 7am
+            isClicked("//div[@class='sbox-distri-container']"); // Parte pasajeros
+            isClicked("//div[@class='_pnlpk-itemRow__item _pnlpk-stepper-minors -medium-down-to-lg']//a[@class='steppers-icon-right sbox-3-icon-plus']"); // suma un menor
+            isClicked("//div[@class='_pnlpk-itemRow__item _pnlpk-stepper-minors -medium-down-to-lg']//a[@class='steppers-icon-right sbox-3-icon-plus']"); // suma otro menor
+            selectDropDown("//div[@class='_pnlpk-minors-age-select-wrapper']//select[@class='select-tag']","8"); // Añadir edad de menores
+            selectDropDown("//div[@class='_pnlpk-itemRow _pnlpk-minor-age-select _pnlpk-minor-age-select-last-item']//select[@class='select-tag']","12"); // Añadir edad menores
+            isClicked("//a[@class='_pnlpk-apply-button sbox-3-btn -primary _pnlpk-panel__button--link-right -lg']"); // aplicar los participantes
+            clickBuscar(false); // busca los datos, cambia depende si tiene o no fecha
             Thread.sleep(3000);
-            selectDropDown("//select[@id='currency-select']","string:USD");
-            isClicked("//div[@class='results']//div[@class='search-cluster ng-scope'][1]//button");
+            selectDropDown("//select[@id='currency-select']","string:USD"); // cambia moneda
+            isClicked("//div[@class='results']//div[@class='search-cluster ng-scope'][1]//button"); //le da al boton comprar
             Thread.sleep(7000);
-            isClicked("//span[text()='¿Quieres canjear tus CMR Puntos?']//ancestor::span");
-            Assert.assertTrue(driverElement("//input[@class='checkbox-tag ng-untouched ng-pristine ng-valid']").isSelected());
+            isClicked("//span[text()='¿Quieres canjear tus CMR Puntos?']//ancestor::span"); // selecciona la opcion de canjear puntos
+            Assert.assertTrue(driverElement("//input[@class='checkbox-tag ng-untouched ng-pristine ng-valid']").isSelected()); // Testea si la checkbox
             Thread.sleep(3000);
-            isClicked("//div[@class='eva-3-row -no-gutter']//a");
+            isClicked("//div[@class='eva-3-row -no-gutter']//a"); // Selecciona las promociones y formas de pago
             Thread.sleep(3000);
         }
 
@@ -166,8 +166,8 @@ public class Traslados {
         if (arribo_o_partida == 'a')
         {
             isClicked("//div[contains(@class,'sbox-checkin-container')]");
-//        isClicked("//div[@class='_dpmg2--month _dpmg2--o-3 _dpmg2--has-start-range _dpmg2--month-active']//span[text()="+arribo+"]"); NO ANDA NO SE POR QUE
-            isClicked("/html/body/div[3]/div/div[5]/div[2]/div[4]/span[1]"); //TENGO QUE USAR ESTE PARA QUE ANDE
+//        isClicked("//div[@class='_dpmg2--month _dpmg2--o-3 _dpmg2--has-start-range _dpmg2--month-active']//span[text()="+arribo+"]"); no anda
+            isClicked("/html/body/div[3]/div/div[5]/div[2]/div[4]/span[1]"); //tengo que usar este
             isClicked("//div[@class='_dpmg2--date-footer']//button[@class='_dpmg2--desktopFooter-button _dpmg2--desktopFooter-button-apply sbox-3-btn -lg -primary']");
 
         } else if (arribo_o_partida == 'p')
