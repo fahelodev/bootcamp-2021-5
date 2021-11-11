@@ -75,7 +75,7 @@ public class Alojamientos{
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//label[starts-with(@class,'checkbox-label')]")));
 
-        //Listamos de los resultados todos los nombres de los alojamientos y le damos click al encontrar el solicitado
+        //Click en el alojamiento ingresado y cambio de pestana
         busquedaAlojamiento("The Chelsea Harbour Hotel");
 
         //Obtenemos una lista de cada FAQ y las desplegamos una por una
@@ -86,7 +86,6 @@ public class Alojamientos{
 
         //Capturamos el titulo del alojamiento seleccionado
         String TituloHotel = driver.findElement(By.xpath("//span[@class='accommodation-name eva-3-h2']")).getText();
-
         String checkTituloHotel = "The Chelsea Harbour Hotel";
 
         Assert.assertEquals(checkTituloHotel,TituloHotel);
@@ -95,37 +94,58 @@ public class Alojamientos{
 
     @Test
     public void T_Aloj_Medio() throws InterruptedException {
-
+        //Obtenemos una lista con todas las categorias y le hacemos click cuando encuentre Alojamientos
         busqueda(categorias,"Alojamientos");
 
+        //Ingresamos El Cairo en la caja de busqueda Destino
         WebElement destino = driver.findElement(By.cssSelector("div.input-container .sbox-destination"));
         destino.sendKeys("El Cairo");
+        //Esperamos a que se despliegue la lista y le damos ENTER a la primera opcion
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("li.item")));
         destino.sendKeys(Keys.ENTER);
 
-        Thread.sleep(1500);
+
+        //Click en la seccion Habitaciones
         driver.findElement(By.cssSelector("div.sbox-distri-container")).click();
+        //Click boton - en la seccion adultos
         driver.findElement(By.cssSelector("a.steppers-icon-left ")).click();
+        //Click boton Aplicar
         driver.findElement(By.cssSelector("a._pnlpk-apply-button")).click();
+
+        //Click en el checkbox Todavía no he decidido la fecha
         driver.findElement(By.xpath("//label[@class='checkbox-label']")).click();
+        //Click en el boton Buscar
         driver.findElement(By.xpath("//em[contains(text(),'Buscar')]")).click();
 
-        Thread.sleep(1500);
-        busquedaFiltro("Wi-Fi gratis en zonas comunes");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//label[starts-with(@class,'checkbox-label')]")));
+        //Filtramos los resultados por Wi-fi gratis en zonas comunes
+        driver.findElement(By.xpath("//em[contains(text(),'Wi-Fi gratis en zonas comunes')]")).click();
 
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(text(),'Wi-Fi gratis en zonas comunes')]")));
+        //Filtramos los resultados por precio: menor a mayor
         Select s = new Select(driver.findElement(By.id("sorting")));
-        s.selectByValue("price_ascending");
+        s.selectByVisibleText("Precio: menor a mayor");
 
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#hotels .results-cluster-container .hf-cluster-title")));
-        Thread.sleep(1500);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("hotels")));
 
-
+        //Click en el alojamiento ingresado y cambio de pestana
         busquedaAlojamiento("Ramses Hilton");
 
+        //Click en Ver comentarios
         driver.findElement(By.cssSelector("a.scroll-to-reviews")).click();
+        //Seleccionamos la seccion En solitario
         driver.findElement(By.xpath("//label[contains(text(),'En solitario')]")).click();
 
+        //Capturamos el titulo del alojamiento seleccionado
+        String TituloHotel = driver.findElement(By.xpath("//span[@class='accommodation-name eva-3-h2']")).getText();
+        String checkTituloHotel = "Ramses Hilton";
 
+        //Capturamos subtitulo de comentario filtrado por En solitario
+        String comentarioSolitario = driver.findElement(By.xpath("//span[contains(text(),'Viajó solo/a ')]")).getText();
+        String checkComentarioSolitario = "Viajó solo/a";
+
+        Assert.assertEquals(checkTituloHotel,TituloHotel);
+        Assert.assertEquals(checkComentarioSolitario,comentarioSolitario);
     }
 
     @Test
@@ -206,30 +226,14 @@ public class Alojamientos{
         }
     }
 
-    private void busquedaFiltro(String filtro){
-        int count = driver.findElements(By.cssSelector("ul.eva-3-dropdown .filters-text-label")).size();
-
-        for (int i = 0; i < count; i++) {
-            String filtros = driver.findElements(By.cssSelector("ul.eva-3-dropdown .filters-text-label")).get(i).getText();
-            if (filtros.equals(filtro)){
-                driver.findElements(By.cssSelector("ul.eva-3-dropdown .filters-text-label")).get(i).click();
-                break;
-            }
-        }
-    }
 
     private void busquedaAlojamiento(String alojamiento) throws InterruptedException {
-        int count = driver.findElements(By.xpath("//a[contains(text(),'"+alojamiento+"')]")).size();
-        for (int i = 0; i < count; i++) {
-            String alojamientos = driver.findElements(By.xpath("//a[contains(text(),'"+alojamiento+"')]")).get(i).getText();
-            if(alojamientos.equals(alojamiento)){
-                driver.findElements(By.xpath("//a[contains(text(),'"+alojamiento+"')]")).get(i).click();
-                Thread.sleep(1500);
-                selectPestana(1);
-                break;
-            }
+        Thread.sleep(1500);
+        driver.findElement(By.xpath("//a[contains(text(),'"+alojamiento+"')]")).click();
+        Thread.sleep(1500);
+        selectPestana(1);
         }
-    }
+
 
     public void selectPestana(int index) {
         tabs2 = new ArrayList<String>(driver.getWindowHandles());
