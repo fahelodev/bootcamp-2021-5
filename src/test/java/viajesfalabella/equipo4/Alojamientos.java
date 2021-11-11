@@ -24,7 +24,9 @@ import static org.junit.Assert.assertTrue;
 public class Alojamientos{
 
     private WebDriver driver;
+    private WebDriverWait wait;
     private ArrayList<String> tabs2;
+    private List<WebElement> categorias;
 
     @BeforeClass
     public static void Setup(){
@@ -42,41 +44,49 @@ public class Alojamientos{
         driver.get("https://www.viajesfalabella.cl/");
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(10,TimeUnit.SECONDS);
+        wait = new WebDriverWait(driver,10);
+        categorias  = driver.findElements(By.cssSelector("div.header-products-container ul li a"));
     }
 
     @Test
     public void T_Aloj_Bajo() throws InterruptedException {
-        List<WebElement> categorias  = driver.findElements(By.cssSelector("div.header-products-container ul li a"));
-        WebDriverWait wait = new WebDriverWait(driver,10);
+        //Obtenemos una lista con todas las categorias y le hacemos click cuando encuentre Alojamientos
         busqueda(categorias,"Alojamientos");
 
+        //Ingresamos Londres en la caja de busqueda Destino
        WebElement destino = driver.findElement(By.cssSelector("div.input-container .sbox-destination"));
        destino.sendKeys("Londres");
+       //Esperamos a que se despliegue la lista y le damos ENTER a la primera opcion
        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("li.item")));
        destino.sendKeys(Keys.ENTER);
 
+       //Click en el checkbox Todavía no he decidido la fecha
         driver.findElement(By.xpath("//label[@class='checkbox-label']")).click();
+        //Click en el boton Buscar
         driver.findElement(By.xpath("//em[contains(text(),'Buscar')]")).click();
 
-        Select s = new Select(driver.findElement(By.id("currency")));
-        s.selectByValue("USD");
-
+        //Filtramos los resultados por Mejor puntuacion
         Select s1 = new Select(driver.findElement(By.id("sorting")));
-        s1.selectByValue("rate_descending");
+        s1.selectByVisibleText("Mejor puntuación");
 
-        //wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#hotels .results-cluster-container .hf-cluster-title")));
+        //Filtramos los resultados por moneda Dolar
+        Select s = new Select(driver.findElement(By.id("currency")));
+        s.selectByVisibleText("Dólar");
 
-        //wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[starts-with(@slot,'element')]")));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//label[starts-with(@class,'checkbox-label')]")));
-        Thread.sleep(1500);
+
+        //Listamos de los resultados todos los nombres de los alojamientos y le damos click al encontrar el solicitado
         busquedaAlojamiento("The Chelsea Harbour Hotel");
 
+        //Obtenemos una lista de cada FAQ y las desplegamos una por una
         int count = driver.findElements(By.cssSelector(".-detail-section-padding .dropdown-item")).size();
         for (int i = 0; i < count; i++) {
             driver.findElements(By.cssSelector(".-detail-section-padding .dropdown-item")).get(i).click();
         }
 
+        //Capturamos el titulo del alojamiento seleccionado
         String TituloHotel = driver.findElement(By.xpath("//span[@class='accommodation-name eva-3-h2']")).getText();
+
         String checkTituloHotel = "The Chelsea Harbour Hotel";
 
         Assert.assertEquals(checkTituloHotel,TituloHotel);
@@ -85,8 +95,7 @@ public class Alojamientos{
 
     @Test
     public void T_Aloj_Medio() throws InterruptedException {
-        WebDriverWait wait = new WebDriverWait(driver,10);
-        List<WebElement> categorias = driver.findElements(By.cssSelector("div.header-products-container ul li a"));
+
         busqueda(categorias,"Alojamientos");
 
         WebElement destino = driver.findElement(By.cssSelector("div.input-container .sbox-destination"));
@@ -121,8 +130,7 @@ public class Alojamientos{
 
     @Test
     public void T_Aloj_Alto() throws InterruptedException {
-        WebDriverWait wait = new WebDriverWait(driver,10);
-        List<WebElement> categorias = driver.findElements(By.cssSelector("div.header-products-container ul li a"));
+
         busqueda(categorias,"Alojamientos");
 
         WebElement destino = driver.findElement(By.cssSelector("div.input-container .sbox-destination"));
@@ -211,11 +219,11 @@ public class Alojamientos{
     }
 
     private void busquedaAlojamiento(String alojamiento) throws InterruptedException {
-        int count = driver.findElements(By.cssSelector("#hotels .results-cluster-container .hf-cluster-title")).size();
+        int count = driver.findElements(By.xpath("//a[contains(text(),'"+alojamiento+"')]")).size();
         for (int i = 0; i < count; i++) {
-            String alojamientos = driver.findElements(By.cssSelector("#hotels .results-cluster-container .hf-cluster-title")).get(i).getText();
+            String alojamientos = driver.findElements(By.xpath("//a[contains(text(),'"+alojamiento+"')]")).get(i).getText();
             if(alojamientos.equals(alojamiento)){
-                driver.findElements(By.cssSelector("#hotels .results-cluster-container .hf-cluster-title")).get(i).click();
+                driver.findElements(By.xpath("//a[contains(text(),'"+alojamiento+"')]")).get(i).click();
                 Thread.sleep(1500);
                 selectPestana(1);
                 break;
