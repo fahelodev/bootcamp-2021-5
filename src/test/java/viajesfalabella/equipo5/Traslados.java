@@ -12,9 +12,11 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
 
 public class Traslados {
     private WebDriver driver;
@@ -29,6 +31,7 @@ public class Traslados {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         wait = new WebDriverWait(driver, 15);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
         //Navegar a página
         driver.get("https://www.viajesfalabella.cl/");
@@ -39,7 +42,6 @@ public class Traslados {
         if(driver != null){
             driver.close();
         }
-
     }
 
     @Test
@@ -48,7 +50,8 @@ public class Traslados {
         String destino = "Hotel W Santiago - Isidora Goyenechea, Las Condes, Chile";
 
         //Cambio de pestaña
-        driver.findElement(By.xpath("//label[contains(text(),'Traslados')]")).click();
+        WebElement seccionTraslados = driver.findElement(By.linkText("Traslados"));
+        seccionTraslados.click();
 
         //Origen
         WebElement inputOrigen = driver.findElement(By.xpath("//label[contains(text(),'Desde')]/following-sibling::input"));
@@ -92,7 +95,8 @@ public class Traslados {
         String nuevoDestino = "Hotel Marriott Santiago";
 
         //Cambio de pestaña
-        driver.findElement(By.xpath("//label[contains(text(),'Traslados')]")).click();
+        WebElement seccionTraslados = driver.findElement(By.linkText("Traslados"));
+        seccionTraslados.click();
 
         //Origen
         WebElement inputOrigen = driver.findElement(By.xpath("//label[contains(text(),'Desde')]/following-sibling::input"));
@@ -153,11 +157,12 @@ public class Traslados {
         String destino = "Aeropuerto Arturo Merino Benitez";
         String origen = "Hotel W Santiago - Isidora Goyenechea, Las Condes, Chile";
 
-        //Carga seccion
-        driver.findElement(By.xpath("//label[contains(text(),'Traslados')]")).click();
+        //Cambio de pestaña
+        WebElement seccionTraslados = driver.findElement(By.linkText("Traslados"));
+        seccionTraslados.click();
 
         //Marca casilla
-        driver.findElement(By.xpath("//span[contains(text(),' Hacia el aeropuerto')]")).click();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[contains(text(),' Hacia el aeropuerto')]"))).click();
 
         //Origen
         WebElement inputOrigen = driver.findElement(By.xpath("//label[contains(text(),'Desde')]/following-sibling::input"));
@@ -177,11 +182,11 @@ public class Traslados {
 
         //Agrega pasajeros
         driver.findElement(By.cssSelector(".sbox-distribution .input-container")).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("._pnlpk-stepper-adults .sbox-3-icon-plus")));
-        driver.findElement(By.cssSelector("._pnlpk-stepper-adults .sbox-3-icon-plus")).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("._pnlpk-stepper-adults .sbox-3-icon-plus"))).click();
+
         //Agrega menor
         driver.findElement(By.cssSelector("._pnlpk-stepper-minors .sbox-3-icon-plus")).click();
-        Select menor = new Select(driver.findElement(By.cssSelector("._pnlpk-minors-age-select-wrapper select")));
+        Select menor = new Select(wait.until(ExpectedConditions.presenceOfElementLocated((By.cssSelector("._pnlpk-minors-age-select-wrapper select")))));
         menor.selectByVisibleText("13 años");
         //Confirma
         driver.findElement(By.xpath("//a[contains(text(),'Aplicar')]")).click();
@@ -192,13 +197,11 @@ public class Traslados {
         //Espera página y selecciona traslado
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//em[contains(text(),'Comprar')]"))).click();
 
-        //Espera que cargue la página
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//h2[contains(text(),'¡Falta poco! Completa tus datos y finaliza tu compra')]")));
-
         //Obtiene Resutlados
-        String resultadoOrigen = driver.findElement(By.cssSelector("#transfer-pickup-T0 p")).getText();
-        String resultadoDestino = driver.findElement(By.cssSelector("#transfer-dropoff-T0 p")).getText();
-        String resultadoPasajeros = driver.findElement(By.cssSelector("#pricebox-list-detail p span")).getText();
+        String resultadoOrigen = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#transfer-pickup-T0 p"))).getText();
+        String resultadoDestino = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#transfer-dropoff-T0 p"))).getText();
+        String resultadoPasajeros = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("span.chk-pricebox-item-description"))).getText();
+
 
         //Comprobacion
         assertTrue(origen.contains(resultadoOrigen));
@@ -213,7 +216,7 @@ public class Traslados {
     }
 
     public void asignarFechaDisponible(int dias){
-        List<WebElement> fechas = driver.findElements(By.cssSelector("._dpmg2--show ._dpmg2--month-active ._dpmg2--available span._dpmg2--date-number"));
+        List<WebElement> fechas = driver.findElements(By.cssSelector("._dpmg2--show ._dpmg2--months ._dpmg2--available ._dpmg2--date-number"));
         fechas.get(dias).click();
     }
 }
