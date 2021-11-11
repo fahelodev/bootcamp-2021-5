@@ -14,6 +14,7 @@ public class TestBase {
     //conteniene las configuraciones basicas de los test a ejecutar
     //atributos
     protected WebDriver driver; // navegador
+    private int segundosEspera = 10;
 
     @BeforeClass
     public static void initialiseBrowser(){
@@ -25,8 +26,8 @@ public class TestBase {
         driver = new ChromeDriver();
         driver.manage().deleteAllCookies();
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.manage().timeouts().pageLoadTimeout(10,TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(segundosEspera, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(segundosEspera,TimeUnit.SECONDS);
     }
 
     @After
@@ -35,5 +36,4 @@ public class TestBase {
             driver.close();
         }
     }
-
 }
