@@ -32,7 +32,7 @@ public class AutomationPaquetesFalabella {
     @Test
     public void paquetes_falabella001(){
         //Seleccionamos paquetes
-        driver.findElement(By.xpath("//label[normalize-space()='Paquetes']"));
+        driver.findElement(By.xpath("//label[.='Paquetes']"));
 
         //Elegimos origen
         WebElement simpleOrigen = driver.findElement(By.xpath("//input[@placeholder='Ingresa una ciudad']"));
@@ -58,7 +58,7 @@ public class AutomationPaquetesFalabella {
     @Test
     public void paquetes_falabella002(){
         //Seleccionamos la seccion paquetes
-        driver.findElement(By.xpath("//label[normalize-space()='Paquetes']"));
+        driver.findElement(By.xpath("//label[.='Paquetes']"));
 
         //Elegimos origen
         WebElement simpleOrigen = driver.findElement(By.xpath("//input[@placeholder='Ingresa una ciudad']"));
@@ -78,31 +78,30 @@ public class AutomationPaquetesFalabella {
         //Elegimos Fecha de ida y vuelta
         driver.findElement(By.cssSelector("[placeholder='Ida']")).click();
         WebDriverWait fechaWait = new WebDriverWait(driver,10);
-        fechaWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='_dpmg2--wrapper _dpmg2--roundtrip _dpmg2--show-info _dpmg2--show']//div[@class='_dpmg2--month _dpmg2--o-1 _dpmg2--month-active']//span[@class='_dpmg2--date _dpmg2--available']/span[.='12']")));
-        driver.findElement(By.xpath("//div[@class='_dpmg2--wrapper _dpmg2--roundtrip _dpmg2--show-info _dpmg2--show']//div[@class='_dpmg2--month _dpmg2--o-1 _dpmg2--month-active']//span[@class='_dpmg2--date _dpmg2--available']/span[.='12']")).click();
+        fechaWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='_dpmg2--wrapper _dpmg2--roundtrip _dpmg2--show-info _dpmg2--show']//div[@class='_dpmg2--month _dpmg2--o-1 _dpmg2--month-active']//span[@class='_dpmg2--date _dpmg2--available']/span[.='18']")));
+        driver.findElement(By.xpath("//div[@class='_dpmg2--wrapper _dpmg2--roundtrip _dpmg2--show-info _dpmg2--show']//div[@class='_dpmg2--month _dpmg2--o-1 _dpmg2--month-active']//span[@class='_dpmg2--date _dpmg2--available']/span[.='18']")).click();
         //Seleccionamos fecha de vuelta
-        driver.findElement(By.xpath("//div[@class='_dpmg2--month _dpmg2--o-1 _dpmg2--has-start-range _dpmg2--month-active']//span[.='19NocheNoches']")).click();
-        driver.findElement(By.xpath("//div[@class='_dpmg2--wrapper _dpmg2--roundtrip _dpmg2--show-info _dpmg2--show _dpmg2--transition-displacement']//button[@class='_dpmg2--desktopFooter-button _dpmg2--desktopFooter-button-apply sbox-3-btn -lg -primary']")).click();
+        driver.findElement(By.xpath("//div[@class='_dpmg2--month _dpmg2--o-1 _dpmg2--has-start-range _dpmg2--month-active']//span[.='25NocheNoches']")).click();
+        driver.findElement(By.xpath("//em[contains(text(),'Aplicar')]//following::em[8]")).click();
 
         //Elegimos habitaciones
         WebElement simpleHabitacion = driver.findElement(By.cssSelector(".sbox-distri-input > .input-container"));
         simpleHabitacion.click();
 
         //Agregamos un mayor
-        driver.findElement(By.cssSelector("._pnlpk-dynamicContent._pnlpk-panel__blocks > div:nth-of-type(1) ._pnlpk-stepper-adults .steppers-icon-right")).click();
+        driver.findElement(By.xpath("//a[@class='steppers-icon-right sbox-3-icon-plus']//following::a[6]")).click();
         //Agregamos un menor
-        driver.findElement(By.xpath("//div[@class='_pnlpk-panel__blocks _pnlpk-dynamicContent']/div[@class='_pnlpk-itemBlock']//div[@class='_pnlpk-itemRow__item _pnlpk-stepper-minors -medium-down-to-lg']//a[2]")).click();
+        driver.findElement(By.xpath("//a[@class='steppers-icon-right sbox-3-icon-plus']//following::a[8]")).click();
         //Select la edad del nino y aplicamos
-        driver.findElement(By.xpath("//div[@class='_pnlpk-minors-age-select-wrapper']/div[@class='_pnlpk-itemRow _pnlpk-minor-age-select _pnlpk-minor-age-select-last-item']//select[@class='select-tag']")).click();
-        fechaWait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//div[@class='_pnlpk-minors-age-select-wrapper']/div[@class='_pnlpk-itemRow _pnlpk-minor-age-select _pnlpk-minor-age-select-last-item']//select[@class='select-tag']")));
-        driver.findElement(By.xpath("//div[@class='_pnlpk-minors-age-select-wrapper']/div[@class='_pnlpk-itemRow _pnlpk-minor-age-select _pnlpk-minor-age-select-last-item']//option[.='3 años']")).click();
-        driver.findElement(By.xpath("//div[@class='_pnlpk-main _pnlpk-panel _pnlpk-panel--popup _pnlpk-panel--mobile _pnlpk-panel--show']//a[.='Aplicar']")).click();
+        driver.findElement(By.xpath("//select[@class='select-tag']//following::select[7]")).click();
+        driver.findElement(By.xpath("//select[@class='select-tag']//following::select[7]//option[@value='3']")).click();
+        driver.findElement(By.xpath("//a[contains(text(),'Aplicar')]//following::a[21]")).click();
 
         //Realizamos nuestra busqueda
         driver.findElement(By.cssSelector(".sbox-search")).click();
 
         //Ordenamos de menor a mayor
-        fechaWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//aloha-select[@class='sorting-select']//select[@class='select-tag']"))).click();
+        fechaWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//select[@class='select-tag']//following::select[37]"))).click();
         driver.findElement(By.xpath("//option[contains(.,'Precio: menor a mayor')]")).click();
 
         //Verificamos que la busqueda nos direccione los datos solicitados correctamente
@@ -112,7 +111,7 @@ public class AutomationPaquetesFalabella {
     @Test
     public void paquetes_falabella003(){
         //Seleccionamos la seccion paquetes
-        driver.findElement(By.xpath("//label[normalize-space()='Paquetes']"));
+        driver.findElement(By.xpath("//label[.='Paquetes']"));
 
         //Seleccionamos vuelo mas dos alojamientos
         driver.findElement(By.cssSelector(".sbox-radio-vhh")).click();
@@ -132,12 +131,12 @@ public class AutomationPaquetesFalabella {
         //Seleccionamos Fecha de ida y vuelta
         driver.findElement(By.cssSelector("[placeholder='Ida']")).click();
         WebDriverWait fechaWait = new WebDriverWait(driver,30);
-        fechaWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='_dpmg2--wrapper _dpmg2--roundtrip _dpmg2--show-info _dpmg2--show']//div[@class='_dpmg2--month _dpmg2--o-1 _dpmg2--month-active']/div[@class='_dpmg2--dates']/span[.='10']")));
+        fechaWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='_dpmg2--wrapper _dpmg2--roundtrip _dpmg2--show-info _dpmg2--show']//div[@class='_dpmg2--month _dpmg2--o-1 _dpmg2--month-active']/div[@class='_dpmg2--dates']/span[.='18']")));
         //Seleccionamos la primer fecha
-        driver.findElement(By.xpath("//div[@class='_dpmg2--wrapper _dpmg2--roundtrip _dpmg2--show-info _dpmg2--show']//div[@class='_dpmg2--month _dpmg2--o-1 _dpmg2--month-active']/div[@class='_dpmg2--dates']/span[.='10']")).click();
+        driver.findElement(By.xpath("//div[@class='_dpmg2--wrapper _dpmg2--roundtrip _dpmg2--show-info _dpmg2--show']//div[@class='_dpmg2--month _dpmg2--o-1 _dpmg2--month-active']/div[@class='_dpmg2--dates']/span[.='18']")).click();
         //Aqui seleccionamos la fecha de vuelta y aplicamos
-        driver.findElement(By.xpath("//div[@class='_dpmg2--month _dpmg2--o-1 _dpmg2--has-start-range _dpmg2--month-active']//span[.='19NocheNoches']")).click();
-        driver.findElement(By.xpath("//div[@class='_dpmg2--wrapper _dpmg2--roundtrip _dpmg2--show-info _dpmg2--show _dpmg2--transition-displacement']//em[@class='_dpmg2--desktopFooter-button-apply-text btn-text']")).click();
+        driver.findElement(By.xpath("//div[@class='_dpmg2--month _dpmg2--o-1 _dpmg2--has-start-range _dpmg2--month-active']//span[.='25NocheNoches']")).click();
+        driver.findElement(By.xpath("//em[contains(text(),'Aplicar')]//following::em[8]")).click();
 
         //Elegimos misma ciudad de origen para alojarnos
         WebElement altoOrigenDos = driver.findElement(By.cssSelector(".sbox-hotel-first-destination"));
@@ -147,8 +146,8 @@ public class AutomationPaquetesFalabella {
 
         //Elegimos segunda fecha de la ciudad donde nos alojamos
         driver.findElement(By.cssSelector(".sbox-hotel-first-checkout-date")).click();
-        driver.findElement(By.xpath("//div[@class='_dpmg2--month _dpmg2--o-1 _dpmg2--has-start-range _dpmg2--has-limit-date _dpmg2--month-active']//span[.='18NocheNoches']")).click();
-        driver.findElement(By.xpath("//div[@class='_dpmg2--wrapper _dpmg2--roundtrip _dpmg2--show']//em[@class='_dpmg2--desktopFooter-button-apply-text btn-text']")).click();
+        driver.findElement(By.xpath("//div[@class='_dpmg2--month _dpmg2--o-1 _dpmg2--has-start-range _dpmg2--has-limit-date _dpmg2--month-active']//span[.='24']")).click();
+        driver.findElement(By.xpath("//em[contains(text(),'Aplicar')]//following::em[2]")).click();
 
         //Elegimos la segunda ciudad donde alojarnos
         WebElement altoDestinoDos = driver.findElement(By.cssSelector(".sbox-hotel-second-destination"));
@@ -158,17 +157,17 @@ public class AutomationPaquetesFalabella {
 
         //Elegimos las habitaciones, además elegimos los adultos y ninos
         driver.findElement(By.cssSelector(".sbox-distri-input > .input-container")).click();
-        driver.findElement(By.cssSelector("._pnlpk-dynamicContent._pnlpk-panel__blocks > div:nth-of-type(1) ._pnlpk-stepper-adults .steppers-icon-right")).click();
-        driver.findElement(By.cssSelector("._pnlpk-dynamicContent._pnlpk-panel__blocks > div:nth-of-type(1) ._pnlpk-stepper-minors .steppers-icon-right")).click();
+        driver.findElement(By.xpath("//input[@class='steppers-tag']//following::a[8]")).click();
+        driver.findElement(By.xpath("//input[@class='steppers-tag']//following::a[10]")).click();
         //Select para elegir la edad del nino
-        driver.findElement(By.xpath("//div[@class='_pnlpk-minors-age-select-wrapper']/div[@class='_pnlpk-itemRow _pnlpk-minor-age-select _pnlpk-minor-age-select-last-item']//select[@class='select-tag']")).click();
-        driver.findElement(By.xpath("//div[@class='_pnlpk-minors-age-select-wrapper']/div[@class='_pnlpk-itemRow _pnlpk-minor-age-select _pnlpk-minor-age-select-last-item']//option[.='4 años']")).click();
+        driver.findElement(By.xpath("//select[@class='select-tag']//following::select[7]")).click();
+        driver.findElement(By.xpath("//select[@class='select-tag']//following::select[7]//option[@value='3']")).click();
 
         //Agregamos habitacion
-        driver.findElement(By.cssSelector("._pnlpk-panel__button--link-left")).click();
+        driver.findElement(By.xpath("//div[@class='_pnlpk-panel__footer -medium-down-to-lg']//following::a[22]")).click();
         //Agregamos Adulto y aplicamos
-        driver.findElement(By.cssSelector("._pnlpk-dynamicContent._pnlpk-panel__blocks > div:nth-of-type(2) ._pnlpk-stepper-adults .steppers-icon-right")).click();
-        driver.findElement(By.cssSelector("._pnlpk-panel--show ._pnlpk-apply-button")).click();
+        driver.findElement(By.xpath("//input[@class='steppers-tag']//following::a[13]")).click();
+        driver.findElement(By.xpath("//a[contains(text(),'Aplicar')]//following::a[21]")).click();
         //Buscamos
         driver.findElement(By.xpath("//em[.='Buscar']")).click();
 
