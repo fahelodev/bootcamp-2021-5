@@ -42,32 +42,33 @@ public class BabyTuto {
         d.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id=\"newsletter\"]/button")));
         driver.findElement(By.xpath("//div[@id=\"newsletter\"]/button")).click();
 
-        int size = driver.findElements(By.cssSelector("body > div.main-container > div.header-3.sup.section-products > div.header-bar > div > div > ul > li > a")).size();
+        int size = driver.findElements(By.cssSelector("div.bar-2-products ul li a")).size();
+        System.out.println(size);
         for (int i=0; i<size;i++){
-            String coche = driver.findElements(By.cssSelector("body > div.main-container > div.header-3.sup.section-products > div.header-bar > div > div > ul > li > a")).get(i).getText();
+            String coche = driver.findElements(By.cssSelector("div.bar-2-products ul li a")).get(i).getText();
             if (coche.equals("COCHES")){
-                driver.findElements(By.cssSelector("body > div.main-container > div.header-3.sup.section-products > div.header-bar > div > div > ul > li > a")).get(i).click();
+                driver.findElements(By.cssSelector("div.bar-2-products ul li a")).get(i).click();
                 break;
             }
         }
 
-        int ca = driver.findElements(By.cssSelector("body > div.main-container > div.header-3.sup.section-products > div.header-bar > div > div > ul > li > div > table > tbody > tr > td > ul > li > a")).size();
-        d.until(ExpectedConditions.visibilityOfElementLocated((By.cssSelector("body > div.main-container > div.header-3.sup.section-products > div.header-bar > div > div > ul > li > div > table > tbody > tr > td > ul > li > a"))));
+        int ca = driver.findElements(By.cssSelector("ul.tree li a")).size();
+        d.until(ExpectedConditions.visibilityOfElementLocated((By.cssSelector("ul.tree li a"))));
         for (int k=0; k<ca;k++){
-            String cocheAccesorios = driver.findElements(By.cssSelector("body > div.main-container > div.header-3.sup.section-products > div.header-bar > div > div > ul > li > div > table > tbody > tr > td > ul > li > a")).get(k).getText();
+            String cocheAccesorios = driver.findElements(By.cssSelector("ul.tree li a")).get(k).getText();
             if (cocheAccesorios.equals("Accesorios para coches")){
-                driver.findElements(By.cssSelector("body > div.main-container > div.header-3.sup.section-products > div.header-bar > div > div > ul > li > div > table > tbody > tr > td > ul > li")).get(k).click();
+                driver.findElements(By.cssSelector("ul.tree li a")).get(k).click();
                 break;
             }
         }
 
 
-        d.until(ExpectedConditions.visibilityOfElementLocated((By.cssSelector("body > div.main-container > div > div > div.categories.row > div.span2.filters > div > ul > li > a > span"))));
-        int a = driver.findElements(By.cssSelector("body > div.main-container > div > div > div.categories.row > div.span2.filters > div > ul > li > a > span")).size();
+        d.until(ExpectedConditions.visibilityOfElementLocated((By.cssSelector("a.f span"))));
+        int a = driver.findElements(By.cssSelector("a.f span")).size();
         for (int o=0; o<a;o++){
-            String bbpro =  driver.findElements(By.cssSelector("body > div.main-container > div > div > div.categories.row > div.span2.filters > div > ul > li > a > span")).get(o).getText();
+            String bbpro =  driver.findElements(By.cssSelector("a.f span")).get(o).getText();
             if (bbpro.equals("BBpro")){
-                driver.findElements(By.cssSelector("body > div.main-container > div > div > div.categories.row > div.span2.filters > div > ul > li > a > span")).get(o).click();
+                driver.findElements(By.cssSelector("a.f span")).get(o).click();
                 break;
             }
         }
