@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class ViajesFalabella {
@@ -63,9 +64,13 @@ public class ViajesFalabella {
         busqueda.sendKeys(Keys.ENTER);
 
 //primeras fechas
-        driver.findElement(By.xpath("//*[@id=\"searchbox\"]/div/div/div/div[3]/div[2]/div[2]/div/div/div[1]/div/input")).click();
-        driver.findElement(By.xpath("/html/body/div[1]/div/div[5]/div[2]/div[4]/span[10]/span[1]")).click();
-        driver.findElement(By.xpath("/html/body/div[1]/div/div[5]/div[2]/div[4]/span[20]/span[1]\n")).click();
+
+        //Fecha
+        driver.findElement(By.xpath("//input[@placeholder='Entrada']")).click();
+        asignarFechaDisponible(10);
+        driver.findElement(By.xpath("//input[@placeholder='Salida']")).click();
+        driver.findElement(By.xpath("//input[@placeholder='Salida']")).click();
+        asignarFechaDisponible(12);
 //boton buscar
         driver.findElement(By.xpath("//*[@id=\"searchbox\"]/div/div/div/div[3]/div[2]/div[4]/div/a/em")).click();
 
@@ -94,11 +99,13 @@ public class ViajesFalabella {
         WebDriverWait wait =  new WebDriverWait(driver,5); // tiempo de espera explicito
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/div[7]/div/div[1]/ul/li[1]/span")));
         busqueda.sendKeys(Keys.ENTER);
-//fechas
-        driver.findElement(By.xpath("//*[@id=\"searchbox\"]/div/div/div/div[3]/div[2]/div[2]/div/div/div[1]/div/input")).click();
-        driver.findElement(By.xpath("/html/body/div[1]/div/div[5]/div[1]/div[4]/span[20]/span[1]")).click();
-        driver.findElement(By.xpath("/html/body/div[1]/div/div[5]/div[1]/div[4]/span[27]/span[1]")).click();
-        driver.findElement(By.xpath("/html/body/div[1]/div/div[6]/div[2]/button[2]/em")).click();
+
+        //Fecha
+        driver.findElement(By.xpath("//input[@placeholder='Entrada']")).click();
+        asignarFechaDisponible(10);
+        driver.findElement(By.xpath("//input[@placeholder='Salida']")).click();
+        driver.findElement(By.xpath("//input[@placeholder='Salida']")).click();
+        asignarFechaDisponible(12);
 
 //adultos y ni;os
         driver.findElement(By.xpath("//*[@id=\"searchbox\"]/div/div/div/div[3]/div[2]/div[3]/div/div/div[2]/div/div")).click();
@@ -128,16 +135,19 @@ public class ViajesFalabella {
         //elegir hotel
         driver.findElement(By.xpath("/html/body/aloha-app-root/aloha-results/div/div/div/div[2]/div[2]/aloha-list-view-container/div[2]/div[1]/aloha-cluster-container/div/div/div[2]/aloha-cluster-pricebox-container/div/div[2]/div[2]/aloha-button")).click();
         //reservar
-        driver.findElement(By.xpath("//*[@id=\"roompacks-container-wrapper\"]/aloha-roompacks-container/aloha-roompacks-grid-container/div[2]/div[2]/aloha-reservation-summary-container/div/aloha-next-step-button/aloha-button/button")).click();
+        //driver.findElement(By.xpath("//*[@id=\"roompacks-container-wrapper\"]/aloha-roompacks-container/aloha-roompacks-grid-container/div[2]/div[2]/aloha-reservation-summary-container/div/aloha-next-step-button/aloha-button/button")).click();
 
     }
 
-
+    public void asignarFechaDisponible(int dias){
+        List<WebElement> fechas = driver.findElements(By.cssSelector("._dpmg2--show ._dpmg2--month-active ._dpmg2--available span._dpmg2--date-number"));
+        fechas.get(dias).click();
+    }
 
     @After
     public void close(){
         if(driver != null){
-            //driver.close();
+            driver.quit();
         }
     }
 
