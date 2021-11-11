@@ -58,11 +58,8 @@ public class AutomationAlojamientoFalabella {
         //introducir fechas
         driver.findElement(By.cssSelector("[placeholder='Entrada']")).click();
         espera.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='_dpmg2--dates']/child::span[18]"))).click();
-        //espera.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='_dpmg2--wrapper _dpmg2--roundtrip _dpmg2--show-info _dpmg2--show']//div[@class='_dpmg2--month _dpmg2--o-1 _dpmg2--month-active']/div[@class='_dpmg2--dates']/span[.='11']"))).click();
         espera.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[.='25NocheNoches']"))).click();
-        //espera.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='_dpmg2--wrapper _dpmg2--roundtrip _dpmg2--show-info _dpmg2--show _dpmg2--transition-displacement']//span[.='7NocheNoches']"))).click();
         driver.findElement(By.xpath("//em[contains(text(),'Aplicar')]")).click();
-        //driver.findElement(By.xpath("//div[@class='_dpmg2--wrapper _dpmg2--roundtrip _dpmg2--show-info _dpmg2--show _dpmg2--transition-displacement']//button[@class='_dpmg2--desktopFooter-button _dpmg2--desktopFooter-button-apply sbox-3-btn -lg -primary']")).click();
         driver.findElement(By.cssSelector(".sbox-search")).click();
 
         //Boton buscar
@@ -105,9 +102,7 @@ public class AutomationAlojamientoFalabella {
         }
 
         //Elige las fechas
-        //espera.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class=' hf-cluster-container cluster-container -eva-3-shadow-line-hover  hf-cluster -featured-hotel  ']//a[.='Elegir fechas']"))).click();
         driver.findElement(By.cssSelector("[placeholder='Entrada']")).click();
-        //espera.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='_dpmg2--month _dpmg2--o-1 _dpmg2--month-active']/div[@class='_dpmg2--dates']/span[.='10']"))).click();
         espera.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='_dpmg2--dates']/child::span[18]"))).click();
         driver.findElement(By.cssSelector("[placeholder='Salida']")).click();
         espera.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[.='25NocheNoches']"))).click();
@@ -127,7 +122,6 @@ public class AutomationAlojamientoFalabella {
             }
         }
 
-        //espera.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='eva-3-btn -md -secondary -eva-3-fwidth']"))).click();
         espera.until(ExpectedConditions.elementToBeClickable(By.xpath("//em[contains(text(),'Reservar ahora')]"))).click();
         driver.findElement(By.id("select-test")).click();
         espera.until(ExpectedConditions.elementToBeClickable(By.xpath("//option[.='LIM, Aeropuerto Internacional Jorge Chavez']"))).click();
