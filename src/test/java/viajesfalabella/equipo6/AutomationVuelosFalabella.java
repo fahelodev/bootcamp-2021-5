@@ -55,9 +55,9 @@ public class AutomationVuelosFalabella {
         driver.findElement(By.xpath("//input[contains(@placeholder,'Ingresa hacia dónde viajas')]")).sendKeys("Ile de France, Francia");
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[.='París, Ile de France, Francia']"))).click();
         //Seleccionamos la fecha de ida
-        driver.findElement(By.cssSelector(".sbox-bind-reference-flight-start-date-input")).click();
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='_dpmg2--month _dpmg2--o-1 _dpmg2--month-active']/div[@class='_dpmg2--dates']/span[.='11']"))).click();
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//em[@class='_dpmg2--desktopFooter-button-apply-text btn-text']"))).click();
+        driver.findElement(By.cssSelector("[placeholder='Ida']")).click();
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='_dpmg2--dates']/span[.='22']"))).click();
+        driver.findElement(By.xpath("//em[contains(text(),'Aplicar')]")).click();
         //Se agregan los pasajeros
         driver.findElement(By.cssSelector(".sbox-flights-double-distribution-picker")).click();
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("._pnlpk-panel--show ._pnlpk-stepper-minors .steppers-icon-right"))).click();
@@ -67,12 +67,12 @@ public class AutomationVuelosFalabella {
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='_pnlpk-itemRow_item _pnlpk-select-flight-class-type -medium-down-to-lg']//select[@class='select-tag']"))).click();
         driver.findElement(By.xpath("//option[.='Premium economy']")).click();
         driver.findElement(By.cssSelector("._pnlpk-panel--show ._pnlpk-apply-button")).click();
-        driver.findElement(By.xpath("//div[@class='sbox-button -ml3-l']//em[@class='btn-text']")).click();
+        driver.findElement(By.cssSelector("a.-md.sbox-search")).click();
     }
     @Test
     public void vuelo_falabella003() throws InterruptedException {
 
-        WebDriverWait wait = new WebDriverWait(driver, 30);
+        WebDriverWait wait = new WebDriverWait(driver, 20);
         driver.findElement(By.cssSelector("a[title='Vuelos']")).click();
         driver.findElement(By.xpath("//span[@class='radio-label'][normalize-space()='Ida y vuelta']")).click();
         driver.findElement(By.xpath("//input[@placeholder='Ingresa desde dónde viajas']")).sendKeys("Buenos Aires");
@@ -80,11 +80,11 @@ public class AutomationVuelosFalabella {
         driver.findElement(By.xpath("//input[contains(@placeholder,'Ingresa hacia dónde viajas')]")).sendKeys("Londres");
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[.='Londres, Inglaterra, Reino Unido']"))).click();
         //Seleecionamos la fecha de ida y vuelta
-        driver.findElement(By.cssSelector(".sbox-bind-reference-flight-start-date-input")).click();
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='_dpmg2--month _dpmg2--o-1 _dpmg2--month-active']/div[@class='_dpmg2--dates']/span[.='22']"))).click();
+        driver.findElement(By.cssSelector("[placeholder='Ida']")).click();
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='_dpmg2--dates']/span[.='22']"))).click();
         driver.findElement(By.cssSelector("[placeholder='Vuelta']"));
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='_dpmg2--month _dpmg2--o-1 _dpmg2--has-start-range _dpmg2--month-active']//span[.='26DíaDías']"))).click();
-        driver.findElement(By.xpath("//em[@class='_dpmg2--desktopFooter-button-apply-text btn-text']")).click();
+        driver.findElement(By.xpath("//em[contains(text(),'Aplicar')]")).click();
         //Se agregan pasajeros
         driver.findElement(By.cssSelector(".sbox-flights-double-distribution-picker")).click();
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("._pnlpk-panel--show ._pnlpk-stepper-minors .steppers-icon-right"))).click();
@@ -97,23 +97,26 @@ public class AutomationVuelosFalabella {
         driver.findElement(By.xpath("//div[@class='sbox-button -ml3-l']//em[@class='btn-text']")).click();
         //Se utilizan los filtros
         driver.findElement(By.xpath("//checkbox-filter[@class='stops']//span[@class='eva-3-checkbox']//span[.='1 Escala']")).click();
-        //Se utilizan los tread.sleep porque la pagina carga y no espera la seleccion
-        Thread.sleep(5000);
+        WebElement loader = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".loader-modal-content")));
+        wait.until(ExpectedConditions.invisibilityOf(loader));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//checkbox-filter[@class='baggage']/checkbox-filter-item[2]//i[@class='checkbox-check eva-3-icon-checkmark filters-checkbox-left']"))).click();
-        Thread.sleep(5000);
+        loader = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".loader-modal-content")));
+        wait.until(ExpectedConditions.invisibilityOf(loader));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//select[@id='eva-select']"))).click();
         driver.findElement(By.xpath("//option[contains(.,'Dólares estadounidenses')]")).click();
-        Thread.sleep(5000);
+        loader = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".loader-modal-content")));
+        wait.until(ExpectedConditions.invisibilityOf(loader));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div[id='order'] select[id='eva-select']"))).click();
         driver.findElement(By.xpath("//option[contains(.,'Más convenientes')]")).click();
-        Thread.sleep(7000);
-        driver.findElement(By.xpath("//div[@id='clusters']/span[1]//em[@class='btn-text']")).click();
+        loader = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".loader-modal-content")));
+        wait.until(ExpectedConditions.invisibilityOf(loader));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='clusters']/span[1]//em[@class='btn-text']"))).click();
 
     }
     @After
     public void close() {
         if (driver != null) {
-            driver.close();
+           // driver.close();
         }
     }
     @AfterClass
