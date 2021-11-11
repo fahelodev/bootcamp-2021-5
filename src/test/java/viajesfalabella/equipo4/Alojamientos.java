@@ -40,7 +40,8 @@ public class Alojamientos{
         driver.manage().window().maximize();
 
         driver.get("https://www.viajesfalabella.cl/");
-        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(10,TimeUnit.SECONDS);
     }
 
     @Test
@@ -59,15 +60,14 @@ public class Alojamientos{
 
         Select s = new Select(driver.findElement(By.id("currency")));
         s.selectByValue("USD");
-        s = new Select(driver.findElement(By.id("sorting")));
-        s.selectByValue("rate_descending");
 
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#hotels .results-cluster-container .hf-cluster-title")));
-<<<<<<< HEAD
+        Select s1 = new Select(driver.findElement(By.id("sorting")));
+        s1.selectByValue("rate_descending");
+
+        //wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#hotels .results-cluster-container .hf-cluster-title")));
+
         //wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[starts-with(@slot,'element')]")));
-        //wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//label[starts-with(@class,'checkbox-label')]")));
-=======
->>>>>>> ab5dd0eaaef19246c94e1e18b1e3d9ab78bd0cfa
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//label[starts-with(@class,'checkbox-label')]")));
         Thread.sleep(1500);
         busquedaAlojamiento("The Chelsea Harbour Hotel");
 
@@ -76,28 +76,9 @@ public class Alojamientos{
             driver.findElements(By.cssSelector(".-detail-section-padding .dropdown-item")).get(i).click();
         }
 
-
-<<<<<<< HEAD
-=======
-        int moneda = driver.findElements(By.cssSelector("span.hf-pricebox-price-currency")).size();
-        boolean errorDolar = false;
-        for (int i = 0; i < moneda; i++) {
-            String marca = driver.findElements(By.cssSelector("span.hf-pricebox-price-currency")).get(i).getText();
-            if(!marca.equals("US$ ")){
-                errorDolar = true;
-                break;
-            }
-        }
-
->>>>>>> ab5dd0eaaef19246c94e1e18b1e3d9ab78bd0cfa
         String TituloHotel = driver.findElement(By.xpath("//span[@class='accommodation-name eva-3-h2']")).getText();
         String checkTituloHotel = "The Chelsea Harbour Hotel";
 
-
-<<<<<<< HEAD
-=======
-        assertFalse(errorDolar); //Comprobacion de filtro dolar aplicado
->>>>>>> ab5dd0eaaef19246c94e1e18b1e3d9ab78bd0cfa
         Assert.assertEquals(checkTituloHotel,TituloHotel);
 
     }
