@@ -10,8 +10,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -33,8 +34,8 @@ public class ServicioPaquetesTest {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.get("https://www.viajesfalabella.cl");
-        espera= new WebDriverWait(driver, 7);
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        espera= new WebDriverWait(driver, 10);
+
 
     }
 
@@ -81,7 +82,7 @@ public class ServicioPaquetesTest {
                 break;
             }
         }
-        //ingresamos la palabra cordoba en el campo "destino
+        //ingresamos la palabra cordoba en el campo destino
         driver.findElement(By.cssSelector("input.input-tag.sbox-main-focus.sbox-destination.sbox-secondary")).sendKeys("cordoba");
         espera.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(text(),'Córdoba, Córdoba, Argentina')]")));
 
@@ -107,7 +108,7 @@ public class ServicioPaquetesTest {
     }
 
     @Test
-    public void caso05() throws InterruptedException {
+    public void caso05()  throws InterruptedException{
         //ingresamos la palabra "cordoba" en el campo origen
         driver.findElement(By.cssSelector("input.input-tag.sbox-main-focus")).sendKeys("cordoba");
         espera.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(text(),'Córdoba, Córdoba, Argentina')]")));
@@ -123,6 +124,8 @@ public class ServicioPaquetesTest {
         driver.findElement(By.cssSelector("input.input-tag.sbox-main-focus.sbox-destination.sbox-secondary")).sendKeys("buenos aires");
         espera.until(ExpectedConditions.elementToBeClickable((By.cssSelector("div.ac-container ul li"))));
 
+
+
         //ingresamos en el campo "fecha ida" y seleccionamos la fecha 1 de diciembre
         driver.findElement(By.cssSelector("div.ac-container ul>li")).click();
         driver.findElement(By.cssSelector("input.input-tag.sbox-checkin-date")).click();
@@ -134,6 +137,8 @@ public class ServicioPaquetesTest {
             }
         }
 
+
+
         //inngresamos en el campo "fecha vuelta" y seleccionamos la fecha 11 de diciembre
         List<WebElement> options_list = driver.findElements(By.cssSelector("span._dpmg2--date._dpmg2--available"));
         for (WebElement l: options_list) {
@@ -143,32 +148,36 @@ public class ServicioPaquetesTest {
             }
         }
 
+
+
         //click en el boton buscar
         driver.findElement(By.xpath("//em[contains(text(),'Buscar')]")).click();
-        Thread.sleep(10000);
-
-        //click en el boton "siguiente" de la opcion "Broadway Hotel & Suites"
+        espera.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[@class='accommodation-name -eva-3-ellipsis' and contains(text(),'Broadway Hotel & Suites')]")));
         driver.findElement(By.xpath("//span[@class='accommodation-name -eva-3-ellipsis' and contains(text(),'Broadway Hotel & Suites')]")).click();
 
-        // Integer habitacionPredeterminada = Integer.valueOf(driver.findElement(By.xpath("//span[@class='main-value' and contains(text(),'495')]")).getText());
 
-        //espera.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='-eva-3-mt-sm' and contains(text(),'Seleccionada')]")));
-        //driver.findElement(By.xpath("//div[@class='roompack-section col-3']")).click();
-        //driver.findElement(By.className("radio-tag")).click();
 
-        //espera.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@class='main-value']")));
-        String valorTotalPorUno;
-        valorTotalPorUno = driver.findElement(By.xpath("//span[@class='main-value']")).getText();
-        System.out.println(valorTotalPorUno);
+        Thread.sleep(5000);
+        ArrayList tabs = new ArrayList(driver.getWindowHandles());
+        System.out.println(tabs.size());
+        driver.switchTo().window((String) tabs.get(1));  //hacemos foco en la otra pestaña
 
-        assertEquals("402.859", valorTotalPorUno);
+
+
+        double valorAnterior = Double.parseDouble(driver.findElement(By.xpath("//span[@class='main-value']")).getText());
+        String precio[]= driver.findElement(By.xpath("//p[@class='price']")).getText().split(" ");
+        double valorSuite = Double.parseDouble(precio[1]);
+        driver.findElement(By.xpath("//p[contains(text(),'Seleccionar')]")).click();
+        double valorActual =  Double.parseDouble(driver.findElement(By.xpath("//span[@class='main-value']")).getText());
+        assertTrue(valorActual==(valorSuite/2)+valorAnterior);
+
 
     }
 
     @After
     public void close() {
         if (driver != null) {
-            driver.close();
+            driver.quit();
         }
 
     }

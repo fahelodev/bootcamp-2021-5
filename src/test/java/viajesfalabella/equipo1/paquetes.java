@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,6 +20,8 @@ import static org.junit.Assert.assertTrue;
 
 public class paquetes {
     private WebDriver driver;
+    private int segundosEspera = 25;
+    private WebDriverWait espera;
 
     @BeforeClass
     public static void Setup(){
@@ -32,11 +35,22 @@ public class paquetes {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.get("https://www.viajesfalabella.cl/");
+        // ESPERA IMPLICITA
+        esperaImplicita();
+        // TOMAMOS LAS CATEGORIAS Y LAS METEMOS EN UNA LISTA
+        List<WebElement> categorias = driver.findElements(By.cssSelector("div.header-products-container ul li a"));
+        // SELECCIONAMOS LA PAGINA DESTINO
+        busqueda(categorias, "Paquetes");
+        // ESPERA IMPLICITA PARA LA CARGA DE LA PAGINA
+        esperaImplicita();
+    }
+
+    private void esperaImplicita(){
+        driver.manage().timeouts().implicitlyWait(segundosEspera, TimeUnit.SECONDS);
     }
 
     private void busqueda(List<WebElement> lista,String palabra){
         for (WebElement l: lista){
-            // System.out.println("- "+l.getText());
             // RECORREMOS LA LISTA HASTA ENCONTRAR LA PALABRA REQUERIDA
             if (l.getText().contains(palabra)){
                 // HACEMOS CLICK EN LA CATEGORIA SELECCIONADA
@@ -45,268 +59,286 @@ public class paquetes {
             }
         }
     }
+
     private void mostrar(List<WebElement> lista){
         for (WebElement l: lista){
             System.out.println("elemento: "+l.getText());
         }
     }
 
-    @Test
-    public void CdP01_agregarPaquete() throws InterruptedException {
-        // 1.- CARGAR HOME
-        // ESPERA
-        WebDriverWait espera = new WebDriverWait(driver, 30);
-        // 3.- SELECCIONAR CATEGORIA COCHES
-        // CREAMOS LISTA
-        List<WebElement> categorias = driver.findElements(By.cssSelector("div.header-products-container ul li a"));
-        busqueda(categorias, "Paquetes");
-        driver.findElement(By.cssSelector("div.sbox-bundles span.sbox-bundle.sbox-bundle-vhh")).click();
-        // CASILLA ORIGEN
-        driver.findElement(By.cssSelector("div.sbox-place-container input")).sendKeys("bue");
-        espera.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.ac-container span")));
-        List<WebElement> origen = driver.findElements(By.cssSelector("div.ac-group-container span"));
-        busqueda(origen, "Ciudad de Buenos Aires");
-        // CASILLA DESTINO
-        driver.findElement(By.cssSelector("div.sbox-second-place-container input")).sendKeys("esp");
-        espera.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.ac-container span")));
-        List<WebElement> destino = driver.findElements(By.cssSelector("div.ac-group-container span"));
-        busqueda(destino, "Cataluña");
-        // FECHAS IDA Y VUELTA
-        driver.findElement(By.cssSelector("div.input-container.sbox-checkin-input-container input")).click();
-        // dia actual
+    private void seleccionar (String texto, String comparar, String cssCuadro, String cssResultados){
+        espera = new WebDriverWait(driver,segundosEspera);
+        driver.findElement(By.cssSelector(cssCuadro)).sendKeys(texto);
+        espera.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(cssResultados)));
+        List<WebElement> resultados = driver.findElements(By.cssSelector(cssResultados));
+        busqueda(resultados,comparar);
+    }
 
-        String busqIda = "4";
-        String busqVuelta = "19";
-        String busqHasta = "8";
-        String [ ]  nca = {"3","6","2","2","5","7","3","5","1","4","6","2"};
-        int i = 0;
-        WebElement mes = driver.findElement(By.cssSelector("body > div.datepicker-packages.sbox-v4-components > div > div._dpmg2--months > div._dpmg2--month._dpmg2--o-1._dpmg2--month-active > div._dpmg2--month-title > span._dpmg2--month-title-month"));
-        while (!mes.getText().contains("Enero")){
-            // System.out.println("Mes: " + mes.getText());
-            driver.findElement(By.cssSelector("body > div.datepicker-packages.sbox-v4-components > div > div._dpmg2--controlsWrapper > div._dpmg2--controls-next > i")).click();
-            Thread.sleep(2000);
-            String dir = "body > div.datepicker-packages.sbox-v4-components > div > div._dpmg2--months > div._dpmg2--month._dpmg2--o-"+nca[i]+"._dpmg2--month-active > div._dpmg2--month-title > span._dpmg2--month-title-month";
-            mes = driver.findElement(By.cssSelector(dir));
-            i++;
-        }
-        List<WebElement> busq3 = driver.findElements(By.cssSelector("div._dpmg2--months span._dpmg2--date"));
-        busqueda(busq3, busqIda);
-        busqueda(busq3, busqVuelta);
-        // FECHA HASTA
-        driver.findElement(By.cssSelector("div.sbox-bundles span.sbox-bundle.sbox-bundle-vhh")).click();
-        driver.findElement(By.cssSelector("#searchbox > div > div > div > div.sbox-mobile-body.sbox-bind-disable-date.sbox-hotel-another-city-ui.sbox-hotel-partial-stay-ui.sbox-another-city-disabled-input.sbox-partial-stay-disabled > div.sbox-row.-wrap.-row-bottom > div.sbox-vhh-container.sbox-row.-mt2-l.-wrap > div.sbox-row.-wrap > div:nth-child(1) > div.sbox-row.-wrap.sbox-dates-container.-mb3-m.-mb4-s > div > div.sbox-3-input.-md.sbox-3-validation.-top-right.-icon-left.sbox-dates-input.sbox-hotel-first-date-end-container > div > input")).click();
-        List<WebElement> busq4 = driver.findElements(By.cssSelector("div._dpmg2--months span._dpmg2--date"));
-        busqueda(busq4,busqHasta);
-        // CASILLA SEGUNDO DESTINO
-        driver.findElement(By.cssSelector("#searchbox > div > div > div > div.sbox-mobile-body.sbox-bind-disable-date.sbox-hotel-another-city-ui.sbox-hotel-partial-stay-ui.sbox-another-city-disabled-input.sbox-partial-stay-disabled > div.sbox-row.-wrap.-row-bottom > div.sbox-vhh-container.sbox-row.-mt2-l.-wrap > div.sbox-row.-wrap > div.sbox-row.vhh-module-container.-mb5-m.-mb3-s.-ml3-l.-wrap-s > div.sbox-places-group-container.sbox-row.-mb5-m.-wrap-s.-mr2-l.-mb3-s.sbox-places-without-rounded > div > div > div > div > input")).sendKeys("marbella");
-        espera.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.ac-group-container ul li span")));
-        List<WebElement> segundo = driver.findElements(By.cssSelector("div.ac-group-container ul li span"));
-        busqueda(segundo, "Andalucía");
-        // HABITACIONES PERSONAS
-        /*
-        driver.findElement(By.cssSelector("div.sbox-distribution-picker-wrapper-ui")).click();
-        String num =driver.findElement(By.cssSelector("div.sbox-distri-container div.sbox-passengers-container input")).getAttribute("value");
-        int numero = Integer.parseInt(num);
-        while (numero != 3){
-            if (numero > 3){
-                driver.findElement(By.cssSelector("div._pnlpk-itemRow__item a.steppers-icon-left.sbox-3-icon-minus")).click();
-                numero--;
+    private void seleccionarxpath (String texto, String comparar, String xpathCuadro, String xpathResultados){
+        espera = new WebDriverWait(driver,segundosEspera);
+        driver.findElement(By.xpath(xpathCuadro)).sendKeys(texto);
+        espera.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(xpathResultados)));
+        List<WebElement> resultados = driver.findElements(By.cssSelector(xpathResultados));
+        busqueda(resultados,comparar);
+    }
+
+    private void buscarCalendario(int diaBuscado, List<WebElement> mes){
+        String dia = Integer.toString(diaBuscado);
+        busqueda(mes,dia);
+    }
+
+    private void adultos (int real, int esperado){
+        while (esperado != real){
+            if (real > esperado){
+                driver.findElement(By.cssSelector("div.distpicker.distpicker-rooms-packages.sbox-v4-components a.steppers-icon-left.sbox-3-icon-minus")).click();
+                real--;
             }
             else{
-                driver.findElement(By.cssSelector("div._pnlpk-itemRow__item a.steppers-icon-right.sbox-3-icon-plus")).click();
-                numero++;
+                driver.findElement(By.cssSelector("div.distpicker.distpicker-rooms-packages.sbox-v4-components a.steppers-icon-right.sbox-3-icon-plus")).click();
+                real++;
             }
         }
-         */
-        driver.findElement(By.cssSelector("#searchbox > div > div > div > div.sbox-mobile-body.sbox-bind-disable-date.sbox-hotel-another-city-ui.sbox-hotel-partial-stay-ui.sbox-another-city-disabled-input.sbox-partial-stay-disabled > div.sbox-row.-wrap.-row-bottom > div.sbox-button.-ml3-l > div > a")).click();
-        Thread.sleep(10000);
-        driver.findElement(By.cssSelector("#currency")).click();
-        List <WebElement> options = driver.findElements(By.cssSelector("#currency select option"));
-        busqueda(options,"Dólares");
-        Thread.sleep(2000);
-        driver.findElement(By.cssSelector("#order")).click();
-        List <WebElement> options2 = driver.findElements(By.cssSelector("#order select option"));
-        busqueda(options2, "convenientes");
-        Thread.sleep(2000);
-        driver.findElement(By.cssSelector("#trips-cluster-selected-position > trips-cluster-selected > span > cluster > div > div > div.CLUSTER.cluster-pricebox-container > fare > span > span > div.mobile-container > buy-button > a > div")).click();
-        Thread.sleep(2000);
-        // List <WebElement> holiday = driver.findElements(By.cssSelector("body > aloha-app-root > aloha-results > div > div > div.results-wrapper.-eva-3-mt-xlg > div.results-column > div.results-items-wrapper > aloha-list-view-container > div.-eva-3-mb-xlg > aloha-cluster-container > div > div > div.cluster-content > div > div.cluster-description-wrapper.-eva-3-fwidth > div > aloha-cluster-accommodation-info-container > div.accommodation-name-wrapper > span"));
-        List<WebElement> holiday = driver.findElements(By.cssSelector("body > aloha-app-root > aloha-results > div > div > div.results-wrapper.-eva-3-mt-xlg > div.results-column > div.results-items-wrapper > aloha-list-view-container > div.-eva-3-mb-xlg > aloha-cluster-container > div > div > div.cluster-content > div > div.cluster-description-wrapper.-eva-3-fwidth > div > aloha-cluster-accommodation-info-container > div.accommodation-name-wrapper > span"));
-        mostrar(holiday);
-        int contador = 0;
-        for (WebElement l: holiday){
-            // System.out.println("- "+l.getText());
-            // RECORREMOS LA LISTA HASTA ENCONTRAR LA PALABRA REQUERIDA
-            if (l.getText().contains("Holiday")){
-                // HACEMOS CLICK EN LA CATEGORIA SELECCIONADA
-                contador++;
-                break;
+    }
+
+    private void menor (int edad){
+        /// SUMAMOS 1 NIÑO
+        driver.findElement(By.cssSelector("div.distpicker.distpicker-rooms-packages.sbox-v4-components div._pnlpk-itemRow__item._pnlpk-stepper-minors.-medium-down-to-lg a.steppers-icon-right.sbox-3-icon-plus")).click();
+        // CLICK EN EDAD
+        driver.findElement(By.cssSelector("div.distpicker.distpicker-rooms-packages.sbox-v4-components div._pnlpk-itemRow__item._pnlpk-select-minor-age select")).click();
+        List <WebElement> edades = driver.findElements(By.cssSelector("div.distpicker.distpicker-rooms-packages.sbox-v4-components select option"));
+        String dia = Integer.toString(edad);
+        busqueda(edades,dia);
+    }
+
+    private void calendario (int fecha1, int fecha2){
+        // LISTA CALENTARIO ACTUAL
+        List<WebElement> mesActual = driver.findElements(By.cssSelector("._dpmg2--show ._dpmg2--month-active ._dpmg2--available span._dpmg2--date-number"));
+        // INGRESAR FECHAS
+        // TOMAMOS EL DIA ACTUAL
+        Calendar c1 = Calendar.getInstance();
+        String dia = Integer.toString(c1.get(Calendar.DATE));
+        int diaActual = Integer.parseInt(dia);
+        // ULTIMO DIA DEL CALENDARIO ACTUAL
+        String diaMax = mesActual.get(mesActual.size()-1).getText();
+        int diaUltimo = Integer.parseInt(diaMax);
+        // LA FECHA ACTUAL + 1 DIA PASA AL SIGUIENTE MES?
+        if (diaActual+fecha2 < diaUltimo){
+            buscarCalendario(diaActual+fecha1,mesActual);
+            buscarCalendario(diaActual+fecha2,mesActual);
+        }
+        else{
+            if (diaActual+fecha1 < diaUltimo){
+                buscarCalendario(diaActual+fecha1,mesActual);
+                driver.findElement(By.xpath("//i[@class='_dpmg2--icon-ico-arrow']//ancestor::div[@class='datepicker-packages-car sbox-v4-components']")).click();
+                mesActual= driver.findElements(By.cssSelector("._dpmg2--show ._dpmg2--month-active ._dpmg2--available span._dpmg2--date-number"));
+                buscarCalendario(diaActual+fecha2-diaUltimo,mesActual);
+            }
+            else {
+                driver.findElement(By.xpath("//i[@class='_dpmg2--icon-ico-arrow']//ancestor::div[@class='datepicker-packages-car sbox-v4-components']")).click();
+                mesActual= driver.findElements(By.cssSelector("._dpmg2--show ._dpmg2--month-active ._dpmg2--available span._dpmg2--date-number"));
+                buscarCalendario(diaActual+fecha1-diaUltimo,mesActual);
+                buscarCalendario(diaActual+fecha2-diaUltimo,mesActual);
             }
         }
-        Assert.assertEquals(1,contador);
+    }
+
+    private void buscarMes (String mes){
+        WebElement mesActual = driver.findElement(By.cssSelector("._dpmg2--show ._dpmg2--month-active span"));
+        while (!mesActual.getText().contains(mes)){
+            // AVANZAMOS AL SIGUIENTE MES
+            driver.findElement(By.cssSelector("body > div.datepicker-packages.sbox-v4-components > div > div._dpmg2--controlsWrapper > div._dpmg2--controls-next > i")).click();
+            espera.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("._dpmg2--show ._dpmg2--month-active span")));
+            // TOMAMOS EL NOMBRE DEL MES SIGUIENTE
+            mesActual = driver.findElement(By.cssSelector("._dpmg2--show ._dpmg2--month-active span"));
+        }
+    }
+
+    private void seleccionbox (String clase, String palabra) throws InterruptedException {
+        Thread.sleep(2000);
+        driver.findElement(By.cssSelector(clase)).click();
+        espera.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(clase+" select option")));
+        List <WebElement> options = driver.findElements(By.cssSelector(clase+" select option"));
+        // CAMBIAMOS A DÓLARES ESTADOUNIDENSES
+        busqueda(options,palabra);
+    }
+
+    @Test
+    public void CdP03_busquedaPaquetes(){
+        espera = new WebDriverWait(driver,segundosEspera);
+        // OPCIONES:
+        // vh: VUELO + 1 ALOJAMIENTO
+        // vhh: VUELO + 2 ALOJAMIENTOS
+        // va: VUELO + AUTO
+        // SELECCIONAMOS VUELO + 1 ALOJAMIENTO
+        driver.findElement(By.xpath("//input[@value='vh']")).click();
+
+        // SELECCIONAMOS LA CASILLA ORIGEN
+        seleccionar("santiago","Santiago de Chile","div.sbox-place-container input","div.ac-container span");
+        // SELECCIONAMOS LA CASILLA DESTINO
+        seleccionar("san pedro","San Pedro de Atacama","div.sbox-second-place-container input","div.ac-container span");
+
+        // LLENAMOS LOS CAMPOS DE FECHAS
+        driver.findElement(By.cssSelector("[placeholder='Ida']")).click();
+        // CALENDARIO
+        // INGRESAR DIAS AGREGADOS A AMBAS FECHAS
+        // EL PRIMER CAMPO DEBE SER MENOR QUE EL SEGUNDO
+        calendario(1,2);
+        // PASAJEROS
+        driver.findElement(By.cssSelector("div.sbox-distri-input-container")).click();
+        String num =driver.findElement(By.cssSelector("div.sbox-distri-container div.sbox-passengers-container input")).getAttribute("value");
+        int valorActual = Integer.parseInt(num);
+        // CANTIDAD DE ADULTOS DEBE SER IGUAL A 2
+        adultos(valorActual,2);
+        // BUSCAMOS RESULTADOS
+        driver.findElement(By.cssSelector("div.sbox-button-container a")).click();
+        // ESPERAMOS QUE CARGUE LA PAGINA
+        esperaImplicita();
+        espera.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.results-cluster-container")));
+        // CANTIDAD DE RESULTADOS
+        int lista = driver.findElements(By.cssSelector("div.results-cluster-container")).size();
+        assertTrue(lista>1);
     }
 
     @Test
     public void CdP02_busquedaPaquetes(){
-        WebDriverWait d = new WebDriverWait(driver,10);
-        d.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class=\"header-products-container\"]/ul/li/a")));
-        int size = driver.findElements(By.xpath("//div[@class=\"header-products-container\"]/ul/li/a")).size();
-        for (int i=0; i<size;i++){
-            String categoria = driver.findElements(By.xpath("//div[@class=\"header-products-container\"]/ul/li/a")).get(i).getAttribute("title");
-            if (categoria.equals("Paquetes")){
-                driver.findElements(By.xpath("//div[@class=\"header-products-container\"]/ul/li/a")).get(i).click();
-                break;
-            }
-        }
+        // ESPERA EXPLICITA
+        espera = new WebDriverWait(driver,segundosEspera);
+        // SELECCIONAMOS LA CASILLA ORIGEN
+        seleccionar("santiago","Santiago de Chile","div.sbox-place-container input","div.ac-container span");
+        // SELECCIONAMOS LA CASILLA DESTINO
+        seleccionar("buenos aires","Ciudad de Buenos Aires","div.sbox-second-place-container input","div.ac-container span");
 
-        seleccionarOrigen("santiago","Santiago de Chile, Santiago, Chile");
-
-        seleccionarDestino("Buenos aires","Buenos Aires, Ciudad de Buenos Aires, Argentina");
-
-        seleccionarDias(1,2);
-
+        // CLICK EN CALENDARIO CASILLA "IDA"
+        driver.findElement(By.cssSelector("[placeholder='Ida']")).click();
+        calendario(1,2);
         driver.findElement(By.cssSelector("div.sbox-button-container a")).click();
-        d.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.cluster-content")));
+        esperaImplicita();
+        espera.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.cluster-content")));
         String ciudad =  driver.findElement(By.cssSelector("div.cluster-content div.cluster-description-wrapper span.-eva-3-tc-gray-2")).getText();
         Pattern patron = Pattern.compile("Buenos Aires");
         Matcher m = patron.matcher(ciudad);
         boolean e = m.find();
         String res = String.valueOf(e);
         assertEquals("true",res);
-
     }
 
-    //div.pricebox-value-container > aloha-price-container > aloha-summary-price > p
     @Test
-    public void CdP03_busquedaPaquetes(){
-        WebDriverWait d = new WebDriverWait(driver,10);
+    public void CdP01_agregarPaquete() throws InterruptedException {
+        espera = new WebDriverWait(driver,segundosEspera);
+        // OPCIONES:
+        // vh: VUELO + 1 ALOJAMIENTO
+        // vhh: VUELO + 2 ALOJAMIENTOS
+        // va: VUELO + AUTO
+        // SELECCIONAMOS VUELO + 1 ALOJAMIENTO
+        driver.findElement(By.xpath("//input[@value='vhh']")).click();
 
-        d.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class=\"header-products-container\"]/ul/li/a")));
-        int size = driver.findElements(By.xpath("//div[@class=\"header-products-container\"]/ul/li/a")).size();
-        for (int i=0; i<size;i++){
-            String categoria = driver.findElements(By.xpath("//div[@class=\"header-products-container\"]/ul/li/a")).get(i).getAttribute("title");
-            if (categoria.equals("Paquetes")){
-                driver.findElements(By.xpath("//div[@class=\"header-products-container\"]/ul/li/a")).get(i).click();
-                break;
-            }
-        }
+        // SELECCIONAMOS LA CASILLA ORIGEN
+        seleccionar("bue","Ciudad de Buenos Aires","div.sbox-place-container input","div.ac-container span");
+        // SELECCIONAMOS LA CASILLA DESTINO
+        seleccionar("esp","Cataluña","div.sbox-second-place-container input","div.ac-container span");
 
-        //puede ser vh,vhh o va
-        seleccionarPaquete("vh");
+        // FECHAS IDA Y VUELTA
+        String fechaIda = "4";
+        String fechaHasta = "8";
+        String fechaVuelta = "19";
 
-        seleccionarOrigen("santiago","Santiago de Chile, Santiago, Chile");
+        // FECHAS PARTE 1
 
-        seleccionarDestino("San pedro", "San Pedro de Atacama, Antofagasta, Chile");
+        // CLICK EN FECHAS IDA
+        driver.findElement(By.cssSelector("[placeholder='Ida']")).click();
+        espera.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("._dpmg2--show ._dpmg2--month-active span")));
+        // BUSCAMOS EL MES DE ENERO
+        buscarMes("Enero");
+        // CREAMOS UNA LISTA CON EL MES DE ENERO
+        List<WebElement> mesEnero = driver.findElements(By.cssSelector("._dpmg2--show ._dpmg2--month-active ._dpmg2--available span._dpmg2--date-number"));
+        // BUSCAMOS Y SELECCIONAMOS LOS DIAS
+        busqueda(mesEnero, fechaIda);
+        busqueda(mesEnero, fechaVuelta);
 
-        //cantidad de dias a agregar a la primer fecha y la segunda fecha a seleccionar
-        seleccionarDias(1,2);
+        // FECHAS PARTE 2
 
-        driver.findElement(By.cssSelector("div.sbox-distri-container")).click();
-        String numero =driver.findElement(By.cssSelector("div.sbox-distri-container div.sbox-passengers-container input")).getAttribute("value");
-        if(numero.equals("2")){
-            driver.findElement(By.cssSelector("div.sbox-button-container a")).click();
-        }else{
+        // CERRAMOS EL CALENDARIO DE IDA Y VUELTA
+        driver.findElement(By.xpath("//input[@value='vhh']")).click();
 
-        }
-// /html/body/aloha-app-root/aloha-results/div/div/div/div[1]/aloha-filter-list/div/ul/li[10]/aloha-filter/aloha-checkbox-filter/ul/aloha-view-more/div/div[2]/span
-//body > aloha-app-root > aloha-results > div > div > div > div.filters-column > aloha-filter-list > div > ul > li:nth-child(10) > aloha-filter > aloha-checkbox-filter > ul > aloha-view-more > div > div.view-more-btn.-eva-3-mt-lg.-without-gradient > span
-        d.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.results-cluster-container")));
-        int lista = driver.findElements(By.cssSelector("div.results-cluster-container")).size();
+        // CLICK EN HASTA
+        driver.findElement(By.cssSelector("[placeholder='Hasta']")).click();
+        espera.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("._dpmg2--show ._dpmg2--month-active span")));
+        // MES TOMAMOS EL CALENDARIO DEL MES DE ENERO (HASTA)
+        mesEnero = driver.findElements(By.cssSelector("._dpmg2--show ._dpmg2--month-active ._dpmg2--available span._dpmg2--date-number"));
+        // BUSCAMOS Y SELECCIONAMOS LA 3ERA FECHA
+        busqueda(mesEnero,fechaHasta);
 
-        assertTrue(lista>1);
+        // CASILLA SEGUNDO DESTINO
+        // SELECCIONAMOS E INGRESAMOS EL SEGUNDO DESTINO
+        seleccionarxpath("marbella","Andalucía","//label[contains(text(),'Segundo destino')]/following-sibling::input","div.ac-container span");
 
+        // HABITACIONES PERSONAS
+        driver.findElement(By.cssSelector("div.sbox-distribution-picker-wrapper-ui")).click();
+        String num =driver.findElement(By.cssSelector("div.sbox-distri-container div.sbox-passengers-container input")).getAttribute("value");
+        int real = Integer.parseInt(num);
+        // SELECCIONAR 2 ADULTOS
+        adultos(real,2);
+        // SELECCIONAR UN MENOR DE 2 AÑOS
+        menor(2);
 
+        // DAMOS CLICK EN BUSCAR PARA VISUALIZAR LAS OPCIONES SIGUIENTES
+        driver.findElement(By.xpath("//em[contains(text(),'Buscar')]")).click();
+        esperaImplicita();
+
+        // SIGUIENTE PAGINA
+        // SELECT CURRENCY Y ORDER
+
+        // SELECCIONAMOS EL TIPO DE MONEDA
+        // CAMBIAMOS A DÓLARES ESTADOUNIDENSES
+        seleccionbox("#currency","Dólares");
+        // PAUSA DEBIDO A QUE NINGUN OTRO STOP FUNCIONO
+        Thread.sleep(2000);
+        // SELECCIONAMOS ORDENAR POR
+        // CAMBIAMOS A MÁS CONVENIENTES
+        seleccionbox("#order","convenientes");
+
+        // CLICK EN SIGUIENTE EN LA PRIMERA OPCIÓN
+        espera.until(ExpectedConditions.elementToBeClickable(By.xpath("//em[contains(text(),'Siguiente')]//ancestor::a[@class='-md eva-3-btn -primary']")));
+        Thread.sleep(2000);
+        driver.findElement(By.xpath("//em[contains(text(),'Siguiente')]//ancestor::a[@class='-md eva-3-btn -primary']")).click();
+        esperaImplicita();
+
+        // CLICK EN EL HOTEL "Holiday Inn Express"
+        driver.findElement(By.xpath("//span[contains(text(),'Holiday Inn Express')]")).click();
+        esperaImplicita();
+
+        // CLICK EN EL BOTON SIGUIENTE PARA SELECCIONAR EL HOTEL
+        espera.until(ExpectedConditions.elementToBeClickable(By.xpath("//em[contains(text(),'Siguiente')]//ancestor::div[@class='pricebox-action -eva-3-mt-lg pricebox-button']")));
+        // Thread.sleep(2000);
+        driver.findElement(By.xpath("//em[contains(text(),'Siguiente')]//ancestor::div[@class='pricebox-action -eva-3-mt-lg pricebox-button']")).click();
+        esperaImplicita();
+
+        // CLICK EN EL BOTON SIGUIENTE EN PLAYA MARBELLA
+        espera.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(text(),'Marbella Playa')]")));
+        // Thread.sleep(2000);
+        driver.findElement(By.xpath("//span[contains(text(),'Marbella Playa')]")).click();
+        esperaImplicita();
+
+        // CLICK EN EL BOTON SIGUIENTE PARA LA PARTE FINAL
+        espera.until(ExpectedConditions.elementToBeClickable(By.xpath("//em[contains(text(),'Siguiente')]//ancestor::div[@class='pricebox-action -eva-3-mt-lg pricebox-button']")));
+        // Thread.sleep(2000);
+        driver.findElement(By.xpath("//em[contains(text(),'Siguiente')]//ancestor::div[@class='pricebox-action -eva-3-mt-lg pricebox-button']")).click();
+        esperaImplicita();
+
+        WebElement holiday = driver.findElement(By.xpath("//div[@class='eva-3-h3 -eva-3-tc-gray-0' and contains(text(),'Holiday Inn Express')]"));
+        String frase = "Holiday Inn Express Barcelona City 22@";
+        Assert.assertTrue(holiday.getText().contains(frase));
     }
-
-
-
-
-
-
-    private void seleccionarPaquete(String paquete){
-
-        int s = driver.findElements(By.cssSelector("span.sbox-bundle input")).size();
-        for (int i=0; i<s;i++){
-            String tipo = driver.findElements(By.cssSelector("span.sbox-bundle input")).get(i).getAttribute("value");
-
-            if (tipo.equals(paquete)){
-                driver.findElements(By.cssSelector("span.sbox-bundle input")).get(i).click();
-                break;
-            }
-        }
-    }
-
-    private void seleccionarOrigen (String palabra, String comparar){
-        WebDriverWait d = new WebDriverWait(driver,10);
-        driver.findElement(By.cssSelector("div.sbox-place-container input")).sendKeys(palabra);
-        d.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.ac-container span")));
-        int q =driver.findElements(By.cssSelector("div.ac-container span")).size();
-        for (int i=0; i<q;i++){
-            String origen = driver.findElements(By.cssSelector("div.ac-container span")).get(i).getText();
-            if (origen.equals(comparar)){
-                driver.findElements(By.cssSelector("div.ac-container span")).get(i).click();
-                break;
-            }
-        }
-    }
-
-    private void seleccionarDestino (String palabra, String comparar){
-        WebDriverWait d = new WebDriverWait(driver,10);
-        driver.findElement(By.cssSelector("div.sbox-second-place-container input")).sendKeys(palabra);
-        d.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.ac-container span")));
-        int p =driver.findElements(By.cssSelector("div.ac-container span")).size();
-        for (int i=0; i<p;i++){
-            String destino = driver.findElements(By.cssSelector("div.ac-container span")).get(i).getText();
-            if (destino.equals(comparar)){
-                driver.findElements(By.cssSelector("div.ac-container span")).get(i).click();
-                break;
-            }
-        }
-    }
-
-    private void seleccionarDias(int dia1 , int dia2){
-
-        driver.findElement(By.cssSelector("div.sbox-checkin-input-container input")).click();
-        int k =driver.findElements(By.cssSelector("div._dpmg2--month-active span")).size();
-        Calendar c1 = Calendar.getInstance();
-        String dia = Integer.toString(c1.get(Calendar.DATE));
-        int o = Integer.parseInt(dia);
-        o=o+dia1;
-        String fech1 = Integer.toString(o);
-
-        for (int i=0; i<k;i++){
-            String fecha1 = driver.findElements(By.cssSelector("div._dpmg2--month-active span span._dpmg2--date-number")).get(i).getText();
-            if (fecha1.equals(fech1)){
-                driver.findElements(By.cssSelector("div._dpmg2--month-active span span._dpmg2--date-number")).get(i).click();
-                break;
-            }
-        }
-
-        int w = Integer.parseInt(dia);
-        w=w+dia2;
-        String fech2 = Integer.toString(w);
-        for (int i=0; i<k;i++){
-            String fecha2 = driver.findElements(By.cssSelector("div._dpmg2--month-active span span._dpmg2--date-number")).get(i).getText();
-            if (fecha2.equals(fech2)){
-                driver.findElements(By.cssSelector("div._dpmg2--month-active span span._dpmg2--date-number")).get(i).click();
-                break;
-            }
-        }
-
-    }
-
 
     @After
     public void close(){
         if(driver != null){
             driver.close();
         }
-
     }
 
     @AfterClass
     public static void closeAll(){
         System.out.println("closeAll :: Cerrar otras conexiones que fueron utilizadas en el test");
-
     }
 }

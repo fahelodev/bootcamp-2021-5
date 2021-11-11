@@ -18,6 +18,7 @@ import java.util.regex.Pattern;
 import static org.junit.Assert.assertEquals;
 
 public class alojamientos {
+
     private WebDriver driver;
 
     @BeforeClass
@@ -36,99 +37,75 @@ public class alojamientos {
 
     }
 
-    @Test
-    public void alojamientoComplejidadBaja() {
-
-        WebDriverWait espera = new WebDriverWait(driver, 10);
-        driver.findElement(By.cssSelector("li.header-product-item")).click();
-        driver.findElement(By.cssSelector("label.checkbox-label")).click();
-
-        espera.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div.sbox-place-container input")));
-        WebElement destino = driver.findElement(By.cssSelector("div.sbox-place-container input"));
-        destino.click();
-        destino.sendKeys("orlando, florida, estados Unidos");
-
-        espera.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.ac-container span")));
-        int q = driver.findElements(By.cssSelector("div.ac-container span")).size();
-        for (int i = 0; i < q; i++) {
-
-            String origen = driver.findElements(By.cssSelector("div.ac-container span")).get(i).getText();
-            if (origen.equals("Orlando, Florida, Estados Unidos")) {
-                driver.findElements(By.cssSelector("div.ac-container span")).get(i).click();
+    private void seleccionarDestino (String palabra, String comparar){
+        WebDriverWait d = new WebDriverWait(driver,10);
+        driver.findElement(By.cssSelector("div.sbox-place-container input")).sendKeys(palabra);
+        d.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.ac-container span")));
+        List <WebElement> resultados =driver.findElements(By.cssSelector("div.ac-container span"));
+        for (WebElement l: resultados){
+            if (l.getText().contains(comparar)){
+                l.click();
                 break;
             }
         }
-        driver.findElement(By.cssSelector("div.sbox-button")).click();
-
-        espera.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.results-cluster-container")));
-        int lista = driver.findElements(By.cssSelector("div.results-cluster-container")).size();
-        System.out.println("cantidad de lista: " + lista);
-
-
-        Assert.assertTrue(lista > 1);
+    }
+    private void busqueda(List<WebElement> lista,String palabra){
+        for (WebElement l: lista){
+            // System.out.println("- "+l.getText());
+            // RECORREMOS LA LISTA HASTA ENCONTRAR LA PALABRA REQUERIDA
+            if (l.getText().contains(palabra)){
+                // HACEMOS CLICK EN LA CATEGORIA SELECCIONADA
+                l.click();
+                break;
+            }
+        }
     }
 
-
-    @Test
-    public void alojamientoBusquedaMedia() throws InterruptedException {
-
-        WebDriverWait espera = new WebDriverWait(driver, 15);
-        driver.findElement(By.cssSelector("li.header-product-item")).click();
-
-        espera.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div.sbox-place-container input")));
-        WebElement destino = driver.findElement(By.cssSelector("div.sbox-place-container input"));
-        destino.click();
-        destino.sendKeys("dub");
-
-        espera.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.ac-container span")));
-        int q = driver.findElements(By.cssSelector("div.ac-container span")).size();
-        for (int i = 0; i < q; i++) {
-
-            String origen = driver.findElements(By.cssSelector("div.ac-container span")).get(i).getText();
-            if (origen.equals("Dubái, Dubai, Emiratos Árabes Unidos")) {
-                driver.findElements(By.cssSelector("div.ac-container span")).get(i).click();
-                break;
-            }
-        }
-
-        espera.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div.sbox-dates-input.sbox-datein-container > div > input")));
-        WebElement fechaIda = driver.findElement(By.cssSelector("div.sbox-dates-input.sbox-datein-container > div > input"));
-        fechaIda.click();
-
-        int k = driver.findElements(By.cssSelector("div._dpmg2--month-active span")).size();
+    private void calendario (int fecha1, int fecha2){
+        // LISTA CALENTARIO ACTUAL
+        List<WebElement> mesActual = driver.findElements(By.cssSelector("._dpmg2--show ._dpmg2--month-active ._dpmg2--available span._dpmg2--date-number"));
+        // INGRESAR FECHAS
+        // TOMAMOS EL DIA ACTUAL
         Calendar c1 = Calendar.getInstance();
         String dia = Integer.toString(c1.get(Calendar.DATE));
-        int o = Integer.parseInt(dia);
-        o = o + 1;
-        String fech1 = Integer.toString(o);
-        for (int i = 0; i < k; i++) {
-            String fecha1 = driver.findElements(By.cssSelector("div._dpmg2--month-active span span._dpmg2--date-number")).get(i).getText();
-            if (fecha1.equals(fech1)) {
-                driver.findElements(By.cssSelector("div._dpmg2--month-active span span._dpmg2--date-number")).get(i).click();
-                break;
+        int diaActual = Integer.parseInt(dia);
+        // ULTIMO DIA DEL CALENDARIO ACTUAL
+        String diaMax = mesActual.get(mesActual.size()-1).getText();
+        int diaUltimo = Integer.parseInt(diaMax);
+        // LA FECHA ACTUAL + 1 DIA PASA AL SIGUIENTE MES?
+        if (diaActual+fecha2 < diaUltimo){
+            buscarCalendario(diaActual+fecha1,mesActual);
+            buscarCalendario(diaActual+fecha2,mesActual);
+        }
+        else{
+            if (diaActual+fecha1 < diaUltimo){
+                buscarCalendario(diaActual+fecha1,mesActual);
+                driver.findElement(By.cssSelector("body > div.datepicker-packages.sbox-v4-components > div > div._dpmg2--controlsWrapper > div._dpmg2--controls-next > i")).click();
+                mesActual= driver.findElements(By.cssSelector("._dpmg2--show ._dpmg2--month-active ._dpmg2--available span._dpmg2--date-number"));
+                buscarCalendario(diaActual+fecha2-diaUltimo,mesActual);
+            }
+            else {
+                driver.findElement(By.cssSelector("body > div.datepicker-packages.sbox-v4-components > div > div._dpmg2--controlsWrapper > div._dpmg2--controls-next > i")).click();
+                mesActual= driver.findElements(By.cssSelector("._dpmg2--show ._dpmg2--month-active ._dpmg2--available span._dpmg2--date-number"));
+                buscarCalendario(diaActual+fecha1-diaUltimo,mesActual);
+                buscarCalendario(diaActual+fecha2-diaUltimo,mesActual);
             }
         }
+    }
 
-        int w = Integer.parseInt(dia);
-        w = w + 7;
-        String fech2 = Integer.toString(w);
-        for (int i = 0; i < k; i++) {
-            String fecha2 = driver.findElements(By.cssSelector("div._dpmg2--month-active span span._dpmg2--date-number")).get(i).getText();
-            if (fecha2.equals(fech2)) {
-                driver.findElements(By.cssSelector("div._dpmg2--month-active span span._dpmg2--date-number")).get(i).click();
-                break;
-            }
-        }
+    private void buscarCalendario(int diaBuscado, List<WebElement> mes){
+        String dia = Integer.toString(diaBuscado);
+        busqueda(mes,dia);
+    }
 
-        driver.findElement(By.cssSelector("div.sbox-distri-input-container")).click();
-        espera.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div._pnlpk-panel-scroll")));
+    private void  seleccionarAdultos(int cant){
 
         String num = driver.findElement(By.cssSelector("div.sbox-distri-container div.sbox-passengers-container input")).getAttribute("value");
         int numero = Integer.parseInt(num);
 
 
-        while (numero != 1) {
-            if (numero > 1) {
+        while (numero != cant) {
+            if (numero > cant) {
                 // click izquierdo (-)
                 driver.findElement(By.cssSelector("div._pnlpk-itemRow__item a.steppers-icon-left.sbox-3-icon-minus")).click();
                 numero--;
@@ -138,12 +115,11 @@ public class alojamientos {
                 numero++;
             }
         }
-        driver.findElement(By.cssSelector("div.sbox-button")).click();
-
-        espera.until(ExpectedConditions.elementToBeClickable(By.cssSelector("aloha-select.sorting-select div.eva-3-select.-sm div.select-container select")));
-        driver.findElement(By.cssSelector("aloha-select.sorting-select div.eva-3-select.-sm div.select-container select")).click();
-
-        List<WebElement> optionsTO = driver.findElements(By.cssSelector("aloha-select.sorting-select div.eva-3-select.-sm div.select-container select option"));
+    }
+////select[@class='select-tag']/option[@value='total_price_ascending']
+    private void filtrar (String filtro){
+        WebDriverWait espera = new WebDriverWait(driver, 15);
+        List<WebElement> optionsTO = driver.findElements(By.xpath("//aloha-select[@class='sorting-select']//select[@class='select-tag']/option"));
         System.out.println(optionsTO);
 
         espera.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".eva-3-select.-sm .select-tag")));
@@ -155,25 +131,68 @@ public class alojamientos {
 
         }
 
-        espera.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button.eva-3-btn.-md.-primary.-eva-3-fwidth")));
-        WebElement ubicacion = driver.findElement(By.cssSelector("aloha-cluster-accommodation-info-container > aloha-location-name > span"));
-        String nombre = ubicacion.getText();
-        System.out.println(nombre);
+    }
 
-        Pattern patron = Pattern.compile("Dubái");
+    private String patron(String comparar, String selector){
+        WebElement ubicacion = driver.findElement(By.xpath(selector));
+        String nombre = ubicacion.getText();
+
+        Pattern patron = Pattern.compile(comparar);
         Matcher m = patron.matcher(nombre);
         boolean e = m.find();
         String res = String.valueOf(e);
 
-        espera.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div.pricebox-value-container > aloha-price-container > aloha-summary-price > p.eva-3-p.-eva-3-tc-gray-2.first-message")));
-        WebElement c = driver.findElement(By.cssSelector("div.pricebox-value-container > aloha-price-container > aloha-summary-price > p.eva-3-p.-eva-3-tc-gray-2.first-message"));
-        String cantidad = c.getText();
-        System.out.println(cantidad);
+       return res;
+    }
 
-        Pattern patron2 = Pattern.compile("6");
-        Matcher m2 = patron2.matcher(cantidad);
-        boolean e2 = m2.find();
-        String res2 = String.valueOf(e2);
+    @Test
+    public void CdP09_busquedaAlojamiento() {
+
+        WebDriverWait espera = new WebDriverWait(driver, 10);
+        driver.findElement(By.cssSelector("li.header-product-item")).click();
+        driver.findElement(By.cssSelector("label.checkbox-label")).click();
+
+        seleccionarDestino("orlando","Orlando, Florida, Estados Unidos");
+        driver.findElement(By.cssSelector("div.sbox-button")).click();
+
+        espera.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.results-cluster-container")));
+        int lista = driver.findElements(By.cssSelector("div.results-cluster-container")).size();
+
+        Assert.assertTrue(lista > 1);
+    }
+
+
+    @Test
+    public void CdP08_busquedaAlojamiento() throws InterruptedException {
+
+        WebDriverWait espera = new WebDriverWait(driver, 15);
+        driver.findElement(By.cssSelector("li.header-product-item")).click();
+        //SELECCIONA EL DESTINO
+        seleccionarDestino("dub","Dubái, Dubai, Emiratos Árabes Unidos");
+
+        espera.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div.sbox-dates-input.sbox-datein-container > div > input")));
+        driver.findElement(By.xpath("//input[@placeholder='Entrada']")).click();
+
+        //SELECCIONA LA FECHAS
+        calendario(1,7);
+
+        driver.findElement(By.cssSelector("div.sbox-distri-input-container")).click();
+        espera.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div._pnlpk-panel-scroll")));
+
+        //SELECCIONA LA CANTIDAD DE ADULTOS
+        seleccionarAdultos(1);
+        driver.findElement(By.cssSelector("div.sbox-button")).click();
+
+        espera.until(ExpectedConditions.elementToBeClickable(By.xpath("//aloha-select[@class='sorting-select']//select[@class='select-tag']")));
+        driver.findElement(By.xpath("//aloha-select[@class='sorting-select']//select[@class='select-tag']")).click();
+        //SE APLICA EL FILTRO DESEADO
+        filtrar("Precio: menor a mayor");
+        //UTILIZCION DE EXPRECION REGULAR PARA COMPARAR PALABRAS
+        espera.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button.eva-3-btn.-md.-primary.-eva-3-fwidth")));
+
+        ////div[@class='cluster-description-wrapper -eva-3-fwidth']//span[@class='-eva-3-tc-gray-2']
+        String res = patron("Dubái","//span[@class='-eva-3-tc-gray-2']");
+        String res2 = patron("6","//p[@class='eva-3-p -eva-3-tc-gray-2 first-message']");
 
 
         assertEquals("true", res);
@@ -182,73 +201,24 @@ public class alojamientos {
     }
 
     @Test
-    public void alojamientoComplejidadAlta() throws InterruptedException {
+    public void CdP07_agregarAlojamiento() throws InterruptedException {
 
         WebDriverWait espera = new WebDriverWait(driver, 20);
+        espera.until(ExpectedConditions.elementToBeClickable(By.cssSelector("li.header-product-item")));
         driver.findElement(By.cssSelector("li.header-product-item")).click();
 
         espera.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div.sbox-place-container input")));
-        WebElement destino = driver.findElement(By.cssSelector("div.sbox-place-container input"));
-        destino.click();
-        destino.sendKeys("lon");
-
-        espera.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.ac-container span")));
-        int q = driver.findElements(By.cssSelector("div.ac-container span")).size();
-        for (int i = 0; i < q; i++) {
-
-            String origen = driver.findElements(By.cssSelector("div.ac-container span")).get(i).getText();
-            if (origen.equals("Londres, Inglaterra, Reino Unido")) {
-                driver.findElements(By.cssSelector("div.ac-container span")).get(i).click();
-                break;
-            }
-        }
+        seleccionarDestino("lon","Londres, Inglaterra, Reino Unido");
 
         espera.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div.sbox-dates-input.sbox-datein-container > div > input")));
-        WebElement fechaIda = driver.findElement(By.cssSelector("div.sbox-dates-input.sbox-datein-container > div > input"));
-        fechaIda.click();
+        driver.findElement(By.cssSelector("div.sbox-dates-input.sbox-datein-container > div > input")).click();
 
-        int k = driver.findElements(By.cssSelector("div._dpmg2--month-active span")).size();
-        Calendar c1 = Calendar.getInstance();
-        String dia = Integer.toString(c1.get(Calendar.DATE));
-        int o = Integer.parseInt(dia);
-        o = o + 7;
-        String fech1 = Integer.toString(o);
-        for (int i = 0; i < k; i++) {
-            String fecha1 = driver.findElements(By.cssSelector("div._dpmg2--month-active span span._dpmg2--date-number")).get(i).getText();
-            if (fecha1.equals(fech1)) {
-                driver.findElements(By.cssSelector("div._dpmg2--month-active span span._dpmg2--date-number")).get(i).click();
-                break;
-            }
-        }
-
-        int w = Integer.parseInt(dia);
-        w = w + 17;
-        String fech2 = Integer.toString(w);
-        for (int i = 0; i < k; i++) {
-            String fecha2 = driver.findElements(By.cssSelector("div._dpmg2--month-active span span._dpmg2--date-number")).get(i).getText();
-            if (fecha2.equals(fech2)) {
-                driver.findElements(By.cssSelector("div._dpmg2--month-active span span._dpmg2--date-number")).get(i).click();
-                break;
-            }
-        }
+        calendario(7,17);
 
         driver.findElement(By.cssSelector("div.sbox-distri-input-container")).click();
         espera.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div._pnlpk-panel-scroll")));
 
-        String num = driver.findElement(By.cssSelector("div.sbox-distri-container div.sbox-passengers-container input")).getAttribute("value");
-        int numero = Integer.parseInt(num);
-
-        while (numero != 2) {
-            if (numero > 1) {
-                // click izquierdo (-)
-                driver.findElement(By.cssSelector("div._pnlpk-itemRow__item a.steppers-icon-left.sbox-3-icon-minus")).click();
-                numero--;
-            } else {
-                //click derecho (+)
-                driver.findElement(By.cssSelector("div._pnlpk-itemRow__item a.steppers-icon-right.sbox-3-icon-plus")).click();
-                numero++;
-            }
-        }
+        seleccionarAdultos(2);
 
         driver.findElement(By.cssSelector("._pnlpk-panel__button--link-left")).click();
         driver.findElement(By.cssSelector("._pnlpk-apply-button.sbox-3-btn.-primary")).click();
@@ -257,11 +227,11 @@ public class alojamientos {
 
         //filtrar por reserva flexible
         espera.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div.eva-3-filters-vertical.-eva-3-mb-lg.-show-filters")));
-        driver.findElement(By.cssSelector(".eva-3-dropdown .dropdown-item.-active .dropdown-subitem:first-of-type .dropdown-item-container")).click();
+        driver.findElement(By.xpath("//li[contains(.,'Reserva flexible')]//em")).click();
 
-        //filtrar por reserva departamento
+
         espera.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div.eva-3-filters-vertical.-eva-3-mb-lg.-show-filters")));
-        List<WebElement> optionsTO = driver.findElements(By.cssSelector("div.eva-3-filters-vertical.-eva-3-mb-lg.-show-filters ul.eva-3-dropdown li.dropdown-item.-active aloha-checkbox-filter ul li.dropdown-subitem"));
+        List<WebElement> optionsTO = driver.findElements(By.xpath("//li[contains(.,'Tipo de Alojamiento')]//em"));
         System.out.println(optionsTO);
         for (WebElement dep : optionsTO) {
             if (dep.getText().contains("Departamentos")) {
@@ -269,23 +239,10 @@ public class alojamientos {
                 break;
             }
         }
-/*
-        //filtrar por desayuno
-        espera.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div.eva-3-filters-vertical.-eva-3-mb-lg.-show-filters")));
-        List<WebElement> optionsTO1 = driver.findElements(By.cssSelector("div.eva-3-filters-vertical.-eva-3-mb-lg.-show-filters ul.eva-3-dropdown li.dropdown-item.-active aloha-checkbox-filter ul li.dropdown-subitem"));
-        for (WebElement des : optionsTO1) {
-            if (des.getText().contains("Desayuno")) {
-                des.click();
-                break;
-            }
-
-        }
-
- */
-
-        espera.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div.eva-3-pricebox-cluster.-responsive div.pricebox-top-container div.pricebox-action button")));
+//
+        espera.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='pricebox-action']")));
         Thread.sleep(7000);
-        driver.findElement(By.cssSelector("div.cluster-pricebox-container div.eva-3-pricebox-cluster.-responsive div.pricebox-top-container div.pricebox-action button")).click();
+        driver.findElement(By.xpath("//button[@class='eva-3-btn -md -primary -eva-3-fwidth']")).click();
 
         //Metodo para cambiar de pestaña
         String mainTab = driver.getWindowHandle();
@@ -300,27 +257,35 @@ public class alojamientos {
             }
         }
 
-        Thread.sleep(2000);
-        driver.findElement(By.cssSelector("body > aloha-app-root > aloha-detail > div > div:nth-child(4) > div > div > aloha-infobox-container > aloha-infobox-wrapper-container > div > div > div > aloha-infobox-shopping-content > div > div.pricebox-action.-eva-3-mt-lg.pricebox-button > aloha-button > button")).click();
+
 
         Thread.sleep(2000);
-        driver.findElement(By.cssSelector("#roompacks-container-wrapper > aloha-roompacks-container > aloha-roompacks-grid-container > div.body > div.col-6.-eva-3-bc-white > aloha-reservation-summary-container > div > aloha-next-step-button > aloha-button > button")).click();
+        driver.findElement(By.xpath("//div[@class='pricebox-top-container']//button")).click();
 
         Thread.sleep(2000);
-        driver.findElement(By.cssSelector("#pricebox-overlay > div.eva-3-pricebox-sticky.eva-3-shadow.price-box-sticky.price-box-shadow.-loyalty.-with-info > div > button > em")).click();
+        driver.findElement(By.xpath("//div[@class='-eva-3-mb-lg']//button")).click();
+
+        Thread.sleep(2000);
+        driver.findElement(By.xpath("//div[@class='pricebox-content-container']//button")).click();
 
         Thread.sleep(5000);
-        WebElement mensaje = driver.findElement(By.cssSelector("div.eva-3-message.-success.-eva-3-mb-md.-eva-3-mt-md div.message-header span"));
-        String mensajeObtenido = mensaje.getText();
 
-        assertEquals("¡Felicitaciones! Seleccionaste la habitación más económica del South Point Suites. ¡No te la pierdas! Confirma ahora tu reserva", mensajeObtenido);
+        espera.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='eva-3-message -success -eva-3-mb-md -eva-3-mt-md']//span")));
+        Thread.sleep(5000);
+        String res = patron("¡Felicitaciones! Seleccionaste la habitación más económica","//div[@class='eva-3-message -success -eva-3-mb-md -eva-3-mt-md']//span");
+
+        assertEquals("true",res);
+
+        driver.close();
+        driver.switchTo().window(mainTab);
+
 
     }
 
     @After
     public void close() {
         if (driver != null) {
-            driver.close();
+           driver.close();
         }
     }
 
