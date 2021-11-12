@@ -60,11 +60,14 @@ public class Paquetes{
         select5Stars();
         Thread.sleep(2000);
         clickFirstHotel(true);
-        isClicked("//button[@class='eva-3-btn -md -primary -eva-3-fwidth']");
-        isClicked("//div[@class='mobile-container']/buy-button/a");
-        isClicked("//div[@id=\"carousel_5\"]//div[@data-swiper-slide-index='0' and @style='width: 301.25px; margin-right: 25px;']");
+        isClicked("//button[@class='eva-3-btn -md -primary -eva-3-fwidth'][1]");
+//        isClicked("//div[@id=\"carousel_5\"]//div[@data-swiper-slide-index='0' and @style='width: 301.25px; margin-right: 25px;']");
         Thread.sleep(3000);
-        isClicked("//div[@class='toggle -eva-3-tc-purple-3 -eva-3-bold -eva-3-mt-xlg']/span");
+        isClicked("//a[@class='-md eva-3-btn -primary']");
+        Thread.sleep(3000);
+        isClicked("//div[@class='highlight-card'][1]");
+        Thread.sleep(3000);
+        isClicked("//div[@class='toggle -eva-3-tc-purple-3 -eva-3-bold -eva-3-mt-xlg']//span");
         Thread.sleep(3000);
         isClicked("//div[@class='detail-actions']/a");
         isClicked("//div[@class='modal-header']//i[@class='modal-close eva-3-icon-close']");
@@ -84,7 +87,6 @@ public class Paquetes{
     public static void closeAll()
     {
         System.out.println("closeAll :: Cerrar otras conexiones que fueron utilizados en el test");
-
     }
 
     public WebElement driverElement(String path)

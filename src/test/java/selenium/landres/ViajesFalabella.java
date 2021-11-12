@@ -1,4 +1,4 @@
-package viajesfalabella.equipo3;
+package selenium.landres;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.*;
@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
@@ -32,6 +33,8 @@ public class ViajesFalabella {
 
     }
 
+
+
     @Test
     public void atc03(){
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS); // espera implicito para toda la pagina
@@ -40,7 +43,7 @@ public class ViajesFalabella {
         WebElement busqueda = driver.findElement(By.xpath("//*[@id=\"searchbox\"]/div/div/div/div[3]/div[2]/div[1]/div/div/div/div/div/input"));
         busqueda.sendKeys("pinchas");
 
-        String b= "No se encontraron resultados que coincidan con";
+        String b= "No se encontraron resultados que coincidan con  ";
         String selected = driver.findElement(By.cssSelector(".ac-group-hint-error")).getText();
         Assert.assertEquals("No se encontraron resultados que coincidan con  " + "pinchas",b+selected);
 
@@ -131,10 +134,6 @@ public class ViajesFalabella {
 
         //elegir hotel
         driver.findElement(By.xpath("/html/body/aloha-app-root/aloha-results/div/div/div/div[2]/div[2]/aloha-list-view-container/div[2]/div[1]/aloha-cluster-container/div/div/div[2]/aloha-cluster-pricebox-container/div/div[2]/div[2]/aloha-button")).click();
-
-        String selected = driver.findElement(By.xpath("/html/body/aloha-app-root/aloha-results/div/div/div/div[2]/div[2]/aloha-list-view-container/div[2]/div[1]/aloha-cluster-container/div/div/div[1]/div/div[2]/div/aloha-cluster-accommodation-info-container/div[1]/span")).getText();
-        Assert.assertEquals("Sheltown 525 Hotel",selected);
-
         //reservar
         //driver.findElement(By.xpath("//*[@id=\"roompacks-container-wrapper\"]/aloha-roompacks-container/aloha-roompacks-grid-container/div[2]/div[2]/aloha-reservation-summary-container/div/aloha-next-step-button/aloha-button/button")).click();
 
@@ -159,7 +158,6 @@ public class ViajesFalabella {
     }
 
 }
-
 
 
 
