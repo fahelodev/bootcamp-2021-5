@@ -29,9 +29,12 @@ public class VFpaquetesPage extends SeleniumBase {
     By darClickCampoFechaHasta = By.cssSelector("[placeholder='Hasta']");
     By darClickPasajeros = By.cssSelector("div.sbox-distri-input-container");
     By pasajeros = By.cssSelector("div.sbox-distri-container div.sbox-passengers-container input");
-    By btnBuscar = By.cssSelector("div.sbox-button-container a");
+    By btnBuscar = By.xpath("//em[contains(text(),'Buscar')]")
     By contenedorResultados = By.cssSelector("div.results-cluster-container");
     By calendario = By.cssSelector("._dpmg2--show ._dpmg2--month-active ._dpmg2--available span._dpmg2--date-number");
+    By
+    String boxTipoDeMoneda = "#currency";
+    String boxOrdenarPor = "#order";
 
     public void irPaquetesDesdeHome(){
         // generar la lista categorias
@@ -86,6 +89,10 @@ public class VFpaquetesPage extends SeleniumBase {
         esperaImplicita();
     }
 
+    public void agregarUnMenorDeEdad(int edad){
+        edadMenor(edad);
+    }
+
     public int resultadosBusqueda(){
         return contarElementos(contenedorResultados);
     }
@@ -93,7 +100,11 @@ public class VFpaquetesPage extends SeleniumBase {
     public String validarLugarHotel(String lugar){
         return lugarHotel(lugar);
     }
-    public void confirmarSeleccionHabitacionMenor(){
-        darClick(btnAplicar);
+
+    public void cambiarBoxTipoMoneda(String seleccion){
+        seleccionbox(boxTipoDeMoneda,seleccion);
+    }
+    public void cambiarBoxOrdenarPor(String seleccion){
+        seleccionbox(boxOrdenarPor,seleccion);
     }
 }

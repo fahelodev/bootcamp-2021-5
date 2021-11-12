@@ -182,4 +182,22 @@ public class SeleniumBase {
             mesActual = driver.findElement(By.cssSelector("._dpmg2--show ._dpmg2--month-active span"));
         }
     }
+
+    public void edadMenor (int edad){
+        /// SUMAMOS 1 NIÑO
+        driver.findElement(By.cssSelector("div.distpicker.distpicker-rooms-packages.sbox-v4-components div._pnlpk-itemRow__item._pnlpk-stepper-minors.-medium-down-to-lg a.steppers-icon-right.sbox-3-icon-plus")).click();
+        // CLICK EN EDAD
+        driver.findElement(By.cssSelector("div.distpicker.distpicker-rooms-packages.sbox-v4-components div._pnlpk-itemRow__item._pnlpk-select-minor-age select")).click();
+        List <WebElement> edades = driver.findElements(By.cssSelector("div.distpicker.distpicker-rooms-packages.sbox-v4-components select option"));
+        String dia = Integer.toString(edad);
+        busquedaElemento(edades,dia);
+    }
+
+    public void seleccionbox (String clase, String palabra){
+        driver.findElement(By.cssSelector(clase)).click();
+        esperaExplicitaElementoVisible(By.cssSelector(clase+" select option"));
+        List <WebElement> options = driver.findElements(By.cssSelector(clase+" select option"));
+        // CAMBIAMOS A DÓLARES ESTADOUNIDENSES
+        busquedaElemento(options,palabra);
+    }
 }

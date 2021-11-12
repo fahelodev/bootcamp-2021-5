@@ -52,5 +52,10 @@ public class testpaquetes extends TestBase {
         paginaPaquetes.llenarCasillaDestino("esp","Cataluña");
         paginaPaquetes.seleccionarFechasLejanas("Enero",4,19,8);
         paginaPaquetes.llenarCasillaSegundoDestino("marbella","Andalucía");
+        paginaPaquetes.seleccionarCantidadPasajeros(2);
+        paginaPaquetes.agregarUnMenorDeEdad(2);
+        paginaPaquetes.darClickBuscar();
+        paginaPaquetes.cambiarBoxTipoMoneda("Dólares");
+        paginaPaquetes.cambiarBoxOrdenarPor("convenientes");
     }
 }
