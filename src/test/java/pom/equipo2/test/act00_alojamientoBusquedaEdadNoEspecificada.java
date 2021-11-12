@@ -9,7 +9,7 @@ import pom.equipo2.pages.VFHomePage;
 
 import static org.junit.Assert.assertEquals;
 
-public class atc00_alojamientoBusquedaEdadNoEspecificada extends TestBase {
+public class act00_alojamientoBusquedaEdadNoEspecificada extends TestBase {
 
     protected VFHomePage paginaHome = null;
     protected VFAlojamientoPage paginaAlojamiento = null;
