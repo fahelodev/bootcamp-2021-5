@@ -9,12 +9,13 @@ public class VFAlojamientoPage extends SeleniumBase {
     public VFAlojamientoPage(WebDriver driver) {
         super(driver);
     }
-    //Atributos - objeto a guardar
+    //Atributos - objeto a guardar caso de prueba 001
     By btnAlojamiento = By.xpath("//label[.='Alojamientos']");
     By textFieldDestino = By.cssSelector("[placeholder='Ingresa una ciudad, alojamiento o atracción']");
     By selectFirtsDestino = By.xpath("//li[.='Córdoba, Córdoba, Argentina']");
     By btnCheckBoxNoFecha = By.cssSelector(".checkbox-label");
     By btnSearch = By.cssSelector(".sbox-search");
+    //Atributos - objeto a guardar caso de prueba 002
     By btnFechaIda = By.cssSelector("[placeholder='Entrada']");
     By btnFechaVuelta = By.cssSelector("[placeholder='Salida']");
     By selectFirstFechaIda = By.xpath("//div[@class='_dpmg2--dates']/child::span[18]");
@@ -24,6 +25,8 @@ public class VFAlojamientoPage extends SeleniumBase {
     By textFieldSecondDestino = By.cssSelector("[placeholder='Ingresá una ciudad, alojamiento o atracción']");
     By selectSecondDestino = By.xpath("//li[.='Buenos Aires, Ciudad de Buenos Aires, Argentina']");
     By btnCheckBoxSecondNoFecha = By.cssSelector(".sbox5-label-ovr");
+    By verifyText002 = By.xpath("//h1[@id='landingsTitle']");
+    //Atributos - objeto a guardar caso de prueba 003
     By btnSecondSearch = By.cssSelector(".sbox5-box-button-ovr");
     By btnHotel = By.xpath("//div[.='qp Hotels Lima']");
     By btnSecondHotel = By.cssSelector("[index='0'] .eva-3-btn");
@@ -35,8 +38,9 @@ public class VFAlojamientoPage extends SeleniumBase {
     By btnVueloRegreso = By.id("departureTime");
     By selectHoraRegreso = By.xpath("//select[@id='departureTime']/option[.='06:00']");
     By btnBuscarAeroPuerto = By.xpath("//em[contains(text(),'Buscar')]");
-    By btnAgregarTraslado = By.xpath("//button[@class='eva-3-btn -eva-3-fwidth -md -primary']");
+    By btnAgregarTraslado = By.xpath("//div[@class='highlight-card-container -eva-3-shadow-1-hover -eva-3-bc-white TRANSFER REGULAR']//em[@class='btn-text']");
     By btnVerDetalle = By.xpath("//a[.='Ver detalle']");
+    By verifyText003 = By.xpath("//span[@class='added-product-title']");
 
     public void goAlojamientoToHome(){
         click(btnAlojamiento);
@@ -102,9 +106,15 @@ public class VFAlojamientoPage extends SeleniumBase {
         click(selectHoraRegreso);
         click(btnBuscarAeroPuerto);
     }
-    public void confirmTraslado(){
-        waitExplicitClick(btnAgregarTraslado,10);
+    public void confirmTraslado() throws InterruptedException {
+        waitExplicitClick(btnAgregarTraslado,50);
         click(btnAgregarTraslado);
+        loadEmergent(btnVerDetalle);
         click(btnVerDetalle);
     }
+
+    public void checkText002(){verifyTextAlojamiento002(verifyText002);}
+
+    public void checkText003(){
+        verifyTextAlojamiento003(verifyText003);}
 }
