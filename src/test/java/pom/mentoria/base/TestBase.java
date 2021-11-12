@@ -2,6 +2,7 @@ package pom.mentoria.base;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.openqa.selenium.WebDriver;
@@ -32,8 +33,14 @@ public class TestBase {
     @After
     public void close(){
         if(driver != null){
-            driver.close();
+            driver.quit();
         }
+    }
+
+    @AfterClass
+    public static void closeAll()
+    {
+        System.out.println("closeAll :: Cerrar otras conexiones que fueron utilizados en el test");
     }
 
 }

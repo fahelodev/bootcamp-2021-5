@@ -34,18 +34,20 @@ public class Alojamientos{
         WebDriverManager.chromedriver().setup();
 
     }
+
     @Before
     public void init(){
         System.out.println("init para instanciar");
         driver = new ChromeDriver();
         driver.manage().deleteAllCookies();
+        driver.manage().deleteAllCookies();
         driver.manage().window().maximize();
-
         driver.get("https://www.viajesfalabella.cl/");
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(10,TimeUnit.SECONDS);
         wait = new WebDriverWait(driver,10);
         categorias  = driver.findElements(By.cssSelector("div.header-products-container ul li a"));
+
     }
 
     @Test
@@ -228,6 +230,21 @@ public class Alojamientos{
         Assert.assertEquals(checkTituloHotel,TituloHotel);
     }
 
+    @After
+    public void close() throws InterruptedException {
+        if(driver != null){
+            Thread.sleep(4000);
+            driver.quit();
+        }
+
+    }
+
+    @AfterClass
+    public static void closeAll(){
+        System.out.println("closeAll :: Cerrar otras conexiones que fueron utilizadas en el test");
+
+    }
+
     private void busqueda(List<WebElement> lista, String palabra){
         for (WebElement l: lista){
             if (l.getText().contains(palabra)){
@@ -281,21 +298,6 @@ public class Alojamientos{
         for (int i = 0; i < menores; i++) {
             driver.findElement(By.xpath("//div[@class='_pnlpk-itemRow__item _pnlpk-stepper-minors -medium-down-to-lg'] //a[@class='steppers-icon-right sbox-3-icon-plus']")).click();
         }
-    }
-
-    @After
-    public void close() throws InterruptedException {
-        if(driver != null){
-            Thread.sleep(4000);
-            driver.quit();
-        }
-
-    }
-
-    @AfterClass
-    public static void closeAll(){
-        System.out.println("closeAll :: Cerrar otras conexiones que fueron utilizadas en el test");
-
     }
 
 
