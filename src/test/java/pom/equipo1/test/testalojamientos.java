@@ -34,12 +34,19 @@ public class testalojamientos extends TestBase {
     }
 
     @Test
-    public void CdP08_busquedaAlojamiento(){
+    public void CdP08_busquedaAlojamiento() throws InterruptedException {
         paginaAlojamientos.llenarCasillaDestino("dub","Dubái, Dubai, Emiratos Árabes Unidos");
         //se cae sin una espera(ver)
         paginaAlojamientos.seleccionarFechas(1,7);
         paginaAlojamientos.seleccionarCantidadOcupantesHabitacion(1);
         paginaAlojamientos.darClickBotonBuscar();
+        paginaAlojamientos.seleccionarFiltroOrdenarPor("Precio: menor a mayor");
+        Thread.sleep(2000);
+        String validarLugar = paginaAlojamientos.validarLugar("Dubái");
+        String validarDias = paginaAlojamientos.validarDias("6");
+
+        assertEquals("true",validarLugar);
+        assertEquals("true",validarDias);
 
 
     }

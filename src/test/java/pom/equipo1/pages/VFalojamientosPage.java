@@ -28,7 +28,10 @@ public class VFalojamientosPage extends SeleniumBase {
     By clickHabitaciones=By.cssSelector("div.sbox-distri-input-container");
     By ocupantesHabitacion = By.cssSelector("div.sbox-distri-container div.sbox-passengers-container input");
     By calendario = By.cssSelector("._dpmg2--show ._dpmg2--month-active ._dpmg2--available span._dpmg2--date-number");
-
+    By clikOrdenarPor= By.xpath("//aloha-select[@class='sorting-select']//select[@class='select-tag']");
+    By opcionesOrdenarPor= By.xpath("//aloha-select[@class='sorting-select']//select[@class='select-tag']/option");
+    By mensajeLugar=By.xpath("//span[@class='-eva-3-tc-gray-2']");
+    By mensajeDias=By.xpath("//p[@class='eva-3-p -eva-3-tc-gray-2 first-message']");
 
 
     By darClickVuelo1Alojamiento = By.xpath("//input[@value='vh']");
@@ -71,6 +74,23 @@ public class VFalojamientosPage extends SeleniumBase {
         cantidadOcupantesHabitacion(numero,ocupantesHabitacion);
     }
 
+    public void seleccionarFiltroOrdenarPor(String filtro){
+        esperaImplicita();
+        darClick(clikOrdenarPor);
+        filtrar(filtro,opcionesOrdenarPor);
+    }
+
+    public String validarLugar(String lugar){
+        esperaImplicita();
+        return validarDatos(lugar,mensajeLugar);
+    }
+
+    public String validarDias(String dias){
+        esperaImplicita();
+        return validarDatos(dias,mensajeDias);
+    }
+
+
 
 
 
@@ -101,9 +121,7 @@ public class VFalojamientosPage extends SeleniumBase {
         return contarElementos(contenedorResultados);
     }
 
-    public String validarLugarHotel(String lugar){
-        return lugarHotel(lugar);
-    }
+
     public void confirmarSeleccionHabitacionMenor(){
         darClick(btnAplicar);
     }

@@ -163,10 +163,11 @@ public class SeleniumBase {
         return lista;
     }
 
-    public String lugarHotel (String lugar){
-        String ciudad =  driver.findElement(By.cssSelector("div.cluster-content div.cluster-description-wrapper span.-eva-3-tc-gray-2")).getText();
+    public String validarDatos (String lugar, By localizador){
+        WebElement dato=driver.findElement(localizador);
+        String mensaje = dato.getText();
         Pattern patron = Pattern.compile(lugar);
-        Matcher m = patron.matcher(ciudad);
+        Matcher m = patron.matcher(mensaje);
         boolean e = m.find();
         String res = String.valueOf(e);
         return res;
@@ -219,4 +220,17 @@ public class SeleniumBase {
         // CAMBIAMOS A DÓLARES ESTADOUNIDENSES
         busquedaElemento(options,palabra);
     }
+    public void filtrar (String filtro,  By localizador) {
+        WebDriverWait espera = new WebDriverWait(driver, 15);
+        List<WebElement> optionsTO = driver.findElements(localizador);
+        espera.until(ExpectedConditions.elementToBeClickable(localizador));
+        for (WebElement l : optionsTO) {
+            if (l.getText().contains(filtro)) {
+                l.click();
+                break;
+            }
+
+        }
+    }
+
 }
