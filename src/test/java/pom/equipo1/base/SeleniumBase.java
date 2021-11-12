@@ -80,6 +80,7 @@ public class SeleniumBase {
 
     public void calendario (int fecha1, int fecha2){
         // LISTA CALENTARIO ACTUAL
+        esperaExplicitaElementoVisible(By.cssSelector("._dpmg2--show ._dpmg2--month-active ._dpmg2--available span._dpmg2--date-number"));
         List<WebElement> mesActual = driver.findElements(By.cssSelector("._dpmg2--show ._dpmg2--month-active ._dpmg2--available span._dpmg2--date-number"));
         // INGRESAR FECHAS
         // TOMAMOS EL DIA ACTUAL
@@ -132,5 +133,11 @@ public class SeleniumBase {
                 real++;
             }
         }
+    }
+
+    public int contarElementos (By localizador){
+        esperaExplicitaElementoVisible(localizador);
+        int lista = driver.findElements(localizador).size();
+        return lista;
     }
 }

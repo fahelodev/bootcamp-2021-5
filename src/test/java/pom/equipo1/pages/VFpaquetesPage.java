@@ -24,7 +24,7 @@ public class VFpaquetesPage extends SeleniumBase {
     By esperaCampoOrigen = By.cssSelector("div.ac-container span");
     By campoDestino = By.cssSelector("div.sbox-second-place-container input");
     By esperaCampoDestino = By.cssSelector("div.ac-container span");
-    By darClickCampoFecha = By.cssSelector("[placeholder='Ida']");
+    By darClickCampoFechaIda = By.cssSelector("[placeholder='Ida']");
     By darClickPasajeros = By.cssSelector("div.sbox-distri-input-container");
     By pasajeros = By.cssSelector("div.sbox-distri-container div.sbox-passengers-container input");
     By btnBuscar = By.cssSelector("div.sbox-button-container a");
@@ -35,7 +35,6 @@ public class VFpaquetesPage extends SeleniumBase {
         List <WebElement> listaCategorias = generarLista(categorias);
         // seleccionar el elemento paquetes de la lista
         busquedaElemento(listaCategorias,"Paquetes");
-        // esperaExplicitaElementoClickeable(desplegableHabitaciones,7);
     }
     public void seleccionarVuelo1Alojamiento(){
         darClick(darClickVuelo1Alojamiento);
@@ -51,8 +50,8 @@ public class VFpaquetesPage extends SeleniumBase {
         ingresarDestino(destino,seleccion,campoDestino,esperaCampoDestino);
     }
 
-    public void llenarCampoFecha(int fecha1, int fecha2){
-        darClick(darClickCampoFecha);
+    public void seleccionarFechas(int fecha1, int fecha2){
+        darClick(darClickCampoFechaIda);
         calendario(fecha1,fecha2);
     }
 
@@ -63,11 +62,11 @@ public class VFpaquetesPage extends SeleniumBase {
 
     public void darClickBuscar(){
         darClick(btnBuscar);
+        esperaImplicita();
     }
 
-    public void resultadosBusqueda(){
-        esperaImplicita();
-        esperaExplicitaElementoVisible(contenedorResultados);
+    public int resultadosBusqueda(){
+        return contarElementos(contenedorResultados);
     }
 
     public void agregarHabitacionMenor(){
