@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -30,6 +31,7 @@ public class Paquetes {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         wait = new WebDriverWait(driver, 30);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
         //Navegar a página
         driver.get("https://www.viajesfalabella.cl/");
@@ -43,11 +45,12 @@ public class Paquetes {
 
     @Test
     public void Paquetes01_PaqueteRecomendado(){
-        WebElement NavegadorPaquete = driver.findElement(By.cssSelector("a[title=Paquetes]"));
-        NavegadorPaquete.click();
-        List <WebElement> Paquetes = driver.findElements(By.cssSelector("a[class=offer-card-clickeable]"));
-        Paquetes.get(0).click();
-        WebElement modal = driver.findElement(By.cssSelector("a[class='date-box']"));
+        //Cambio de pestaña
+        driver.findElement(By.linkText("Paquetes")).click();
+
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("img.offer-card-image-main"))).click();
+
+        WebElement modal = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a.date-box")));
         modal.click();
         wait.until(ExpectedConditions.numberOfWindowsToBe(2));
         ArrayList<String> tabs1 = new ArrayList<String> (driver.getWindowHandles());
@@ -66,15 +69,15 @@ public class Paquetes {
         wait.until(ExpectedConditions.titleIs("Viajes Falabella"));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div[class='detail-wrapper eva-3-row -no-gutter']")));
 
-        String VueloTitulo =  driver.findElement(By.cssSelector("span[class='title']")).getText();
+        String VueloTitulo =  driver.findElement(By.cssSelector("ib-flight .title")).getText();
         String Alojamiento = driver.findElement(By.cssSelector("ib-hotel .title")).getText();
-        String traslado_compartido = driver.findElement(By.cssSelector("ib-transfer .title")).getText();
+
+        wait.until(ExpectedConditions.elementToBeClickable((By.xpath("//em[contains(text(),'Ver traslado')]")))).getText();
+
         String AlojamientoTituloEsperado = "ALOJAMIENTO";
-        String TrasladoCompartido = "TRASLADO COMPARTIDO";
         String VueloTituloEsperado = "VUELO";
 
         Assert.assertEquals(AlojamientoTituloEsperado,Alojamiento);
-        Assert.assertEquals(TrasladoCompartido,traslado_compartido);
         Assert.assertEquals(VueloTituloEsperado,VueloTitulo);
     }
 
@@ -82,12 +85,13 @@ public class Paquetes {
     public void Paquetes02_PrecioFinalCoincide() {
 
         String origen = "Santiago de Chile, Santiago, Chile";
-        String destino = "Miami Beach, Florida, Estados Unidos";
-        String segundoDestino = "Miami, Florida, Estados Unidos";
+        String destino = "Miami Beach, Florida";
+        String segundoDestino = "Miami, Florida";
 
         //Cambio de pestaña
-        driver.findElement(By.xpath("//label[contains(text(),'Paquetes')]")).click();
+        driver.findElement(By.linkText("Paquetes")).click();
 
+        //Click en viaje con dos alojamientos
         driver.findElement(By.cssSelector(".sbox-bundle-vhh input")).click();
 
         //Origen
@@ -100,8 +104,8 @@ public class Paquetes {
 
         //Fecha Ida
         driver.findElement(By.xpath("//input[@placeholder='Ida']")).click();
-        asignarFechaDisponible(1);
-        asignarFechaDisponible(7);
+        asignarFechaDisponible(10);
+        asignarFechaDisponible(15);
 
         //Fecha hasta
         driver.findElement(By.xpath("//input[@placeholder='Hasta']")).click();
@@ -117,13 +121,18 @@ public class Paquetes {
         //Espera que se carguen los resultados y navega por las paginas
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[contains(text(),'Este es el vuelo más conveniente')]")));
         driver.findElement(By.xpath("//trips-cluster-selected//buy-button//a")).click();
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//aloha-cluster-pricebox-container//aloha-button/button"))).click();
+        //Primer alojamiento
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//aloha-cluster-pricebox-container//aloha-button/button"))).click();
+        //Primera habitacion
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//aloha-infobox-wrapper-container//em[contains(text(),'Siguiente')]"))).click();
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//aloha-cluster-pricebox-container//aloha-button/button"))).click();
+        //Segundo alojamiento
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//aloha-cluster-pricebox-container//aloha-button/button"))).click();
 
+        //Segunda habitacion
+        WebElement btnConfirmarSegundoHotel = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//aloha-infobox-wrapper-container//em[contains(text(),'Siguiente')]")));
         //Toma el precio
         String precio = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//aloha-summary-price//p/span"))).getText();
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//aloha-infobox-wrapper-container//em[contains(text(),'Siguiente')]"))).click();
+        btnConfirmarSegundoHotel.click();
 
         //Espera que cargue la página y toma el precio
         String resultado = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#chk-total-price span.amount"))).getText();
@@ -131,14 +140,13 @@ public class Paquetes {
         //Limpia el precio
         precio = precio.replace("$ ", "");
 
-
         int precioFinal = Integer.parseInt(precio.replace(".",""));
 
         //Saca el digito mas pequeño
         int resultadoFinal = Integer.parseInt(resultado.replace(".",""));
 
         //Comprobacion
-        Assert.assertEquals(precioFinal, resultadoFinal, 100);
+        Assert.assertEquals(precioFinal, resultadoFinal, 1000);
     }
 
     @Test
@@ -148,7 +156,7 @@ public class Paquetes {
         String destino = "Miami Beach, Estados Unidos";
 
         //Cambio de pestaña
-        driver.findElement(By.xpath("//label[contains(text(),'Paquetes')]")).click();
+        driver.findElement(By.linkText("Paquetes")).click();
 
         //Origen
         WebElement inputOrigen = driver.findElement(By.xpath("//label[contains(text(),'Origen')]/following-sibling::input"));
@@ -160,8 +168,8 @@ public class Paquetes {
 
         //Fecha
         driver.findElement(By.xpath("//input[@placeholder='Ida']")).click();
+        asignarFechaDisponible(5);
         asignarFechaDisponible(10);
-        asignarFechaDisponible(20);
 
         //Click en Buscar
         driver.findElement(By.cssSelector("a.sbox-search")).click();
@@ -195,7 +203,7 @@ public class Paquetes {
         driver.findElement(By.xpath("//em[contains(text(),'Siguiente')]")).click();
 
         //Agrega Traslado
-        WebElement btnTraslado = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.highlight-card-container.TRANSFER")));
+        WebElement btnTraslado = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div.highlight-card-container.TRANSFER")));
         btnTraslado.click();
         driver.findElement(By.xpath("//a/em[contains(text(),'Agregar')]")).click();
         String traslado = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("app-transfer-highlight-card .added-product-title"))).getText();
@@ -257,7 +265,8 @@ public class Paquetes {
     }
 
     public void asignarFechaDisponible(int dias){
-        List<WebElement> fechas = driver.findElements(By.cssSelector("._dpmg2--show ._dpmg2--month-active ._dpmg2--available span._dpmg2--date-number"));
+        List<WebElement> fechas = driver.findElements(By.cssSelector("._dpmg2--show ._dpmg2--month ._dpmg2--available ._dpmg2--date-number"));
         fechas.get(dias).click();
     }
 }
+
