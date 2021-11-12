@@ -1,9 +1,9 @@
-package pom.mentoria.test;
+package pom.equipo4.test;
 
 import org.junit.Test;
-import pom.mentoria.base.TestBase;
-import pom.mentoria.pages.VFHomePage;
-import pom.mentoria.pages.VFPaquetesPage;
+import pom.equipo4.base.TestBase;
+import pom.equipo4.pages.VFHomePage;
+import pom.equipo4.pages.VFPaquetesPage;
 
 public class atc03_Alojamientos extends TestBase {
 

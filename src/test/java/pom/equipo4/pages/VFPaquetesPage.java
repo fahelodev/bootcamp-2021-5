@@ -1,4 +1,4 @@
-package pom.mentoria.pages;
+package pom.equipo4.pages;
 
 import org.apache.xpath.operations.Bool;
 import org.junit.Assert;
@@ -9,7 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pom.mentoria.base.SeleniumBase;
+import pom.equipo4.base.SeleniumBase;
 
 import java.util.ArrayList;
 import java.util.Locale;

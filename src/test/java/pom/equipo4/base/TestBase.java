@@ -1,4 +1,4 @@
-package pom.mentoria.base;
+package pom.equipo4.base;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.After;

@@ -1,4 +1,4 @@
-package pom.mentoria.base;
+package pom.equipo4.base;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
