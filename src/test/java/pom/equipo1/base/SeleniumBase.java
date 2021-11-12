@@ -46,6 +46,7 @@ public class SeleniumBase {
         espera = new WebDriverWait(driver,segundosEspera);
         espera.until(ExpectedConditions.elementToBeClickable(localizador));
     }
+
     public void esperaExplicitaElementoVisible(By localizador){
         WebDriverWait espera;
         espera = new WebDriverWait(driver,segundosEspera);
@@ -80,10 +81,10 @@ public class SeleniumBase {
         busquedaElemento(resultados,seleccionar);
     }
 
-    public void calendario (int fecha1, int fecha2){
+    public void buscarEnCalendario (int fecha1, int fecha2, By localizador){
         // LISTA CALENTARIO ACTUAL
-        esperaExplicitaElementoVisible(By.cssSelector("._dpmg2--show ._dpmg2--month-active ._dpmg2--available span._dpmg2--date-number"));
-        List<WebElement> mesActual = driver.findElements(By.cssSelector("._dpmg2--show ._dpmg2--month-active ._dpmg2--available span._dpmg2--date-number"));
+        esperaExplicitaElementoVisible(localizador);
+        List<WebElement> mesActual = driver.findElements(localizador);
         // INGRESAR FECHAS
         // TOMAMOS EL DIA ACTUAL
         Calendar c1 = Calendar.getInstance();
@@ -142,6 +143,7 @@ public class SeleniumBase {
         int lista = driver.findElements(localizador).size();
         return lista;
     }
+
     public String lugarHotel (String lugar){
         String ciudad =  driver.findElement(By.cssSelector("div.cluster-content div.cluster-description-wrapper span.-eva-3-tc-gray-2")).getText();
         Pattern patron = Pattern.compile(lugar);
@@ -149,5 +151,35 @@ public class SeleniumBase {
         boolean e = m.find();
         String res = String.valueOf(e);
         return res;
+    }
+
+    public void fechasLejanas(String mes,int fecha1,int fecha2, By localizador){
+        esperaExplicitaElementoVisible(By.cssSelector("._dpmg2--show ._dpmg2--month-active span"));
+        buscarMes(mes);
+        List<WebElement> mesBuscado = driver.findElements(localizador);
+        String dia1 = Integer.toString(fecha1);
+        String dia2 = Integer.toString(fecha2);
+        busquedaElemento(mesBuscado,dia1);
+        busquedaElemento(mesBuscado,dia2);
+    }
+
+    public void ingresarFechaHasta(int fecha){
+        esperaExplicitaElementoVisible(By.cssSelector("._dpmg2--show ._dpmg2--month-active span"));
+        // MES TOMAMOS EL CALENDARIO DEL MES DE ENERO (HASTA)
+        List<WebElement> mes = driver.findElements(By.cssSelector("._dpmg2--show ._dpmg2--month-active ._dpmg2--available span._dpmg2--date-number"));
+        // BUSCAMOS Y SELECCIONAMOS LA 3ERA FECHA
+        String dia = Integer.toString(fecha);
+        busquedaElemento(mes,dia);
+    }
+
+    private void buscarMes (String mes){
+        WebElement mesActual = driver.findElement(By.cssSelector("._dpmg2--show ._dpmg2--month-active span"));
+        while (!mesActual.getText().contains(mes)){
+            // AVANZAMOS AL SIGUIENTE MES
+            driver.findElement(By.cssSelector("body > div.datepicker-packages.sbox-v4-components > div > div._dpmg2--controlsWrapper > div._dpmg2--controls-next > i")).click();
+            esperaExplicitaElementoVisible(By.cssSelector("._dpmg2--show ._dpmg2--month-active span"));
+            // TOMAMOS EL NOMBRE DEL MES SIGUIENTE
+            mesActual = driver.findElement(By.cssSelector("._dpmg2--show ._dpmg2--month-active span"));
+        }
     }
 }

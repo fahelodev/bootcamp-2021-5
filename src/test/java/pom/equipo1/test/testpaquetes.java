@@ -44,4 +44,13 @@ public class testpaquetes extends TestBase {
         String validar = paginaPaquetes.validarLugarHotel("Buenos Aires");
         assertEquals("true",validar);
     }
+
+    @Test
+    public void CdP01_agregarPaquete(){
+        paginaPaquetes.seleccionarVuelo2Alojamientos();
+        paginaPaquetes.llenarCasillaOrigen("bue","Ciudad de Buenos Aires");
+        paginaPaquetes.llenarCasillaDestino("esp","Cataluña");
+        paginaPaquetes.seleccionarFechasLejanas("Enero",4,19,8);
+        paginaPaquetes.llenarCasillaSegundoDestino("marbella","Andalucía");
+    }
 }
