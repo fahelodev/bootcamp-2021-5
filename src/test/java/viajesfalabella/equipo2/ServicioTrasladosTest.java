@@ -44,24 +44,29 @@ public class ServicioTrasladosTest {
         driver.findElement(By.xpath("//span[contains(text(),' Hacia el aeropuerto')]")).click();
 
         //ingresamos la palabra "naindo"
-        driver.findElement(By.cssSelector("input.input-tag.sbox-main-focus.sbox-destination")).sendKeys("Naindo");
+
+        driver.findElement(By.xpath("//input[contains(@class,'sbox-places-second')]")).sendKeys("Naindo");
         espera.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(text(),'Naindo')]")));
         //seleccionamos la opcion naindo de la lista
         driver.findElement(By.xpath("//span[contains(text(),'Naindo')]")).click();
 
         //ingreamos "la rioja" en el campo "hasta"
-        driver.findElement(By.cssSelector("input.input-tag.sbox-main-focus.sbox-origin")).sendKeys("La rioja");
-        espera.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(text(),'Aeropuerto Capitan Vicente Almando, La ')]")));
-        driver.findElement(By.xpath("//span[contains(text(),'Aeropuerto Capitan Vicente Almando, La ')]")).click();
+
+        driver.findElement(By.xpath("//input[contains(@class,'sbox-places-first')]")).sendKeys("La rioja");
+
+        espera.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(text(),'Vicente Almando')]")));
+        driver.findElement(By.xpath("//span[contains(text(),'Vicente Almando')]")).click();
 
         //seleccionamos en el campo "fecha hora" la fecha "22 de noviembre" y hora "07:00"
-        driver.findElement(By.cssSelector("input.input-tag.sbox-checkout")).click();
+        driver.findElement(By.xpath("//input[contains(@class,'checkout')]")).click();
+
         driver.findElement(By.xpath("//span[@class='_dpmg2--date-number' and contains(text(),'22')]")).click();
         Select hora = new Select(driver.findElement(By.cssSelector("select.select-tag.sbox-time-departure")));
         hora.selectByVisibleText("07:00");
 
         //click en buscar
         driver.findElement(By.cssSelector("i.input-icon.sbox-3-icon-search")).click();
+
 
            espera.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("h5.eva-3-h5")));
         //se obtienen los mensajes de advertencia
@@ -82,21 +87,24 @@ public class ServicioTrasladosTest {
 
         //click en traslados
         driver.findElement(By.xpath("//label[contains(text(),'Traslado')]")).click();
-        espera.until(ExpectedConditions.elementToBeClickable((By.cssSelector("input[placeholder='Ingresa un aeropuerto'"))));
 
+        espera.until(ExpectedConditions.elementToBeClickable((By.xpath(" //input[contains(@class,'sbox-places-first')]"))));
         //ingresamos "cordoba"
-        driver.findElement(By.cssSelector("input[placeholder='Ingresa un aeropuerto'")).sendKeys("Córdoba");
+        driver.findElement(By.xpath(" //input[contains(@class,'sbox-places-first')]")).sendKeys("Córdoba");
+      //  driver.findElement(By.cssSelector("input[placeholder='Ingresa un aeropuerto'")).sendKeys("Córdoba");
         espera.until(ExpectedConditions.elementToBeClickable((By.cssSelector("div.ac-container ul li"))));
         driver.findElement(By.cssSelector("div.ac-container ul li")).click();
 
         //ingresamos "sava"
-        driver.findElement(By.cssSelector("input[placeholder='Ingresa un hotel o dirección adónde quieras ir']")).sendKeys("Sava");
+     //   driver.findElement(By.cssSelector("input[placeholder='Ingresa un hotel o dirección adónde quieras ir']")).sendKeys("Sava");
+        driver.findElement(By.xpath("//input[contains(@class,'sbox-places-second')]")).sendKeys("Sava");
+
         espera.until(ExpectedConditions.elementToBeClickable((By.cssSelector("div.ac-container ul li"))));
         driver.findElement(By.cssSelector("div.ac-container ul li")).click();
 
         //click en el campo fecha y se ingresa "22 de noviembre"
-        driver.findElement(By.cssSelector("input.input-tag.sbox-checkin")).click();
 
+        driver.findElement(By.xpath("//input[contains(@class,'checkin')]")).click();
         List<WebElement> seleccionarHora = driver.findElements(By.xpath("//span[@class='_dpmg2--date-number' and contains(text(),'22')]"));
         for (WebElement elemento:seleccionarHora) {
             if(elemento.getText().equals("22")) {
@@ -113,7 +121,8 @@ public class ServicioTrasladosTest {
         int i=0;
         //hacemos tres click en el boton (+) de pasajeros
         while(i<3) {
-            driver.findElement(By.cssSelector("._pnlpk-itemRow__item._pnlpk-stepper-adults.-medium-down-to-lg  a.steppers-icon-right.sbox-3-icon-plus")).click();
+            driver.findElement(By.xpath("//label[contains(text(),'A')] /following::a[contains(@class,'plus')]")).click();
+          //  driver.findElement(By.cssSelector("._pnlpk-itemRow__item._pnlpk-stepper-adults.-medium-down-to-lg  a.steppers-icon-right.sbox-3-icon-plus")).click();
             i++;
         }
         //click en buscar
@@ -122,7 +131,6 @@ public class ServicioTrasladosTest {
         //comprobamos que exista al menos un resultado para "traslados"
         List<WebElement> listaAutos = driver.findElements(By.cssSelector("div.search-cluster.ng-scope.ng-hide"));
         int resultado= listaAutos.size();
-        System.out.println(resultado);
         assertTrue(resultado>=1);
     }
 
@@ -133,19 +141,22 @@ public class ServicioTrasladosTest {
         //Click en traslados
         driver.findElement(By.xpath("//label[contains(text(),'Traslados')]")).click();
 
-        //ingreamos "cordoba" en y seleccionamos la opcion "aeropuerto Taravella"
-        driver.findElement(By.cssSelector("input.input-tag.sbox-main-focus.sbox-origin")).sendKeys("Cordoba");
+        //ingreamos "cordoba" en desde y seleccionamos la opcion "aeropuerto Taravella"
+        driver.findElement(By.xpath(" //input[contains(@class,'sbox-places-first')]")).sendKeys("Córdoba");
+    //    driver.findElement(By.cssSelector("input.input-tag.sbox-main-focus.sbox-origin")).sendKeys("Cordoba");
         espera.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(text(),'Taravella')]")));
         driver.findElement(By.xpath("//span[contains(text(),'Taravella')]")).click();
 
         //ingresamos "sava" y seleccionamos la palabra para seleccionar el hotel de Santa Fe
-        driver.findElement(By.cssSelector("input[placeholder='Ingresa un hotel o dirección adónde quieras ir']")).sendKeys("Sava");
+        driver.findElement(By.xpath("//input[contains(@class,'sbox-places-second')]")).sendKeys("Sava");
+       // driver.findElement(By.cssSelector("input[placeholder='Ingresa un hotel o dirección adónde quieras ir']")).sendKeys("Sava");
         espera.until(ExpectedConditions.elementToBeClickable((By.cssSelector("div.ac-container ul li"))));
         driver.findElement(By.cssSelector("div.ac-container ul li")).click();
 
 
         //seleccionamos el campo fecha e ingresamos "22 de noviembre"
-        driver.findElement(By.cssSelector("input.input-tag.sbox-checkin")).click();
+        driver.findElement(By.xpath("//input[contains(@class,'checkin')]")).click();
+      //  driver.findElement(By.cssSelector("input.input-tag.sbox-checkin")).click();
         List<WebElement> seleccionarHora = driver.findElements(By.xpath("//span[@class='_dpmg2--date-number' and contains(text(),'22')]"));
         for (WebElement elemento : seleccionarHora) {
             if (elemento.getText().equals("22")) {
@@ -180,7 +191,9 @@ public class ServicioTrasladosTest {
         assertEquals(totalAutosEsperado,totalAutos);
 
         //validacion de la cantidad de personas por vehiculo
-        WebElement chek = driver.findElement(By.cssSelector(".search-view-items-container > div:nth-of-type(3) span:nth-of-type(1) > span:nth-of-type(1) > span:nth-of-type(1) > span:nth-of-type(2)"));
+       // WebElement chek = driver.findElement(By.cssSelector(".search-view-items-container > div:nth-of-type(3) span:nth-of-type(1) > span:nth-of-type(1) > span:nth-of-type(1) > span:nth-of-type(2)"));
+        WebElement chek = driver.findElement(By.xpath("//div[@class='search-cluster ng-scope']/following::span[contains(text(),'14 personas ')]"));
+
         System.out.println(chek.getText());
         assertEquals("14 personas por vehículo", chek.getText());
 
