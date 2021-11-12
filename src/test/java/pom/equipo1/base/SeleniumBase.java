@@ -125,6 +125,12 @@ public class SeleniumBase {
         adultos(valorActual,esperado);
     }
 
+    public void cantidadOcupantesHabitacion (int esperado, By localizador){
+        String num =driver.findElement(localizador).getAttribute("value");
+        int valorActual = Integer.parseInt(num);
+        ocupantesHabitacion(valorActual,esperado);
+    }
+
     private void adultos (int real, int esperado){
         while (esperado != real){
             if (real > esperado){
@@ -133,6 +139,19 @@ public class SeleniumBase {
             }
             else{
                 driver.findElement(By.cssSelector("div.distpicker.distpicker-rooms-packages.sbox-v4-components a.steppers-icon-right.sbox-3-icon-plus")).click();
+                real++;
+            }
+        }
+    }
+
+    private void ocupantesHabitacion (int real, int esperado){
+        while (esperado != real){
+            if (real > esperado){
+                driver.findElement(By.cssSelector("div._pnlpk-itemRow__item a.steppers-icon-left.sbox-3-icon-minus")).click();
+                real--;
+            }
+            else{
+                driver.findElement(By.cssSelector("div._pnlpk-itemRow__item a.steppers-icon-right.sbox-3-icon-plus")).click();
                 real++;
             }
         }
