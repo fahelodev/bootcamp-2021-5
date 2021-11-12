@@ -47,12 +47,14 @@ public class ServicioPaquetesTest {
         int i=0;
         //click tres veces en (+) en campo "adultos"
         while(i<3) {
-            driver.findElement(By.cssSelector("div._pnlpk-panel__blocks._pnlpk-dynamicContent  a.steppers-icon-right.sbox-3-icon-plus")).click();
+          //  driver.findElement(By.cssSelector("div._pnlpk-panel__blocks._pnlpk-dynamicContent  a.steppers-icon-right.sbox-3-icon-plus")).click();
+            driver.findElement(By.xpath("//div[contains(@class,'_pnlpk-dynamicContent')]/following:: label[contains(text(),'A')] /following::a[contains(@class,'plus')] ")).click();
             i++;
         }
         //click tres veces en (+) en campo "menores"
         for (int j = 0; j < 3; j++)
-            driver.findElement(By.cssSelector("div._pnlpk-panel__blocks._pnlpk-dynamicContent ._pnlpk-itemRow__item._pnlpk-stepper-minors.-medium-down-to-lg  a.steppers-icon-right.sbox-3-icon-plus")).click();
+           // driver.findElement(By.cssSelector("div._pnlpk-panel__blocks._pnlpk-dynamicContent ._pnlpk-itemRow__item._pnlpk-stepper-minors.-medium-down-to-lg  a.steppers-icon-right.sbox-3-icon-plus")).click();
+            driver.findElement(By.xpath("//div[contains(@class,'_pnlpk-dynamicContent')]/following:: label[contains(text(),'M')] /following::a[contains(@class,'plus')] ")).click();
 
 
         //se obtiene el mensaje y se almacena en una variable String
@@ -70,8 +72,9 @@ public class ServicioPaquetesTest {
 
     @Test
     public void caso04() {
+
         //ingresamos la palabra cordoba en el campo "origen"
-        driver.findElement(By.cssSelector("input.input-tag.sbox-main-focus")).sendKeys("cordoba");
+        driver.findElement(By.xpath("//input[contains(@class,'sbox-places-first')]")).sendKeys("cordoba");
         espera.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(text(),'Córdoba, Córdoba, Argentina')]")));
 
         List<WebElement> listaAlojamientos = driver.findElements(By.cssSelector("div.ac-container ul>li"));
@@ -83,7 +86,7 @@ public class ServicioPaquetesTest {
             }
         }
         //ingresamos la palabra cordoba en el campo destino
-        driver.findElement(By.cssSelector("input.input-tag.sbox-main-focus.sbox-destination.sbox-secondary")).sendKeys("cordoba");
+        driver.findElement(By.xpath("//input[contains(@class,'sbox-places-second')]")).sendKeys("cordoba");
         espera.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(text(),'Córdoba, Córdoba, Argentina')]")));
 
         List<WebElement> listaDestino = driver.findElements(By.cssSelector("div.ac-container ul>li"));
@@ -98,7 +101,7 @@ public class ServicioPaquetesTest {
         driver.findElement(By.xpath("//span[contains(text(),'Todavía no he decidido la fecha')]")).click();
 
         //seleccionamos el mes enero del año 2022
-        Select meses = new Select(driver.findElement(By.cssSelector("select.select-tag.sbox-month-seletor")));
+        Select meses = new Select(driver.findElement(By.xpath("//select[contains(@class,'month')]")));
         meses.selectByVisibleText("Enero 2022");
 
         //click en el boton buscar
@@ -110,7 +113,7 @@ public class ServicioPaquetesTest {
     @Test
     public void caso05()  throws InterruptedException{
         //ingresamos la palabra "cordoba" en el campo origen
-        driver.findElement(By.cssSelector("input.input-tag.sbox-main-focus")).sendKeys("cordoba");
+        driver.findElement(By.xpath("//input[contains(@class,'sbox-places-first')]")).sendKeys("cordoba");
         espera.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(text(),'Córdoba, Córdoba, Argentina')]")));
         List<WebElement> listaAlojamientos = driver.findElements(By.cssSelector("div.ac-container ul>li"));
         //recorre la lista y compara cual es igual a Córdoba, Córdoba, Argentina y en caso que se encuentre hace click
@@ -121,7 +124,7 @@ public class ServicioPaquetesTest {
             }
         }
         //ingresa la palabra "buenos aires" en el campo destino
-        driver.findElement(By.cssSelector("input.input-tag.sbox-main-focus.sbox-destination.sbox-secondary")).sendKeys("buenos aires");
+        driver.findElement(By.xpath("//input[contains(@class,'sbox-places-second')]")).sendKeys("buenos aires");
         espera.until(ExpectedConditions.elementToBeClickable((By.cssSelector("div.ac-container ul li"))));
 
 
@@ -159,8 +162,7 @@ public class ServicioPaquetesTest {
 
         Thread.sleep(5000);
         ArrayList tabs = new ArrayList(driver.getWindowHandles());
-        System.out.println(tabs.size());
-        driver.switchTo().window((String) tabs.get(1));  //hacemos foco en la otra pestaña
+         driver.switchTo().window((String) tabs.get(1));  //hacemos foco en la otra pestaña
 
 
 
@@ -177,7 +179,7 @@ public class ServicioPaquetesTest {
     @After
     public void close() {
         if (driver != null) {
-            driver.quit();
+          //  driver.quit();
         }
 
     }
