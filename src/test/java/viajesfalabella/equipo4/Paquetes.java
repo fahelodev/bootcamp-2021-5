@@ -87,7 +87,6 @@ public class Paquetes{
     public static void closeAll()
     {
         System.out.println("closeAll :: Cerrar otras conexiones que fueron utilizados en el test");
-
     }
 
     public WebElement driverElement(String path)
