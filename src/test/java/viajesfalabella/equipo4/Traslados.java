@@ -52,6 +52,7 @@ public class Traslados {
             fillOriginDestinyInput("destination","hilton");
             selectArriboOPartida('a',"1");
             clickBuscar(false);
+            Thread.sleep(3000);
             isClicked("//a[@class='-md -eva-3-hide-small eva-3-btn -secondary']");
             selectDropDown("//select[@class='select-tag sbox-time-arrival']","420");
             isClicked("//div[@class='sbox-button-container']");
