@@ -57,5 +57,6 @@ public class testpaquetes extends TestBase {
         paginaPaquetes.darClickBuscar();
         paginaPaquetes.cambiarBoxTipoMoneda("Dólares");
         paginaPaquetes.cambiarBoxOrdenarPor("convenientes");
+        // hola
     }
 }
