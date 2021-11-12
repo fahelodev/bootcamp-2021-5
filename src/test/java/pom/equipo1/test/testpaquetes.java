@@ -41,7 +41,7 @@ public class testpaquetes extends TestBase {
         paginaPaquetes.llenarCasillaDestino("buenos aires","Ciudad de Buenos Aires");
         paginaPaquetes.seleccionarFechas(1,2);
         paginaPaquetes.darClickBuscar();
-        paginaPaquetes.resultadosBusqueda();
-
+        String validar = paginaPaquetes.validarLugarHotel("Buenos Aires");
+        assertEquals("true",validar);
     }
 }

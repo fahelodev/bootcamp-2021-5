@@ -9,6 +9,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SeleniumBase {
 
@@ -139,5 +141,13 @@ public class SeleniumBase {
         esperaExplicitaElementoVisible(localizador);
         int lista = driver.findElements(localizador).size();
         return lista;
+    }
+    public String lugarHotel (String lugar){
+        String ciudad =  driver.findElement(By.cssSelector("div.cluster-content div.cluster-description-wrapper span.-eva-3-tc-gray-2")).getText();
+        Pattern patron = Pattern.compile(lugar);
+        Matcher m = patron.matcher(ciudad);
+        boolean e = m.find();
+        String res = String.valueOf(e);
+        return res;
     }
 }

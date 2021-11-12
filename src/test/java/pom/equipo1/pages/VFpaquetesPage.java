@@ -69,9 +69,8 @@ public class VFpaquetesPage extends SeleniumBase {
         return contarElementos(contenedorResultados);
     }
 
-    public void agregarHabitacionMenor(){
-        darClick(btnHabitaciones);
-        darClick(btnMasHabitaciones);
+    public String validarLugarHotel(String lugar){
+        return lugarHotel(lugar);
     }
     public void confirmarSeleccionHabitacionMenor(){
         darClick(btnAplicar);
