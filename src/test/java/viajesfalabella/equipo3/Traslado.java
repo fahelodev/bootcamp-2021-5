@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class Traslado {
@@ -37,7 +38,7 @@ public class Traslado {
     public void atc01() {
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS); // espera implicito para toda la pagina
         driver.findElement(By.xpath("//label[contains(text(),'Traslados')]")).click();
-        //CheckBox Hacia
+        //CheckBox Hacia aeropuerto
         driver.findElement(By.xpath("//*[@id=\"searchbox\"]/div/div/div/div[3]/div[2]/div[1]/div[2]/span[2]/label/i\n")).click();
         //TextBox Desde
         WebElement Desde = driver.findElement(By.xpath("//*[@id=\"searchbox\"]/div/div/div/div[3]/div[2]/div[2]/div/div[2]/div/div/div/div/input"));
@@ -52,20 +53,43 @@ public class Traslado {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/div[8]/div/div/ul/li")));
         Hasta.sendKeys(Keys.ENTER);
         //Fecha
-        driver.findElement(By.xpath("//*[@id=\"searchbox\"]/div/div/div/div[3]/div[2]/div[3]/div/div[2]/div/div/div[1]\n")).click();
+        driver.findElement(By.xpath("//input[@placeholder='Partida']")).click();
+        asignarFechaDisponible(2);
+        Select horaRetiro = new Select(driver.findElement(By.cssSelector("select[class='select-tag sbox-time-departure']")));
+        horaRetiro.selectByVisibleText("06:00");
+        Desde.sendKeys(Keys.ENTER);
+
+        /*driver.findElement(By.xpath("//*[@id=\"searchbox\"]/div/div/div/div[3]/div[2]/div[3]/div/div[2]/div/div/div[1]\n")).click();
         driver.findElement(By.xpath("/html/body/div[2]/div/div[5]/div[1]/div[4]/span[10]")).click();
         Hasta.sendKeys(Keys.ENTER);
         wait = new WebDriverWait(driver, 5); // tiempo de espera explicito
         driver.findElement(By.xpath("//*[@id=\"searchbox\"]/div/div/div/div[3]/div[2]/div[3]/div/div[2]/div/div/div[2]")).click();
         Select horaRetiro = new Select(driver.findElement(By.cssSelector("select[class='select-tag sbox-time-departure']")));
         horaRetiro.selectByVisibleText("06:00");
-        Desde.sendKeys(Keys.ENTER);
+        Desde.sendKeys(Keys.ENTER);*/
+
         //Cantidad Pasajeros
         driver.findElement(By.xpath("//*[@id=\"searchbox\"]/div/div/div/div[3]/div[2]/div[4]/div/div/div[2]/div/div\n")).click();
         for (int i = 0; i < 2; i++) {
             driver.findElement(By.xpath("/html/body/div[1]/div/div[1]/div[2]/div/div[1]/div/div[1]/div[2]/div/a[2]")).click();
         }
+        //Boton buscar
+        driver.findElement(By.xpath("//*[@id=\"searchbox\"]/div/div/div/div[3]/div[2]/div[5]/div/a")).click();
+
+        List<WebElement> listaP = driver.findElements(By.cssSelector("strong[class='ng-binding']"));
+        int contP = listaP.size();
+        System.out.println(contP);
+        int contadorfinal = 0;
+        while (contadorfinal < contP) {
+
+            String text = driver.findElements(By.cssSelector("strong[class='ng-binding']")).get(contadorfinal).getText();
+            contadorfinal++;
+
+        }
+
+        Assert.assertEquals(contP, contadorfinal);
     }
+
 
     @Test
     public void atc02() {
@@ -85,41 +109,51 @@ public class Traslado {
         wait = new WebDriverWait(driver, 5); // tiempo de espera explicito
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/div[8]/div/div/ul/li")));
         Hasta.sendKeys(Keys.ENTER);
-        //Fecha Llegada
-        wait = new WebDriverWait(driver, 5); // tiempo de espera explicito
-        driver.findElement(By.xpath("//*[@id=\"searchbox\"]/div/div/div/div[3]/div[2]/div[3]/div/div[1]/div/div/div[1]/div/div/input")).click();
-        driver.findElement(By.xpath("/html/body/div[3]/div/div[5]/div[2]/div[4]/span[1]")).click();
-        Hasta.sendKeys(Keys.ENTER);
-        wait = new WebDriverWait(driver, 5); // tiempo de espera explicito
+        //Fecha Arribo
+        driver.findElement(By.xpath("//input[@placeholder='Arribo']")).click();
+        asignarFechaDisponible(5);
+        driver.findElement(By.xpath("//input[@class='input-tag sbox-checkout']")).click();
+        driver.findElement(By.xpath("//input[@class='input-tag sbox-checkout']")).click();
+        asignarFechaDisponible(10);
         Select horaLlegada = new Select(driver.findElement(By.cssSelector("select[class='select-tag sbox-time-arrival']")));
-        wait = new WebDriverWait(driver, 5); // tiempo de espera explicito
         horaLlegada.selectByVisibleText("10:00");
         Desde.sendKeys(Keys.ENTER);
-        // Fecha Regreso
-        wait = new WebDriverWait(driver, 5); // tiempo de espera explicito
+
+
+        // Fecha Partida
+        /*driver.findElement(By.xpath("//input[@class='input-tag sbox-checkout']")).click();
+        asignarFechaDisponible(10);
+        Select horaRegreso = new Select(driver.findElement(By.cssSelector("select[class='select-tag sbox-time-departure']")));
+        horaRegreso.selectByVisibleText("16:00");
+        Desde.sendKeys(Keys.ENTER);*/
+
+        /*wait = new WebDriverWait(driver, 5); // tiempo de espera explicito
         driver.findElement(By.xpath("//*[@id=\"searchbox\"]/div/div/div/div[3]/div[2]/div[3]/div/div[2]/div/div/div[1]/div/div/input")).click();
         driver.findElement(By.xpath("/html/body/div[3]/div/div[5]/div[2]/div[4]/span[8]")).click();
         Hasta.sendKeys(Keys.ENTER);
         Select horaRegreso = new Select(driver.findElement(By.cssSelector("select[class='select-tag sbox-time-departure']")));
         wait = new WebDriverWait(driver, 5); // tiempo de espera explicito
-        horaRegreso.selectByVisibleText("16:00");
-            //Cantidad Pasajeros Niños
-            driver.findElement(By.xpath("//*[@id=\"searchbox\"]/div/div/div/div[3]/div[2]/div[4]/div/div/div[2]/div/div\n")).click();
-            for (int j = 0; j < 1; j++) {
-                driver.findElement(By.xpath("/html/body/div[1]/div/div[1]/div[2]/div/div[1]/div/div[2]/div[2]/div/a[2]")).click();
+        horaRegreso.selectByVisibleText("16:00");*/
 
-                Select Edad = new Select(driver.findElement(By.cssSelector("select[class='select-tag']")));
-                Edad.selectByVisibleText("10 años");
-                }
-            //Botón buscar
+        //Cantidad Pasajeros Niños
+        driver.findElement(By.xpath("//*[@id=\"searchbox\"]/div/div/div/div[3]/div[2]/div[4]/div/div/div[2]/div/div\n")).click();
+        for (int j = 0; j < 1; j++) {
+            driver.findElement(By.xpath("/html/body/div[1]/div/div[1]/div[2]/div/div[1]/div/div[2]/div[2]/div/a[2]")).click();
+
+            Select Edad = new Select(driver.findElement(By.cssSelector("select[class='select-tag']")));
+            Edad.selectByVisibleText("10 años");
+        }
+        //Botón buscar
         driver.findElement(By.xpath("//*[@id=\"searchbox\"]/div/div/div/div[3]/div[2]/div[5]/div")).click();
-       //Filtro Dolares
+        //Filtro Dolares
         wait = new WebDriverWait(driver, 5); // tiempo de espera explicito
         driver.findElement(By.xpath("//*[@id=\"currency-select\"]")).click();
-        driver.findElement(By.xpath("//*[@id=\"currency-select\"]/option[2] ")).click();
+        driver.findElement(By.xpath("//*[@id=\"currency-select\"]/option[2]")).click();
 
-     //  driver.findElement(By.cssSelector("div[class='select-container'] > select[class='select-tag ng-valid ng-not-empty ng-dirty ng-valid-parse ng-touched'] > option[value='string:USD']")).click();
-        }
+        String selected = driver.findElement(By.xpath("//*[@id=\"currency-select\"]/option[2]")).getText();
+        Assert.assertEquals("Dólares", selected);
+
+    }
 
     @Test
     public void atc03() {
@@ -180,23 +214,33 @@ public class Traslado {
         wait = new WebDriverWait(driver, 5); // tiempo de espera explicito
         horamod.selectByVisibleText("20:00");
 
-
         driver.findElement(By.xpath("//*[@id=\"bodyID\"]/div[6]/div[1]/div/div[1]/div/div/div/div/div/div[3]/div[2]/div[5]/div/a")).click();
 
         driver.findElement(By.xpath("//*[@id=\"bodyID\"]/div[6]/div[1]/div/div[2]/main/div[3]/div/div[2]/div[3]/search-item/div[2]/div[2]/div[2]/div/div[1]/div[2]/button")).click();
         //  driver.findElement(By.cssSelector("div[class='select-container'] > select[class='select-tag ng-valid ng-not-empty ng-dirty ng-valid-parse ng-touched'] > option[value='string:USD']")).click();
+
+        String selected = driver.findElement(By.xpath("//*[@id=\"currency-select\"]/option[2]")).getText();
+        Assert.assertEquals("Dólares", selected);
+
     }
 
+
     @After
-    public void close(){
-        if(driver != null){
+    public void close() {
+        if (driver != null) {
             driver.close();
         }
     }
 
     @AfterClass
-    public static void closeAll(){
+    public static void closeAll() {
         System.out.println("closeAll :: Cerrar otras conexiones que fueron utilizadas en el test");
 
     }
+
+    public void asignarFechaDisponible(int dias) {
+        List<WebElement> fechas = driver.findElements(By.cssSelector("._dpmg2--show ._dpmg2--month-active ._dpmg2--available span._dpmg2--date-number"));
+        fechas.get(dias).click();
     }
+}
+
