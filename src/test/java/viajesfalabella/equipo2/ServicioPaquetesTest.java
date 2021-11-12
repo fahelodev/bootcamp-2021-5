@@ -179,7 +179,7 @@ public class ServicioPaquetesTest {
     @After
     public void close() {
         if (driver != null) {
-          //  driver.quit();
+             driver.quit();
         }
 
     }

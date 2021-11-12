@@ -32,7 +32,7 @@ public class TestBase {
     @After
     public void close(){
         if(driver != null){
-            //driver.close();
+            driver.close();
         }
     }
 
