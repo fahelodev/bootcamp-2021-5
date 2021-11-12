@@ -1,25 +1,29 @@
-/*package katas.landres;
+package katas.landres;
 
-import java.util.HashMap;
-import java.util.ArrayList;
-import java.util.List;
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.junit.Assert.assertArrayEquals;
 
 public class ZooDingleMouseTest {
-    public  String[] whoEatsWho(final String zoo){
-        String []animales= zoo.split(",")  ; // agarro todo lo que tiene zoo y lo corto por  una ,
-        List<String> lista=new ArrayList<String>(); //creamos lista de string
-        String animalcomido;
-        String[]animalCome= null;
-        boolean mataIzq=false;
-        boolean mataDerecha=false;
-        ArrayList<String> resultado= new ArrayList<>();
-        resultado.add(zoo);
+    private ZooDingleMouse objeto;
 
-        for (int i = 0; i <animales.length ; i++) {
-            lista.add(i, animales[i])
 
-        }
+    @Before
+    public void Before(){
+        objeto= new ZooDingleMouse();
+    }
 
+    @Test
+    public void testPrueba1() {
+        final String input = "fox,bug,chicken,grass,sheep";
+        final String[] expected = 	{
+                "fox,bug,chicken,grass,sheep",
+                "chicken eats bug",
+                "fox eats chicken",
+                "sheep eats grass",
+                "fox eats sheep",
+                "fox"};
+        assertArrayEquals(expected, objeto.whoEatsWho(input));
     }
 }
-*/
