@@ -1,8 +1,7 @@
-package pom.mentoria.base;
+package pom.equipo6.base;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.openqa.selenium.WebDriver;
@@ -11,36 +10,27 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import java.util.concurrent.TimeUnit;
 
 public class TestBase {
+    //Contiene las configuraciones basicas para ejecutar los test
 
-    //conteniene las configuraciones basicas de los test a ejecutar
-    //atributos
-    protected WebDriver driver; // navegador
+    //Atributos
+    protected WebDriver driver; //Navegador
 
     @BeforeClass
     public static void initialiseBrowser(){
         WebDriverManager.chromedriver().setup();
     }
-
     @Before
     public void setupBrowser(){
         driver = new ChromeDriver();
         driver.manage().deleteAllCookies();
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.manage().timeouts().pageLoadTimeout(10,TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(20,TimeUnit.SECONDS);
     }
-
     @After
     public void close(){
-        if(driver != null){
-            driver.quit();
+        if (driver != null) {
+            driver.close();
         }
     }
-
-    @AfterClass
-    public static void closeAll()
-    {
-        System.out.println("closeAll :: Cerrar otras conexiones que fueron utilizados en el test");
-    }
-
 }
