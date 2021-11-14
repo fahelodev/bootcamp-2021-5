@@ -213,12 +213,14 @@ public class SeleniumBase {
         busquedaElemento(edades,dia);
     }
 
-    public void seleccionbox (String clase, String palabra){
+    public void seleccionbox (String clase, String palabra) throws InterruptedException {
+        esperaExplicitaElementoClickeable(By.cssSelector(clase));
         driver.findElement(By.cssSelector(clase)).click();
         esperaExplicitaElementoVisible(By.cssSelector(clase+" select option"));
         List <WebElement> options = driver.findElements(By.cssSelector(clase+" select option"));
         // CAMBIAMOS A DÓLARES ESTADOUNIDENSES
         busquedaElemento(options,palabra);
+        Thread.sleep(2000);
     }
     public void filtrar (String filtro,  By localizador) {
         WebDriverWait espera = new WebDriverWait(driver, 15);

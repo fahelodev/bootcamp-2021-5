@@ -109,11 +109,13 @@ public class VFpaquetesPage extends SeleniumBase {
         return obtenerTexto(mensajePaquete);
     }
 
-    public void cambiarBoxTipoMoneda(String seleccion){
+    public void cambiarBoxTipoMoneda(String seleccion) throws InterruptedException {
         seleccionbox(boxTipoDeMoneda,seleccion);
+        esperaImplicita();
     }
-    public void cambiarBoxOrdenarPor(String seleccion){
+    public void cambiarBoxOrdenarPor(String seleccion) throws InterruptedException {
         seleccionbox(boxOrdenarPor,seleccion);
+        esperaImplicita();
     }
 
     public void selecionarPaqueteMasConveniente(){

@@ -45,7 +45,7 @@ public class testpaquetes extends TestBase {
     }
 
     @Test
-    public void CdP01_agregarPaquete(){
+    public void CdP01_agregarPaquete() throws InterruptedException {
         paginaPaquetes.seleccionarVuelo2Alojamientos();
         paginaPaquetes.llenarCasillaOrigen("bue","Ciudad de Buenos Aires");
         paginaPaquetes.llenarCasillaDestino("esp","Cataluña");
