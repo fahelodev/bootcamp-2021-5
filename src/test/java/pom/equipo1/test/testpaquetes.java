@@ -1,13 +1,12 @@
 package pom.equipo1.test;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
 import pom.equipo1.base.TestBase;
 import pom.equipo1.pages.VFHomePage;
 import pom.equipo1.pages.VFpaquetesPage;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class testpaquetes extends TestBase {
@@ -41,8 +40,8 @@ public class testpaquetes extends TestBase {
         paginaPaquetes.llenarCasillaDestino("buenos aires","Ciudad de Buenos Aires");
         paginaPaquetes.seleccionarFechas(1,2);
         paginaPaquetes.darClickBuscar();
-        String validar = paginaPaquetes.validarLugarHotel("Buenos Aires");
-        assertEquals("true",validar);
+        String validar = paginaPaquetes.obtenerUbicacionHotel();
+        Assert.assertTrue(validar.contains("Buenos Aires"));
     }
 
     @Test
@@ -57,6 +56,10 @@ public class testpaquetes extends TestBase {
         paginaPaquetes.darClickBuscar();
         paginaPaquetes.cambiarBoxTipoMoneda("Dólares");
         paginaPaquetes.cambiarBoxOrdenarPor("convenientes");
-        // hola
+        paginaPaquetes.selecionarPaqueteMasConveniente();
+        paginaPaquetes.seleccionarHotelHoliday();
+        paginaPaquetes.selccionarHotelMarbella();
+        String validar = paginaPaquetes.validarMensaje();
+        Assert.assertTrue(validar.contains("Holiday Inn Express Barcelona City 22@"));
     }
 }
