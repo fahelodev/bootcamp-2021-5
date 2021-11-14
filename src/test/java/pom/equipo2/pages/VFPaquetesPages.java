@@ -5,6 +5,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import pom.equipo2.base.SeleniumBase;
 
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+
 public class VFPaquetesPages extends SeleniumBase {
 
     public VFPaquetesPages(WebDriver driver) {
@@ -27,7 +31,12 @@ public class VFPaquetesPages extends SeleniumBase {
     By btnFechaIda = By.cssSelector("div.ac-container ul>li");
     By btnSeleccionFechaIda = By.cssSelector("input.input-tag.sbox-checkin-date");
     By btnSleccionFechaVuelta = By.cssSelector("span._dpmg2--date._dpmg2--available");
-
+    By mensajeAlerta = By.cssSelector("div._pnlpk-tooltip");
+    By mensajeAlerta2 = By.xpath("//span[contains(text(),'El destino debe ser diferente del origen.')]");
+    By listaFechaUltimoMes = By.xpath("//div[@class='_dpmg2--month _dpmg2--o-3']//span[contains(text(),'1')]");
+    By listaFechaMeses = By.cssSelector("span._dpmg2--date._dpmg2--available");
+    String resultado;
+    String resultado2;
 
     public void cargarOrigen() {
         ingresarTexto(campoOrigen, "Cordoba");
@@ -45,7 +54,7 @@ public class VFPaquetesPages extends SeleniumBase {
     }
 
     public void confirmarMes() {
-        seleccionarMes(seleccionMes);
+        seleccionarElementoPorTexto(seleccionMes, "Enero 2022");
     }
 
     public void confirmarBusqueda() {
@@ -66,11 +75,37 @@ public class VFPaquetesPages extends SeleniumBase {
         seleccionarPersonas(btnAumetarMenores, 3);
     }
 
-    public void cargarDestino2 () {
+    public void cargarDestino2() {
         ingresarTexto(campoDestino2, "buenos aires");
         seleccionarTextoLista(listaElementos, "Buenos Aires, Ciudad de Buenos Aires, Argentina");
     }
 
-}
+    public void verificarLimitePersonas() {
 
+        List<WebElement> options_list = encontrarElementos(mensajeAlerta);
+        resultado = "";
+        for (WebElement l : options_list) {
+            resultado += l.getText();
+        }
+        assertEquals("Solo puedes hacer búsquedas de hasta 8 personas", resultado);
+    }
+
+    public void verificarDestinoOrigenDistinto() {
+
+        resultado2 = obtenerTexto(mensajeAlerta2);
+
+        assertEquals("El destino debe ser diferente del origen.", resultado2);
+
+    }
+
+    public void cargarFechas() {
+        clickear(btnSeleccionFechaIda);
+        seleccionarFecha(listaFechaUltimoMes, "1");
+        seleccionarFecha(listaFechaMeses, "11");
+    }
+
+    public void confimarBusqueda() {
+        clickear(btnBuscar);
+    }
+}
 

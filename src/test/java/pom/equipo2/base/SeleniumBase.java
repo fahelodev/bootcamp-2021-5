@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SeleniumBase {
@@ -42,6 +43,7 @@ public class SeleniumBase {
         espera = new WebDriverWait(driver, time);
         espera.until(ExpectedConditions.elementToBeClickable(localizador));
     }
+
     public void esperaExplicitaPrecenciaElementos(By localizador, int time) {
         WebDriverWait espera;
         espera = new WebDriverWait(driver, time);
@@ -67,32 +69,45 @@ public class SeleniumBase {
         }
     }
 
-   public void seleccionarFecha(By localizador, String fecha){
+    public void seleccionarFecha(By localizador, String fecha) {
         List<WebElement> listaFechas = encontrarElementos(localizador);
-       for (WebElement elemento:listaFechas) {
-           if(elemento.getText().equals(fecha)) {
-               elemento.click();
-               break;
-           }
-       }
-
-   }
-
-   public void seleccionarMoneda(By localizador){
-       Select moneda = new Select(encontrarElemento(localizador));
-       moneda.selectByValue("USD");
-   }
-
-   public void ingresarValorMinimo(By localizador, String minimo){
-      encontrarElemento(localizador).sendKeys(minimo);
-    }
-    public void ingresarValorMaximo(By localizador, String maximo){
-        encontrarElemento(localizador).sendKeys(Keys.CONTROL,"a",Keys.DELETE);
-        encontrarElemento(localizador).sendKeys(maximo);
+        for (WebElement elemento : listaFechas) {
+            if (elemento.getText().equals(fecha)) {
+                elemento.click();
+                break;
+            }
+        }
 
     }
 
+    public void seleccionarElementoPorValor(By localizador, String Valor) {
+        Select selector = new Select(encontrarElemento(localizador));
+        selector.selectByValue(Valor);
+    }
 
+    public void seleccionarElementoPorTexto(By localizador, String texto) {
+        Select selector = new Select(encontrarElemento(localizador));
+        selector.selectByVisibleText(texto);
+    }
 
+    public void ingresarTextoBorrandoElPorDefecto(By localizador, String texto) {
+        encontrarElemento(localizador).sendKeys(Keys.CONTROL, "a", Keys.DELETE);
+        encontrarElemento(localizador).sendKeys(texto);
+
+    }
+
+    public void seleccionarPersonas(By localizador, int totalPersonas) {
+
+        for (int i = 0; i < totalPersonas; i++) {
+            encontrarElemento(localizador).click();
+        }
+    }
+
+    public void cambiarFocoPagina () throws InterruptedException {
+        Thread.sleep(5000);
+        ArrayList tabs = new ArrayList(driver.getWindowHandles());
+        driver.switchTo().window((String) tabs.get(1));
+    }
 
 }
+

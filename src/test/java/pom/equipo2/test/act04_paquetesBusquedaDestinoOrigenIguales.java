@@ -1,12 +1,9 @@
 package pom.equipo2.test;
 
 import org.junit.Test;
-import org.openqa.selenium.By;
 import pom.equipo2.base.TestBase;
 import pom.equipo2.pages.VFHomePage;
 import pom.equipo2.pages.VFPaquetesPages;
-
-import static org.junit.Assert.assertEquals;
 
 public class act04_paquetesBusquedaDestinoOrigenIguales extends TestBase {
 
@@ -23,8 +20,7 @@ public class act04_paquetesBusquedaDestinoOrigenIguales extends TestBase {
         paginaPaquetes.confirmarFechaNoDecidida();
         paginaPaquetes.confirmarMes();
         paginaPaquetes.confirmarBusqueda();
-        String resultado = driver.findElement(By.xpath("//span[contains(text(),'El destino debe ser diferente del origen.')]")).getText();
-        assertEquals("El destino debe ser diferente del origen.", resultado);
+        paginaPaquetes.verificarDestinoOrigenDistinto();
     }
 
 
