@@ -23,6 +23,7 @@ public class VFBusquedaAlojamientoPage extends SeleniumBase {
 
 
     public void confirmarMoneda (){
+        esperaExplicitaElementoClickeable(campoMinimo,7);
         seleccionarElementoPorValor(listaMoneda,"USD");
         esperaExplicitaPrecenciaElementos(campoMinimo,7);
         ingresarTexto(campoMinimo,"110");
@@ -31,6 +32,7 @@ public class VFBusquedaAlojamientoPage extends SeleniumBase {
 
     }
     public void confirmarCentro(){
+        esperaExplicitaElementoClickeable(etiquetaCentro,7);
         clickear(etiquetaCentro);
     }
     public void verificarAlMenosUnResultado(){
@@ -38,6 +40,7 @@ public class VFBusquedaAlojamientoPage extends SeleniumBase {
         assertTrue(totalAlojamiento >= 1);
     }
     public void verificarBusquedaConDosFiltros(){
+        esperaExplicitaPrecenciaElementos(etiquetaCantidadCentro,7);
         totalCentro= Integer.valueOf(obtenerTexto(etiquetaCantidadCentro));
         assertTrue(totalCentro > 1);
     }
