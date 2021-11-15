@@ -2,8 +2,9 @@ package pom.equipo2.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import pom.equipo2.base.SeleniumBase;
+import static org.junit.Assert.assertEquals;
+
 import static org.junit.Assert.assertEquals;
 
 public class VFAlojamientoPage extends SeleniumBase {
@@ -26,7 +27,9 @@ public class VFAlojamientoPage extends SeleniumBase {
 
     public void irAlojamientoDesdeHome(){
         clickear(btnAlojamiento);
-        // esperaExplicitaElementoClickeable(desplegableHabitaciones,7);
+
+       // esperaExplicitaElementoClickeable(desplegableHabitaciones,7);
+
     }
     public void agregarMenorHabitacion(){
 
@@ -51,7 +54,11 @@ public class VFAlojamientoPage extends SeleniumBase {
 
 
     public void verificarBusquedaSinEdad(){
-        resultado = obtenerTexto(mensajeError);
+
+         resultado = obtenerTexto(mensajeError);
+
         assertEquals("Ingresa la edad del menor", resultado);
     }
+
+
 }
