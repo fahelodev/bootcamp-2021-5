@@ -14,7 +14,4 @@ public class VFHomePage extends SeleniumBase {
     public void irHomePage(){
         irUrl("https://www.viajesfalabella.cl");
     }
-
-
-
 }
