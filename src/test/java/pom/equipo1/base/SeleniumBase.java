@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -81,7 +82,7 @@ public class SeleniumBase {
         busquedaElemento(resultados,seleccionar);
     }
 
-    public void buscarEnCalendario (int fecha1, int fecha2, By localizador){
+    public void buscarEnCalendario (int fecha1, int fecha2, By localizador,By localizador2){
         // LISTA CALENTARIO ACTUAL
         esperaExplicitaElementoVisible(localizador);
         List<WebElement> mesActual = driver.findElements(localizador);
@@ -101,12 +102,12 @@ public class SeleniumBase {
         else{
             if (diaActual+fecha1 < diaUltimo){
                 buscarCalendario(diaActual+fecha1,mesActual);
-                driver.findElement(By.xpath("//i[@class='_dpmg2--icon-ico-arrow']//ancestor::div[@class='datepicker-packages-car sbox-v4-components']")).click();
+                driver.findElement(localizador2).click();
                 mesActual= driver.findElements(By.cssSelector("._dpmg2--show ._dpmg2--month-active ._dpmg2--available span._dpmg2--date-number"));
                 buscarCalendario(diaActual+fecha2-diaUltimo,mesActual);
             }
             else {
-                driver.findElement(By.xpath("//i[@class='_dpmg2--icon-ico-arrow']//ancestor::div[@class='datepicker-packages-car sbox-v4-components']")).click();
+                driver.findElement(localizador2).click();
                 mesActual= driver.findElements(By.cssSelector("._dpmg2--show ._dpmg2--month-active ._dpmg2--available span._dpmg2--date-number"));
                 buscarCalendario(diaActual+fecha1-diaUltimo,mesActual);
                 buscarCalendario(diaActual+fecha2-diaUltimo,mesActual);
@@ -231,6 +232,39 @@ public class SeleniumBase {
             }
 
         }
+    }
+
+    public void buscarPorFiltro(String labelAFiltrar,String opcionAClickear){
+        esperaExplicitaElementoVisible(By.cssSelector("div.eva-3-filters-vertical.-eva-3-mb-lg.-show-filters"));
+        List<WebElement> optionsTO = driver.findElements(By.xpath("//li[contains(.,'"+labelAFiltrar+"')]//em"));
+        for (WebElement dep : optionsTO) {
+            if (dep.getText().contains(opcionAClickear)) {
+                dep.click();
+                break;
+            }
+        }
+    }
+
+   public void cambiarPestaña(){
+        String mainTab = driver.getWindowHandle();
+        String newTab = "";
+        Set<String> handles = driver.getWindowHandles();
+        for (String actual : handles) {
+
+            if (!actual.equalsIgnoreCase(mainTab)) {
+                driver.switchTo().window(actual);
+                newTab = actual;
+            }
+        }
+    }
+
+    public void cerrarPestaña(){
+        driver.close();
+    }
+
+    public void cambiarPestañaInicial(){
+        String mainTab = driver.getWindowHandle();
+        driver.switchTo().window(mainTab);
     }
 
 }
