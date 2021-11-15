@@ -1,13 +1,11 @@
 package pom.equipo2.test;
 
-/*import org.junit.Test;
-import org.openqa.selenium.By;
+import org.junit.Test;
 import pom.equipo2.base.TestBase;
 import pom.equipo2.pages.VFAlojamientoPage;
 import pom.equipo2.pages.VFBusquedaAlojamientoPage;
 import pom.equipo2.pages.VFHomePage;
 
-import static org.junit.Assert.assertTrue;
 
 public class act02_alojamientoBusquedaDosFiltros extends TestBase {
     protected VFHomePage paginaHome = null;
@@ -27,5 +25,6 @@ public class act02_alojamientoBusquedaDosFiltros extends TestBase {
         paginaBusquedaAlojamiento.confirmarMoneda();
         paginaBusquedaAlojamiento.confirmarCentro();
         paginaBusquedaAlojamiento.verificarBusquedaConDosFiltros();
+
     }
-}*/
+}

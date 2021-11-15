@@ -1,13 +1,11 @@
 package pom.equipo2.test;
 
 import org.junit.Test;
-import org.openqa.selenium.By;
 import pom.equipo2.base.TestBase;
 import pom.equipo2.pages.VFAlojamientoPage;
 import pom.equipo2.pages.VFBusquedaAlojamientoPage;
 import pom.equipo2.pages.VFHomePage;
 
-import static org.junit.Assert.assertTrue;
 
 
 public class act01_alojamientoBusquedaConResultado extends TestBase {
