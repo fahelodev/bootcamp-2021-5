@@ -99,10 +99,4 @@ public class SeleniumBase {
         return driver.getTitle();
     }
 
-
-
-
-
-
-
 }
