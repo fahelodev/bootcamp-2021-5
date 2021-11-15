@@ -1,7 +1,6 @@
 package selenium.mcarrillo;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.checkerframework.checker.units.qual.A;
 import org.junit.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
