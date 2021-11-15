@@ -45,9 +45,11 @@ public class ServicioAlojamientosTest {
         espera.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div.sbox-distri-container")));
 
         //click en Habitaciones
-        driver.findElement(By.cssSelector("div.sbox-distri-container")).click();
+         driver.findElement(By.cssSelector("div.sbox-distri-container")).click();
         //Clic en (+) en la opcion de menores
-        driver.findElement(By.cssSelector("div._pnlpk-itemRow__item._pnlpk-stepper-minors.-medium-down-to-lg  a.steppers-icon-right.sbox-3-icon-plus")).click();
+       // driver.findElement(By.cssSelector("div._pnlpk-itemRow__item._pnlpk-stepper-minors.-medium-down-to-lg  a.steppers-icon-right.sbox-3-icon-plus")).click();
+        driver.findElement(By.xpath("//label[contains(text(),'Menores')]/following::a[contains(@class,'sbox-3-icon-plus')]")).click();
+
         //Click en el boton "Aplicar"
         driver.findElement(By.xpath("//a[contains(text(),'Aplicar')]")).click();
         //Se pasa el texto del mensaje a una variable de tipo String
@@ -63,7 +65,7 @@ public class ServicioAlojamientosTest {
         driver.findElement(By.xpath("//label[contains(text(),'Alojamientos')]")).click();
 
         //Ingresa la palabra "cordoba" en el campo "Destino"
-        driver.findElement(By.cssSelector("input.input-tag.sbox-main-focus")).sendKeys("cordoba");
+        driver.findElement(By.xpath("//input[contains(@class,'sbox-main')]")).sendKeys("cordoba");
 
         //Se obtiene la lista y se selecciona la opcion cordoba
         espera.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(text(),'Córdoba, Córdoba, Argentina')]")));
@@ -78,13 +80,14 @@ public class ServicioAlojamientosTest {
         }
 
         //Seleccionamos el campo fecha de entrada
-        driver.findElement(By.cssSelector("input.input-tag.sbox-checkin-date")).click();
+        driver.findElement(By.xpath("//input[contains(@class,'checkin')]")).click();
 
         //selecciona el dia 8 del mes actual
         driver.findElement(By.xpath("//span[contains(text(),'22')]")).click();
 
-        //selecciona el campo de salida
-        driver.findElement(By.cssSelector(" input.input-tag.sbox-checkout-date")).click();
+        //selecciona el campo fecha  salida
+        driver.findElement(By.xpath("//input[contains(@class,'checkout')]")).click();
+
         //selecciona el dia 12 del mes actual
         driver.findElement(By.xpath("//span[contains(text(),'26')]")).click();
 
@@ -93,7 +96,9 @@ public class ServicioAlojamientosTest {
 
         espera.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("span.dropdown-item-container.disabled-item")));
         //Se obtiene la cantidad de alojamientos
-        Integer resultado = Integer.parseInt(driver.findElement(By.cssSelector("span.dropdown-item-container.disabled-item span.filters-quantity")).getText());
+
+        Integer resultado = Integer.parseInt(driver.findElement(By.xpath("//span[contains(text(),'alojamientos')]/ancestor::span[3]/child::span[2]")).getText());
+
         //Se valida que existe al menos un alojamiento
         assertTrue(resultado >= 1);
     }
@@ -104,7 +109,9 @@ public class ServicioAlojamientosTest {
         driver.findElement(By.xpath("//label[contains(text(),'Alojamientos')]")).click();
 
         //ingresa la palabra "cordoba"
-        driver.findElement(By.cssSelector("input.input-tag.sbox-main-focus")).sendKeys("cordoba");
+        driver.findElement(By.xpath("//input[contains(@class,'sbox-main')]")).sendKeys("cordoba");
+
+
         espera.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(text(),'Córdoba, Córdoba, Argentina')]")));
 
         //recorre la lista y compara cual es igual a Córdoba, Córdoba, Argentina y en caso que se encuentre hace click
@@ -116,14 +123,14 @@ public class ServicioAlojamientosTest {
             }
         }
         //Seleccion de la fecha de entrada
-        driver.findElement(By.cssSelector("input.input-tag.sbox-checkin-date")).click();
+        driver.findElement(By.xpath("//input[contains(@class,'checkin')]")).click();
+
 
         //seleccion la fecha de entrada 22 de noviembre
         driver.findElement(By.xpath("//span[contains(text(),'22')]")).click();
 
         //Seleccion de la fecha de salida
-        driver.findElement(By.cssSelector(" input.input-tag.sbox-checkout-date")).click();
-
+         driver.findElement(By.xpath("//input[contains(@class,'checkout')]")).click();
         //seleccion fecha de salida 26 noviembre
         driver.findElement(By.xpath("//span[contains(text(),'26')]")).click();
 
@@ -131,6 +138,7 @@ public class ServicioAlojamientosTest {
         driver.findElement(By.xpath("//em[contains(text(),'Buscar')]")).click();
 
 
+        espera.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("Select.select-tag")));
         //seleccion de la moneda en Dolares
         Select moneda = new Select(driver.findElement(By.cssSelector("Select.select-tag")));
         moneda.selectByValue("USD");
@@ -149,24 +157,20 @@ public class ServicioAlojamientosTest {
         //Click en el boton aplicar
         driver.findElement(By.xpath("//em[contains(text(),'Aplicar')]")).click();
 
-        //se obtiene una lista de los filtros y se selecciona la opcion centro
-        List<WebElement> listaFiltros = driver.findElements(By.xpath("//ul[@class='eva-3-dropdown']//ul[@class='dropdown-subcontent']/li[@class='dropdown-subitem']//span[@class='eva-3-checkbox']//span[contains(.,'Centro')]"));
-        //System.out.println(listaFiltros.size());
-        String a = driver.findElement(By.xpath("//ul[@class='eva-3-dropdown']//ul[@class='dropdown-subcontent']/li[@class='dropdown-subitem']//span[@class='eva-3-checkbox']//span[contains(.,'Centro')]")).getText();
-        //System.out.println(a);
+        //hacemos clic en el elemento que contiene el texto Centro
+        driver.findElement(By.xpath("//span[contains(text(),'Centro') and not(contains(text(),'de'))]/ancestor::em")).click();
 
-        //recorre la lista y compara cual es igual a centro y en caso que se encuentre hace click
-        for (WebElement elemento : listaFiltros) {
-            if (elemento.getText().equals("Centro")) {
-                elemento.click();
-            }
-        }
+        /*
+        //obtenemos una lista con los dos valores que acompañan a centro
+        List<WebElement> listaValorCentro =driver.findElements(By.xpath("//span[contains(.,'Centro')]/child::span [2]"));
+        String resultadoFinal= listaValorCentro.get(1).getText();
+            */
+        String resultadoFinal= driver.findElement(By.xpath("//span[contains(text(),'Centro') and not(contains(text(),'de'))]/ancestor::span[3]/child::span[2]")).getText();
 
-        espera.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(("//ul[@class='eva-3-dropdown']//ul[@class='dropdown-subcontent']/li[@class='dropdown-subitem']//span[contains(.,'Centro')]//span [@class='filters-quantity']"))));
-        String resultadoFinal = driver.findElement(By.xpath("//ul[@class='eva-3-dropdown']//ul[@class='dropdown-subcontent']/li[@class='dropdown-subitem']//span[contains(.,'Centro')]//span [@class='filters-quantity']")).getText();
-        System.out.println(resultadoFinal);
-        Integer res = Integer.valueOf(resultadoFinal);
+
+         Integer res = Integer.valueOf(resultadoFinal);
         assertTrue("El numero total de alojaminetos es" + res, res > 1);
+
     }
 
     @After

@@ -27,5 +27,4 @@ public class VFAlojamientoPage extends SeleniumBase {
     public void confirmarSeleccionHabitacionMenor(){
         clickear(btnAplicar);
     }
-
 }
