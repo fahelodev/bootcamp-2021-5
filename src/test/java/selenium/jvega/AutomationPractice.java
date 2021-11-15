@@ -1,7 +1,6 @@
 package selenium.jvega;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.apache.tools.ant.types.selectors.SelectSelector;
 import org.junit.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
