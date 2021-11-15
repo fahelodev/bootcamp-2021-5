@@ -1,6 +1,5 @@
 package pom.equipo3.pages;
 
-
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -36,6 +35,9 @@ public class VFAlojamientosPage extends SeleniumBase {
     By listaElementos = By.cssSelector("div.ac-container ul>li");
     By errorFound = By.cssSelector(".ac-group-hint-error");
     By Ordenar = By.xpath ("//aloha-select[@class='sorting-select']//select[@class='select-tag']/option");
+    By Shotel = By.xpath("/html/body/aloha-app-root/aloha-results/div/div/div/div[2]/div[2]/aloha-list-view-container/div[2]/div[1]/aloha-cluster-container/div/div/div[2]/aloha-cluster-pricebox-container/div/div[2]/div[2]/aloha-button");
+    By Hotel = By.xpath("//span[contains(text(),'Libertador Hotel')]");
+    By Oferta = By.cssSelector("body > aloha-app-root > aloha-results > div > div > div > div.filters-column > aloha-filter-list > div > ul > li:nth-child(5) > aloha-filter > aloha-checkbox-filter > ul > li:nth-child(1) > span > span.filters-checkbox > aloha-checkbox > span > label > em > span");
 
 
 
@@ -66,20 +68,16 @@ public class VFAlojamientosPage extends SeleniumBase {
         Assert.assertEquals("No se encontraron resultados que coincidan con" + "pinchas",b+selected);
     }
 
-    public void cargarFechas() {
-        clickear(btnOrigen);
-        asignarFechaDisponible(20);
-        clickear(btnDestino);
-        clickear(btnDestino);
-        asignarFechaDisponible(25);
-    }
 
-    public void cargarFechas() {
+
+
+    public void cargarFechas()
+    {
         clickear(btnOrigen);
-        asignarFechaDisponible(20);
+        asignarFechaDisponible(10);
         clickear(btnDestino);
         clickear(btnDestino);
-        asignarFechaDisponible(25);
+        asignarFechaDisponible(12);
     }
 
 
@@ -114,7 +112,7 @@ public class VFAlojamientosPage extends SeleniumBase {
 
     public void filtroOrdenar()
     {
-        //WebDriverWait espera = new WebDriverWait(driver, 15);
+        esperaExplicitaElementoClickeable(Ordenar,5);
         List<WebElement> eligeOrdenar = encontrarElementos(Ordenar);
 
         //espera.until(ExpectedConditions.elementToBeClickable(Ordenar);
@@ -126,6 +124,20 @@ public class VFAlojamientosPage extends SeleniumBase {
 
         }
     }
+
+    public void ValidacionHotel(){
+        clickear(Shotel);
+
+        String selected = obtenerTexto(Hotel);
+        Assert.assertEquals("Libertador Hotel",selected);
+    }
+
+    public void ValidacioOferta(){
+
+        String selected = obtenerTexto(Oferta);
+        Assert.assertEquals("Todas las ofertas",selected);
+    }
+
     public void Hotel()
     {
         esperaExplicitaElementoClickeable(btnHotel,5);

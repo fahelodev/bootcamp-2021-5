@@ -48,6 +48,10 @@ public class SeleniumBase {
         }
     }
 
+    public void asignarFechaDisponible(int dias){
+        List<WebElement> fechas = driver.findElements(By.cssSelector("._dpmg2--show ._dpmg2--month-active ._dpmg2--available span._dpmg2--date-number"));
+        fechas.get(dias).click();
+    }
 
 
 
@@ -63,6 +67,10 @@ public class SeleniumBase {
         espera.until(ExpectedConditions.elementToBeClickable(localizador));
     }
 
+    public void seleccionarElementoPorTexto(By localizador, String texto) {
+        Select selector = new Select(encontrarElemento(localizador));
+        selector.selectByVisibleText(texto);
+    }
 
     public String obtenerTexto(By localizador){
         return encontrarElemento(localizador).getText();
@@ -82,14 +90,6 @@ public class SeleniumBase {
                 break;
             }
         }
-
-    }
-
-    public void seleccionarOpcion(By localizador, String texto){
-
-        Select select = new Select(encontrarElemento(localizador));
-
-        select.selectByValue(texto);
 
     }
 
