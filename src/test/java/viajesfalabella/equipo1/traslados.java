@@ -55,7 +55,7 @@ public class traslados {
     }
 
     @Test
-    public void CdP04_agregarTrgit aslado() throws InterruptedException {
+    public void CdP04_agregarTraslado() throws InterruptedException {
         // 1.- CARGAR HOME
         // ESPERA
         WebDriverWait espera = new WebDriverWait(driver, 30);
