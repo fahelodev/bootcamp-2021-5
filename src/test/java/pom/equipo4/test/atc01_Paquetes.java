@@ -1,9 +1,9 @@
-package pom.mentoria.test;
+package pom.equipo4.test;
 
 import org.junit.Test;
-import pom.mentoria.base.TestBase;
-import pom.mentoria.pages.VFHomePage;
-import pom.mentoria.pages.VFPaquetesPage;
+import pom.equipo4.base.TestBase;
+import pom.equipo4.pages.VFHomePage;
+import pom.equipo4.pages.VFPaquetesPage;
 
 public class atc01_Paquetes extends TestBase {
 
@@ -12,10 +12,7 @@ public class atc01_Paquetes extends TestBase {
 
     @Test
     public void paquetesBusquedaCompleta() throws InterruptedException {
-        paginaHome = new VFHomePage(driver);
-        paginaHome.irHomePage();
-        paginaPaquetes = new VFPaquetesPage(driver);
-        paginaPaquetes.irPaquetesDesdeHome(); //TODO HACER QUE ESTA LINEA SE USE UNA SOLA VEZ YA QUE SE TIENE QUE ESTAR USANDO EN TODOS LOS TESTS
+        cargarHome();
         paginaPaquetes.ingresarOrigenDestinoVuelo("origin","santiago"); //TODO LO MISMO
         paginaPaquetes.ingresarOrigenDestinoVuelo("destination","new york");
         paginaPaquetes.aplicarBusqueda(true);
@@ -25,9 +22,7 @@ public class atc01_Paquetes extends TestBase {
 
     @Test
     public void paquetesBusquedaServiciosYComentarios() throws InterruptedException {
-        paginaHome = new VFHomePage(driver);
-        paginaHome.irHomePage();
-        paginaPaquetes = new VFPaquetesPage(driver);
+        cargarHome();
         paginaPaquetes.ingresarOrigenDestinoVuelo("origin","santiago");
         paginaPaquetes.ingresarOrigenDestinoVuelo("destination","ciudad de méxico");
         paginaPaquetes.aplicarBusqueda(true);
@@ -37,9 +32,7 @@ public class atc01_Paquetes extends TestBase {
 
     @Test
     public void paquetesBusquedaMostrar5EstrellasAgregarAct() throws InterruptedException {
-        paginaHome = new VFHomePage(driver);
-        paginaHome.irHomePage();
-        paginaPaquetes = new VFPaquetesPage(driver);
+        cargarHome();
         paginaPaquetes.ingresarOrigenDestinoVuelo("origin","santiago");
         paginaPaquetes.ingresarOrigenDestinoVuelo("destination","rio de janeiro");
         paginaPaquetes.aplicarBusqueda(true);
@@ -47,5 +40,13 @@ public class atc01_Paquetes extends TestBase {
         paginaPaquetes.seleccionarPrimerHotelResultadosBusqueda(true);
         paginaPaquetes.procederCompra();
         paginaPaquetes.agregarActividadYEntrarCompraViaje();
+    }
+
+    public void cargarHome()
+    {
+        paginaHome = new VFHomePage(driver);
+        paginaHome.irHomePage();
+        paginaHome.irSeccionDesdeHome("paquetes");
+        paginaPaquetes = new VFPaquetesPage(driver);
     }
 }
