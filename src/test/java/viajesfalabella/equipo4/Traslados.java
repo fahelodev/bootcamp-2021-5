@@ -32,7 +32,9 @@ public class Traslados {
             System.out.println("init para instanciar");
             driver = new ChromeDriver();
             driver.manage().window().maximize();
+            driver.manage().deleteAllCookies();
             driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);      // MANERA IMPLICITA DE INTRODUCIR TIEMPO MAXIMO QUE LE DA AL TEST PARA CARGAR EL ATRIBUTO
+            driver.manage().timeouts().pageLoadTimeout(10,TimeUnit.SECONDS);
             driver.get("https://www.viajesfalabella.cl/");
             selectSeccion("Traslados");
         }

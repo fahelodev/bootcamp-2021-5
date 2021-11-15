@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SeleniumBase {
 
@@ -23,6 +24,10 @@ public class SeleniumBase {
     //Metodos Wrapper - Envoltorio
     public WebElement encontrarElemento(By localizador){
         return driver.findElement(localizador);
+    }
+
+    public List<WebElement> encontrarElementos(By localizador){
+        return driver.findElements(localizador);
     }
 
     public void irUrl(String URL){
