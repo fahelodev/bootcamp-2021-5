@@ -21,5 +21,6 @@ public class alojamiento_falabella002 extends TestBase {
         pageAlojamiento.otherAlojamiento();
         pageAlojamiento.selectSecondNoFecha();
         pageAlojamiento.confirmSecondAlojamiento();
+        pageAlojamiento.checkText002();
     }
 }
