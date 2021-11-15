@@ -40,7 +40,6 @@ public class Alojamientos{
         System.out.println("init para instanciar");
         driver = new ChromeDriver();
         driver.manage().deleteAllCookies();
-        driver.manage().deleteAllCookies();
         driver.manage().window().maximize();
         driver.get("https://www.viajesfalabella.cl/");
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);

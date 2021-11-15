@@ -8,14 +8,11 @@ import pom.equipo4.pages.VFPaquetesPage;
 public class atc03_Alojamientos extends TestBase {
 
     protected VFHomePage paginaHome = null;
-    protected VFPaquetesPage paginaPaquetes = null;
+    protected VFPaquetesPage paginaAlojamientos = null;
 
     @Test
     public void paquetesBusquedaServiciosYComentarios()
     {
-        paginaHome = new VFHomePage(driver);
-        //paginaHome.irHome();
-        paginaPaquetes = new VFPaquetesPage(driver);
-        
+//        cargarHome();
     }
 }

@@ -41,6 +41,7 @@ public class Traslados {
         public void UbicacionEnMapa() throws InterruptedException {
             isClicked("//div[@class='offer-card-container']//div[text()='Traslado en Orlando']");
             selectPestana(1);
+            Thread.sleep(3000);
             isClicked("//div[@class='see-map']");
             Thread.sleep(3000);
             isClicked("//div[@class='eva-3-modal -no-padding map ng-scope -show-modal']//i[@class='modal-close eva-3-icon-close']");
@@ -56,7 +57,8 @@ public class Traslados {
             isClicked("//a[@class='-md -eva-3-hide-small eva-3-btn -secondary']");
             selectDropDown("//select[@class='select-tag sbox-time-arrival']","420");
             isClicked("//div[@class='sbox-button-container']");
-            Thread.sleep(4000);
+            w = new WebDriverWait(driver,10);
+            w.until(ExpectedConditions.elementToBeClickable(By.xpath("//select[@id='currency-select']")));
             selectDropDown("//select[@id='currency-select']","string:USD");
         }
 

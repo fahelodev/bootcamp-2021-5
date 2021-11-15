@@ -10,7 +10,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.concurrent.TimeUnit;
 
-public class TestBase {
+public class TestBase{
 
     //conteniene las configuraciones basicas de los test a ejecutar
     //atributos
@@ -42,5 +42,6 @@ public class TestBase {
     {
         System.out.println("closeAll :: Cerrar otras conexiones que fueron utilizados en el test");
     }
+
 
 }

@@ -17,8 +17,6 @@ import java.util.Locale;
 public class VFPaquetesPage extends SeleniumBase {
     public VFPaquetesPage(WebDriver driver) { super(driver); }
 
-    By btnPaquetes = By.xpath("//a[@title='Paquetes']");
-    By divDatosViaje = By.xpath("//div[@class='sbox-show-hide-container -sbox-3-shadow-static']");
     By listaNombresHotelesPrimero = By.xpath("//li[@class='item -active']");
     By btnBusquedaViaje = By.xpath("//div[@class='sbox-button-container']");
     By switchSinFechaViaje = By.xpath("//span[@class='switch-container']");
@@ -41,17 +39,13 @@ public class VFPaquetesPage extends SeleniumBase {
     By btnagregarActividad = By.xpath("//div[@class='detail-actions']/a");
     By btnEntrarFormularioCompra = By.xpath("//button[@class='eva-3-btn -lg pricebox-sticky-button -secondary']");
 
-
     //Funciones que se usan en todos los tests de paquetes
 
-    public void irPaquetesDesdeHome(){
-        clickear(btnPaquetes);
-        esperaExplicitaElementoClickeable(divDatosViaje,7);
-    }
 
     public void ingresarOrigenDestinoVuelo(String origin_or_destination, String ciudad){
         By inputOrigenYDestino = By.xpath("//input[contains(@class,'input-tag sbox-main-focus sbox-"+origin_or_destination.toLowerCase()+"')]");
         ingresarTexto(inputOrigenYDestino,ciudad);
+        esperaExplicitaPrescenciaElemento(listaNombresHotelesPrimero,10);
         clickear(listaNombresHotelesPrimero);
         Assert.assertEquals(obtenerTexto(listaNombresHotelesPrimero),obtenerTexto(inputOrigenYDestino));
     }
