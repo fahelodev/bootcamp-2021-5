@@ -16,13 +16,23 @@ public class VFCheckoutPage extends SeleniumBase {
     private String fechaEntrada;
     private String fechaSalida;
 
+    private String vuelo;
+    private String alojamiento;
+    private String auto;
+    private String actividad;
+    private String traslado;
+
     By checkoutDetalles = By.className("checkout-details");
     By fechasCheckout = By.xpath("//div[contains(@class,'dm-date')]");
     By precioFinalCheckout = By.xpath("//span[contains(@upaconceptname,'totalPrice')]");
     By trasladoRecogida = By.cssSelector("#transfer-pickup-T0 p");
     By trasladoBajada = By.cssSelector("#transfer-dropoff-T0 p");
     By trasladoNumeroDePasajeros = By.cssSelector("span.chk-pricebox-item-description");
-
+    By paqueteVuelo = By.cssSelector(".product-specific-modif-FLIGHT .eva-3-h3");
+    By paqueteAlojamiento = By.cssSelector(".product-specific-modif-HOTEL .eva-3-h3");
+    By paqueteAuto = By.cssSelector(".product-specific-modif-CAR .eva-3-h3 ");
+    By paqueteActividad = By.cssSelector(".product-specific-modif-TICKET .eva-3-h3");
+    By paqueteTraslado = By.cssSelector(".product-specific-modif-TRANSFER .eva-3-h3");
 
     public void obtenerDetallesCheckout(){
         WebElement detallesPago = encontrarElemento(checkoutDetalles);
@@ -30,6 +40,36 @@ public class VFCheckoutPage extends SeleniumBase {
         fechaEntrada = obtenerTexto(fechas.get(0));
         fechaSalida = obtenerTexto(fechas.get(1));
         precioFinal = obtenerTexto(encontrarElementoDesde(detallesPago,precioFinalCheckout));
+    }
+
+    public void obtenerDetallesDePaquete(){
+        vuelo = obtenerTexto(paqueteVuelo);
+        alojamiento = obtenerTexto(paqueteAlojamiento);
+        auto = obtenerTexto(paqueteAuto);
+        actividad = obtenerTexto(paqueteActividad);
+        traslado = obtenerTexto(paqueteTraslado);
+    }
+
+    public void obtenerPrecio(){
+        WebElement detallesPago = encontrarElemento(checkoutDetalles);
+        precioFinal = obtenerTexto(encontrarElementoDesde(detallesPago,precioFinalCheckout));
+    }
+
+    public String getVuelo(){
+        return vuelo;
+    }
+    public String getAlojamiento(){
+        return alojamiento;
+    }
+    public String getAuto(){
+        return auto;
+    }
+    public String getActividad(){
+        return actividad.toLowerCase();
+    }
+
+    public String getTraslado(){
+        return traslado;
     }
 
     public String getTrasladoRecogida(){

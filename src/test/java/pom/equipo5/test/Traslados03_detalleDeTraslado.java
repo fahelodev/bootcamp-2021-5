@@ -8,8 +8,6 @@ import pom.equipo5.pages.VFHomePage;
 import pom.equipo5.pages.VFResultadosTrasladosPage;
 import pom.equipo5.pages.VFTrasladoPage;
 
-import static org.junit.Assert.assertTrue;
-
 public class Traslados03_detalleDeTraslado extends TestBase {
     protected VFHomePage paginaHome = null;
     protected VFTrasladoPage paginaTraslado = null;

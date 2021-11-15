@@ -49,6 +49,10 @@ public class SeleniumBase {
         encontrarElemento(localizador).sendKeys(texto);
     }
 
+    public void escribirEnInput(WebElement element, String texto){
+        element.sendKeys(texto);
+    }
+
     public void limpiarInput(By localizador){
         encontrarElemento(localizador).clear();
     }
@@ -96,5 +100,12 @@ public class SeleniumBase {
 
     public String obtenerAtributo(By localizador, String atributo){
         return encontrarElemento(localizador).getAttribute(atributo);
+    }
+    public String obtenerAtributo(WebElement element, String atributo){
+        return element.getAttribute(atributo);
+    }
+
+    public boolean estaDesplegado(WebElement element){
+        return element.isDisplayed();
     }
 }

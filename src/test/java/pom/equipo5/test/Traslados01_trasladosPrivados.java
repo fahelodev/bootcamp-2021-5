@@ -3,7 +3,9 @@ package pom.equipo5.test;
 import org.junit.Assert;
 import org.junit.Test;
 import pom.equipo5.base.TestBase;
-import pom.equipo5.pages.*;
+import pom.equipo5.pages.VFHomePage;
+import pom.equipo5.pages.VFResultadosTrasladosPage;
+import pom.equipo5.pages.VFTrasladoPage;
 
 public class Traslados01_trasladosPrivados extends TestBase {
     protected VFHomePage paginaHome = null;
