@@ -22,16 +22,12 @@ public class testalojamientos extends TestBase {
     protected VFHomePage paginaHome = null;
     protected VFalojamientosPage paginaAlojamientos = null;
 
-    @Before
-    public void init(){
+    @Test
+    public void CdP09_busquedaAlojamiento(){
         paginaHome = new VFHomePage(driver);
         paginaHome.irHomePage();
         paginaAlojamientos = new VFalojamientosPage(driver);
         paginaAlojamientos.irAlojamientosDesdeHome();
-    }
-
-    @Test
-    public void CdP09_busquedaAlojamiento(){
         paginaAlojamientos.seleccionarNoHedecidoFecha();
         ////se cae sin una espera(ver)
         paginaAlojamientos.llenarCasillaDestino("orlando","Orlando, Florida, Estados Unidos");
@@ -42,6 +38,10 @@ public class testalojamientos extends TestBase {
 
     @Test
     public void CdP08_busquedaAlojamiento() throws InterruptedException {
+        paginaHome = new VFHomePage(driver);
+        paginaHome.irHomePage();
+        paginaAlojamientos = new VFalojamientosPage(driver);
+        paginaAlojamientos.irAlojamientosDesdeHome();
         paginaAlojamientos.llenarCasillaDestino("dub","Dubái, Dubai, Emiratos Árabes Unidos");
         //se cae sin una espera(ver)
         paginaAlojamientos.seleccionarFechas(1,7);
@@ -60,6 +60,10 @@ public class testalojamientos extends TestBase {
 
     @Test
     public void CdP07_agregarAlojamiento() throws InterruptedException {
+        paginaHome = new VFHomePage(driver);
+        paginaHome.irHomePage();
+        paginaAlojamientos = new VFalojamientosPage(driver);
+        paginaAlojamientos.irAlojamientosDesdeHome();
         //se cae sin una espera
         paginaAlojamientos.llenarCasillaDestino("lon","Londres, Inglaterra, Reino Unido");
         paginaAlojamientos.seleccionarFechas(7,17);
