@@ -24,6 +24,17 @@ public class VFAlojamientosPage extends SeleniumBase {
     By chkList = By.xpath("//label[starts-with(@class,'checkbox-label')]");
     By FAQList = By.cssSelector(".-detail-section-padding .dropdown-item");
     By tituloAlojamientoSelect = By.xpath("//span[@class='accommodation-name eva-3-h2']");
+    By seccionHabitaciones = By.cssSelector("div.sbox-distri-container");
+    By btnRestar = By.cssSelector("a.steppers-icon-left ");
+    By btnAplicar = By.cssSelector("a._pnlpk-apply-button");
+    By chkfiltros = By.xpath("//label[starts-with(@class,'checkbox-label')]");
+    By chkFiltroWifiZonasComunes = By.xpath("//span[contains(text(),'Wi-Fi gratis en zonas comunes')]");
+    By filtroWifiZonasComunes = By.xpath("//em[contains(text(),'Wi-Fi gratis en zonas comunes')]");
+    By resultHotels = By.id("hotels");
+    By textComentario = By.cssSelector("a.scroll-to-reviews");
+    By seccSolitario = By.xpath("//label[contains(text(),'En solitario')]");
+    By comentarioSolitario = By.xpath("//span[contains(text(),'Viajó solo/a ')]");
+
     //By btnAplicar = By.xpath("//a[contains(text(),'Aplicar')]");
 
     public void irAlojamientoDesdeHome(){
@@ -84,6 +95,60 @@ public class VFAlojamientosPage extends SeleniumBase {
         Thread.sleep(1500);
         selectPestana(1);
     }
+
+    public void diminuirUnAdultoEnHabitacion() {
+        clickear(seccionHabitaciones);
+        clickear(btnRestar);
+        clickear(btnAplicar);
+    }
+
+
+    public void filtrarZonaWifiGratisEnZonasComunes() {
+
+        esperaExplicitaPrescenciaElemento(chkfiltros, 10);
+        clickear(filtroWifiZonasComunes);
+        esperaExplicitaPrescenciaElemento(chkFiltroWifiZonasComunes, 10);
+    }
+
+
+    public void filtrarPrecioMayorAMenor() {
+
+        selectprecioMayorAMenor(cbOrdenarPor);
+    }
+
+    public void selectprecioMayorAMenor(By localizador) {
+        Select s = new Select(encontrarElemento(localizador));
+        s.selectByVisibleText("Precio: mayor a menor");
+    }
+
+    public void selectAlojamientoHotel(String alojamiento) throws InterruptedException {
+        esperaExplicitaPrescenciaElemento(resultHotels, 10);
+        busquedaAlojamiento(alojamiento);
+
+    }
+
+
+    public void irSeccionComentariosEnSolitario(){
+
+        clickear(textComentario);
+        clickear(seccSolitario);
+
+
+    }
+
+
+    public void checkComentarioSolitario(String comentario){
+
+        assertComparaString(comentarioSolitario, comentario );
+
+    }
+
+
+
+
+
+
+
 
 
 }
