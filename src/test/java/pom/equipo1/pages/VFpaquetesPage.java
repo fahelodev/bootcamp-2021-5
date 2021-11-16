@@ -36,6 +36,7 @@ public class VFpaquetesPage extends SeleniumBase {
     By hotelMarbella = By.xpath("//em[contains(text(),'Siguiente')]//ancestor::div[@class='pricebox-action -eva-3-mt-lg pricebox-button']");
     By mensajePaquete = By.xpath("//div[@class='eva-3-h3 -eva-3-tc-gray-0' and contains(text(),'Holiday Inn Express')]");
     By ubicacionHotel = By.cssSelector("div.cluster-content div.cluster-description-wrapper span.-eva-3-tc-gray-2");
+    By btnSiguienteCalendario = By.cssSelector("div.datepicker-packages.sbox-v4-components div._dpmg2--controls-next i");
 
     public void irPaquetesDesdeHome(){
         // generar la lista categorias
@@ -69,7 +70,7 @@ public class VFpaquetesPage extends SeleniumBase {
 
     public void seleccionarFechas(int fecha1, int fecha2){
         darClick(darClickCampoFechaIda);
-        buscarEnCalendario(fecha1,fecha2,calendario);
+        buscarEnCalendario(fecha1,fecha2,calendario,btnSiguienteCalendario);
     }
 
     public void seleccionarFechasLejanas(String mes, int fechaInicio, int fechaFin, int fechaParada){

@@ -14,16 +14,12 @@ public class testpaquetes extends TestBase {
     protected VFHomePage paginaHome = null;
     protected VFpaquetesPage paginaPaquetes = null;
 
-    @Before
-    public void init(){
+    @Test
+    public void CdP03_busquedaPaquetes(){
         paginaHome = new VFHomePage(driver);
         paginaHome.irHomePage();
         paginaPaquetes = new VFpaquetesPage(driver);
         paginaPaquetes.irPaquetesDesdeHome();
-    }
-
-    @Test
-    public void CdP03_busquedaPaquetes(){
         paginaPaquetes.seleccionarVuelo1Alojamiento();
         paginaPaquetes.llenarCasillaOrigen("santiago","Santiago de Chile");
         paginaPaquetes.llenarCasillaDestino("san pedro","San Pedro de Atacama");
@@ -36,6 +32,10 @@ public class testpaquetes extends TestBase {
 
     @Test
     public void CdP02_busquedaPaquetes(){
+        paginaHome = new VFHomePage(driver);
+        paginaHome.irHomePage();
+        paginaPaquetes = new VFpaquetesPage(driver);
+        paginaPaquetes.irPaquetesDesdeHome();
         paginaPaquetes.llenarCasillaOrigen("santiago","Santiago de Chile");
         paginaPaquetes.llenarCasillaDestino("buenos aires","Ciudad de Buenos Aires");
         paginaPaquetes.seleccionarFechas(1,2);
@@ -46,6 +46,10 @@ public class testpaquetes extends TestBase {
 
     @Test
     public void CdP01_agregarPaquete() throws InterruptedException {
+        paginaHome = new VFHomePage(driver);
+        paginaHome.irHomePage();
+        paginaPaquetes = new VFpaquetesPage(driver);
+        paginaPaquetes.irPaquetesDesdeHome();
         paginaPaquetes.seleccionarVuelo2Alojamientos();
         paginaPaquetes.llenarCasillaOrigen("bue","Ciudad de Buenos Aires");
         paginaPaquetes.llenarCasillaDestino("esp","Cataluña");
