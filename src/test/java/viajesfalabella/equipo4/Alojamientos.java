@@ -40,7 +40,6 @@ public class Alojamientos{
         System.out.println("init para instanciar");
         driver = new ChromeDriver();
         driver.manage().deleteAllCookies();
-        driver.manage().deleteAllCookies();
         driver.manage().window().maximize();
         driver.get("https://www.viajesfalabella.cl/");
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -51,7 +50,7 @@ public class Alojamientos{
     }
 
     @Test
-    public void T_Aloj_Bajo() throws InterruptedException {
+    public void alojamientoBuscarSegunMejorPuntuacionYMostrarFAQ() throws InterruptedException {
         //Obtenemos una lista con todas las categorias y le hacemos click cuando encuentre Alojamientos
         busqueda(categorias,"Alojamientos");
 
@@ -95,7 +94,7 @@ public class Alojamientos{
     }
 
     @Test
-    public void T_Aloj_Medio() throws InterruptedException {
+    public void alojamientosBuscarMenorAMayorPrecioYConWiFiGratis() throws InterruptedException {
         //Obtenemos una lista con todas las categorias y le hacemos click cuando encuentre Alojamientos
         busqueda(categorias,"Alojamientos");
 
@@ -151,7 +150,7 @@ public class Alojamientos{
     }
 
     @Test
-    public void T_Aloj_Alto() throws InterruptedException {
+    public void alojamientosBuscarPrecioMaximoElegirAeropuertoDestinoYAgregarTraslado() throws InterruptedException {
         //Obtenemos una lista con todas las categorias y le hacemos click cuando encuentre Alojamientos
         busqueda(categorias,"Alojamientos");
 

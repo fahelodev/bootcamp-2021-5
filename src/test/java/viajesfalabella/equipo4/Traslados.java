@@ -1,7 +1,7 @@
 package viajesfalabella.equipo4;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.apache.xpath.operations.Bool;
+//import org.apache.xpath.operations.Bool;
 import org.junit.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -32,7 +32,9 @@ public class Traslados {
             System.out.println("init para instanciar");
             driver = new ChromeDriver();
             driver.manage().window().maximize();
+            driver.manage().deleteAllCookies();
             driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);      // MANERA IMPLICITA DE INTRODUCIR TIEMPO MAXIMO QUE LE DA AL TEST PARA CARGAR EL ATRIBUTO
+            driver.manage().timeouts().pageLoadTimeout(10,TimeUnit.SECONDS);
             driver.get("https://www.viajesfalabella.cl/");
             selectSeccion("Traslados");
         }
@@ -41,6 +43,7 @@ public class Traslados {
         public void UbicacionEnMapa() throws InterruptedException {
             isClicked("//div[@class='offer-card-container']//div[text()='Traslado en Orlando']");
             selectPestana(1);
+            Thread.sleep(3000);
             isClicked("//div[@class='see-map']");
             Thread.sleep(3000);
             isClicked("//div[@class='eva-3-modal -no-padding map ng-scope -show-modal']//i[@class='modal-close eva-3-icon-close']");
@@ -56,7 +59,8 @@ public class Traslados {
             isClicked("//a[@class='-md -eva-3-hide-small eva-3-btn -secondary']");
             selectDropDown("//select[@class='select-tag sbox-time-arrival']","420");
             isClicked("//div[@class='sbox-button-container']");
-            Thread.sleep(4000);
+            w = new WebDriverWait(driver,10);
+            w.until(ExpectedConditions.elementToBeClickable(By.xpath("//select[@id='currency-select']")));
             selectDropDown("//select[@id='currency-select']","string:USD");
         }
 
