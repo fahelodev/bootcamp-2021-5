@@ -1,6 +1,6 @@
 package pom.equipo4.pages;
 
-import org.apache.xpath.operations.Bool;
+//import org.apache.xpath.operations.Bool;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
