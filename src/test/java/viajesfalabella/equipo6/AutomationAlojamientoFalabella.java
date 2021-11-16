@@ -108,7 +108,7 @@ public class AutomationAlojamientoFalabella {
         espera.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[.='25NocheNoches']"))).click();
         driver.findElement(By.cssSelector("._dpmg2--desktopFooter-button-apply")).click();
         driver.findElement(By.cssSelector(".sbox-search")).click();
-        driver.findElement(By.xpath("//span[contains(text(),'Hotel Miramar')]")).click();
+        driver.findElement(By.cssSelector("[index='0'] .eva-3-btn")).click();
 
 
         WebDriverWait driverWaitLong = new WebDriverWait(driver, 10);
@@ -132,7 +132,7 @@ public class AutomationAlojamientoFalabella {
         driver.findElement(By.id("departureTime")).click();
         espera.until(ExpectedConditions.elementToBeClickable(By.xpath("//select[@id='departureTime']/option[.='06:00']"))).click();
         driver.findElement(By.xpath("//em[contains(text(),'Buscar')]")).click();
-        espera.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='highlight-card-container -eva-3-shadow-1-hover -eva-3-bc-white TRANSFER REGULAR']//button[@class='eva-3-btn -eva-3-fwidth -md -primary']"))).click();
+        espera.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='eva-3-btn -eva-3-fwidth -md -primary']"))).click();
         driver.findElement(By.xpath("//a[.='Ver detalle']")).click();
     }
 
