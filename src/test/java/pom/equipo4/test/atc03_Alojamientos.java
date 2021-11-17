@@ -48,7 +48,23 @@ public class atc03_Alojamientos extends TestBase {
 
     }
 
+    @Test
+    public void busquedaAlojamientoConPrecioMaximo5000usYElegirAeropuertoDestino() throws InterruptedException{
 
+        paginaHome = new VFHomePage(driver);
+        paginaHome.irHomePage();
+        paginaAlojamiento = new VFAlojamientosPage(driver);
+        paginaAlojamiento.irAlojamientoDesdeHome();
+        paginaAlojamiento.ingresarDestino("montego bay");
+        paginaAlojamiento.ingresoDeFechaEntradaYSalida("1", "8");
+        paginaAlojamiento.agregarTresMenoresDeCuatroAnios();
+        paginaAlojamiento.confirmarBusqueda();
+        paginaAlojamiento.filtroPrecioADolar();
+        //falta ultima parte
+
+
+
+    }
 
 
 

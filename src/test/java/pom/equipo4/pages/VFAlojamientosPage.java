@@ -34,6 +34,13 @@ public class VFAlojamientosPage extends SeleniumBase {
     By textComentario = By.cssSelector("a.scroll-to-reviews");
     By seccSolitario = By.xpath("//label[contains(text(),'En solitario')]");
     By comentarioSolitario = By.xpath("//span[contains(text(),'Viajó solo/a ')]");
+    By sboxEntrada = By.cssSelector("div.input-container .sbox-checkin-date");
+    By calendar = By.cssSelector("div._dpmg2--months ._dpmg2--available ._dpmg2--date-number");
+    By btnAplicarCalendar = By.xpath("//em[contains(text(),'Aplicar')]");
+    By btnAddMenor = By.xpath("//div[@class='_pnlpk-itemRow__item _pnlpk-stepper-minors -medium-down-to-lg'] //a[@class='steppers-icon-right sbox-3-icon-plus']");
+    By seccionEdad = By.xpath("//div[@class='_pnlpk-minors-age-select-wrapper']//select[@class='select-tag']");
+    By edadCuatro = By.xpath("//select[@class='select-tag'] //option[@value='4']");
+    By cbCambioDeMonedaFiltroIzquierdo = By.xpath("//div[@class='currency-selection'] //select[@class='select-tag']");
 
     //By btnAplicar = By.xpath("//a[contains(text(),'Aplicar')]");
 
@@ -124,23 +131,47 @@ public class VFAlojamientosPage extends SeleniumBase {
     public void selectAlojamientoHotel(String alojamiento) throws InterruptedException {
         esperaExplicitaPrescenciaElemento(resultHotels, 10);
         busquedaAlojamiento(alojamiento);
-
     }
 
 
     public void irSeccionComentariosEnSolitario(){
-
         clickear(textComentario);
         clickear(seccSolitario);
-
-
     }
 
 
     public void checkComentarioSolitario(String comentario){
-
         assertComparaString(comentarioSolitario, comentario );
+    }
 
+    public void ingresoDeFechaEntradaYSalida (String fechaEntrada,String fechaSalida){
+        clickear(sboxEntrada);
+        busquedaFecha(calendar, btnAplicarCalendar, fechaEntrada, fechaSalida );
+    }
+
+
+
+    public void agregarTresMenoresDeCuatroAnios(){
+
+        clickear(seccionHabitaciones);
+        tresMenoresDeEdad4(btnAddMenor, seccionEdad, edadCuatro, btnAplicar );
+
+    }
+
+    public void filtroPrecioADolar(){
+
+        esperaExplicitaPrescenciaElemento(chkfiltros, 10);
+        selectMonedaDolar(cbCambioDeMonedaFiltroIzquierdo);
+        esperaExplicitaPrescenciaElemento(chkfiltros, 10);
+    }
+
+
+
+    private void busquedaAlojamientoGlobal(String alojamiento) throws InterruptedException {
+        Thread.sleep(1500);
+        encontrarElemento(By.xpath("//*[contains(text(),'" + alojamiento + "')]")).click();
+        Thread.sleep(1500);
+        selectPestana(1);
     }
 
 

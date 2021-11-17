@@ -98,5 +98,45 @@ public class SeleniumBase {
     }
 
 
+    public String obtenerTextList(By localizador,int i){
+        return encontrarElementos(localizador).get(i).getText();
+    }
+
+    public void clickearList(By localizador,int i){
+         encontrarElementos(localizador).get(i).click();
+    }
+
+    public void busquedaFecha(By localizadorCalendar, By localizadorAplicar ,String fechaEntrada, String fechaSalida){
+
+        for (int i = 0; i < obtenerTamañoLista(localizadorCalendar); i++) {
+            if(obtenerTextList(localizadorCalendar,i).equals(fechaEntrada)){
+                clickearList(localizadorCalendar,i);
+                break;
+            }
+        }
+
+        for (int i = Integer.parseInt(fechaEntrada); i < obtenerTamañoLista(localizadorCalendar); i++) {
+            if (obtenerTextList(localizadorCalendar,i).equals(fechaSalida)){
+                clickearList(localizadorCalendar,i);
+                clickear(localizadorAplicar);
+                break;
+            }
+        }
+
+    }
+
+
+    public void tresMenoresDeEdad4(By localizadorBtnAddMenor,By localizadorSeccionEdad,By localizadorEdad,By localizadorAplicar){
+        for (int i = 0; i < 3; i++) {
+            clickear(localizadorBtnAddMenor);
+            clickearList(localizadorSeccionEdad,i);
+            clickearList(localizadorEdad,i);
+        }
+        clickear(localizadorAplicar);
+    }
+
+
+
+
 
 }
