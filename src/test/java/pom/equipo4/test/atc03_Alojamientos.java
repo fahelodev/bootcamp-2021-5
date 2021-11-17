@@ -27,5 +27,46 @@ public class atc03_Alojamientos extends TestBase {
     }
 
 
+    @Test
+    public void busquedaAlojamientoSegunPrecioMenorAMayorYWifiGratisEnZonasComunes() throws InterruptedException{
+
+        paginaHome = new VFHomePage(driver);
+        paginaHome.irHomePage();
+        paginaAlojamiento = new VFAlojamientosPage(driver);
+        paginaAlojamiento.irAlojamientoDesdeHome();
+        paginaAlojamiento.ingresarDestino("El Cairo");
+        paginaAlojamiento.diminuirUnAdultoEnHabitacion();
+        paginaAlojamiento.selectSinFecha();
+        paginaAlojamiento.confirmarBusqueda();
+        paginaAlojamiento.filtrarZonaWifiGratisEnZonasComunes();
+        paginaAlojamiento.filtrarPrecioMayorAMenor();
+        paginaAlojamiento.selectAlojamientoHotel("Ramses Hilton");
+        paginaAlojamiento.irSeccionComentariosEnSolitario();
+        paginaAlojamiento.checkTituloText("Ramses Hilton");
+        paginaAlojamiento.checkComentarioSolitario("Viajó solo/a");
+
+
+    }
+
+    @Test
+    public void busquedaAlojamientoConPrecioMaximo5000usYElegirAeropuertoDestino() throws InterruptedException{
+
+        paginaHome = new VFHomePage(driver);
+        paginaHome.irHomePage();
+        paginaAlojamiento = new VFAlojamientosPage(driver);
+        paginaAlojamiento.irAlojamientoDesdeHome();
+        paginaAlojamiento.ingresarDestino("montego bay");
+        paginaAlojamiento.ingresoDeFechaEntradaYSalida("1", "8");
+        paginaAlojamiento.agregarTresMenoresDeCuatroAnios();
+        paginaAlojamiento.confirmarBusqueda();
+        paginaAlojamiento.filtroPrecioADolar();
+        //falta ultima parte
+
+
+
+    }
+
+
+
 }
 

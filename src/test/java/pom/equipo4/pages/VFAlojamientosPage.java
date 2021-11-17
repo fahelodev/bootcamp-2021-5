@@ -24,6 +24,24 @@ public class VFAlojamientosPage extends SeleniumBase {
     By chkList = By.xpath("//label[starts-with(@class,'checkbox-label')]");
     By FAQList = By.cssSelector(".-detail-section-padding .dropdown-item");
     By tituloAlojamientoSelect = By.xpath("//span[@class='accommodation-name eva-3-h2']");
+    By seccionHabitaciones = By.cssSelector("div.sbox-distri-container");
+    By btnRestar = By.cssSelector("a.steppers-icon-left ");
+    By btnAplicar = By.cssSelector("a._pnlpk-apply-button");
+    By chkfiltros = By.xpath("//label[starts-with(@class,'checkbox-label')]");
+    By chkFiltroWifiZonasComunes = By.xpath("//span[contains(text(),'Wi-Fi gratis en zonas comunes')]");
+    By filtroWifiZonasComunes = By.xpath("//em[contains(text(),'Wi-Fi gratis en zonas comunes')]");
+    By resultHotels = By.id("hotels");
+    By textComentario = By.cssSelector("a.scroll-to-reviews");
+    By seccSolitario = By.xpath("//label[contains(text(),'En solitario')]");
+    By comentarioSolitario = By.xpath("//span[contains(text(),'Viajó solo/a ')]");
+    By sboxEntrada = By.cssSelector("div.input-container .sbox-checkin-date");
+    By calendar = By.cssSelector("div._dpmg2--months ._dpmg2--available ._dpmg2--date-number");
+    By btnAplicarCalendar = By.xpath("//em[contains(text(),'Aplicar')]");
+    By btnAddMenor = By.xpath("//div[@class='_pnlpk-itemRow__item _pnlpk-stepper-minors -medium-down-to-lg'] //a[@class='steppers-icon-right sbox-3-icon-plus']");
+    By seccionEdad = By.xpath("//div[@class='_pnlpk-minors-age-select-wrapper']//select[@class='select-tag']");
+    By edadCuatro = By.xpath("//select[@class='select-tag'] //option[@value='4']");
+    By cbCambioDeMonedaFiltroIzquierdo = By.xpath("//div[@class='currency-selection'] //select[@class='select-tag']");
+
     //By btnAplicar = By.xpath("//a[contains(text(),'Aplicar')]");
 
     public void irAlojamientoDesdeHome(){
@@ -84,6 +102,84 @@ public class VFAlojamientosPage extends SeleniumBase {
         Thread.sleep(1500);
         selectPestana(1);
     }
+
+    public void diminuirUnAdultoEnHabitacion() {
+        clickear(seccionHabitaciones);
+        clickear(btnRestar);
+        clickear(btnAplicar);
+    }
+
+
+    public void filtrarZonaWifiGratisEnZonasComunes() {
+
+        esperaExplicitaPrescenciaElemento(chkfiltros, 10);
+        clickear(filtroWifiZonasComunes);
+        esperaExplicitaPrescenciaElemento(chkFiltroWifiZonasComunes, 10);
+    }
+
+
+    public void filtrarPrecioMayorAMenor() {
+
+        selectprecioMayorAMenor(cbOrdenarPor);
+    }
+
+    public void selectprecioMayorAMenor(By localizador) {
+        Select s = new Select(encontrarElemento(localizador));
+        s.selectByVisibleText("Precio: mayor a menor");
+    }
+
+    public void selectAlojamientoHotel(String alojamiento) throws InterruptedException {
+        esperaExplicitaPrescenciaElemento(resultHotels, 10);
+        busquedaAlojamiento(alojamiento);
+    }
+
+
+    public void irSeccionComentariosEnSolitario(){
+        clickear(textComentario);
+        clickear(seccSolitario);
+    }
+
+
+    public void checkComentarioSolitario(String comentario){
+        assertComparaString(comentarioSolitario, comentario );
+    }
+
+    public void ingresoDeFechaEntradaYSalida (String fechaEntrada,String fechaSalida){
+        clickear(sboxEntrada);
+        busquedaFecha(calendar, btnAplicarCalendar, fechaEntrada, fechaSalida );
+    }
+
+
+
+    public void agregarTresMenoresDeCuatroAnios(){
+
+        clickear(seccionHabitaciones);
+        tresMenoresDeEdad4(btnAddMenor, seccionEdad, edadCuatro, btnAplicar );
+
+    }
+
+    public void filtroPrecioADolar(){
+
+        esperaExplicitaPrescenciaElemento(chkfiltros, 10);
+        selectMonedaDolar(cbCambioDeMonedaFiltroIzquierdo);
+        esperaExplicitaPrescenciaElemento(chkfiltros, 10);
+    }
+
+
+
+    private void busquedaAlojamientoGlobal(String alojamiento) throws InterruptedException {
+        Thread.sleep(1500);
+        encontrarElemento(By.xpath("//*[contains(text(),'" + alojamiento + "')]")).click();
+        Thread.sleep(1500);
+        selectPestana(1);
+    }
+
+
+
+
+
+
+
 
 
 }
