@@ -85,7 +85,7 @@ public class SeleniumBase {
     public void buscarEnCalendario (int fecha1, int fecha2, By localizador,By localizador2){
         // LISTA CALENTARIO ACTUAL
         esperaExplicitaElementoVisible(localizador);
-        List<WebElement> mesActual = driver.findElements(localizador);
+        List<WebElement> mesActual = generarLista(localizador);
         // INGRESAR FECHAS
         // TOMAMOS EL DIA ACTUAL
         Calendar c1 = Calendar.getInstance();
@@ -119,6 +119,7 @@ public class SeleniumBase {
         String dia = Integer.toString(diaBuscado);
         busquedaElemento(mes,dia);
     }
+
 
     public void cantidadPasajeros (int esperado, By localizador){
         String num =driver.findElement(localizador).getAttribute("value");
@@ -193,6 +194,16 @@ public class SeleniumBase {
         busquedaElemento(mes,dia);
     }
 
+    public void seleccionarEnfechaArriedo(int fecha1, By localizador){
+        Calendar c1 = Calendar.getInstance();
+        String dia = Integer.toString(c1.get(Calendar.DATE));
+        int d = Integer.parseInt(dia);
+        d = d + 2;
+        //String busqDia = Integer.toString(d);
+        List<WebElement> busq3 = driver.findElements(By.cssSelector("div._dpmg2--months span span._dpmg2--date-number"));
+        buscarCalendario(fecha1,busq3);
+    }
+
     private void buscarMes (String mes){
         WebElement mesActual = driver.findElement(By.cssSelector("._dpmg2--show ._dpmg2--month-active span"));
         while (!mesActual.getText().contains(mes)){
@@ -252,7 +263,6 @@ public class SeleniumBase {
         String newTab = "";
         Set<String> handles = driver.getWindowHandles();
         for (String actual : handles) {
-
             if (!actual.equalsIgnoreCase(mainTab)) {
                 driver.switchTo().window(actual);
                 newTab = actual;
@@ -269,4 +279,47 @@ public class SeleniumBase {
         driver.switchTo().window(mainTab);
     }
 
+    public void cambiarPesos(String palabra, By localizador) {
+        List<WebElement> lista = driver.findElements(localizador);
+        for (WebElement listaOpciones: lista){
+            // RECORREMOS LA LISTA HASTA ENCONTRAR LA PALABRA REQUERIDA
+            if (listaOpciones.getText().contains(palabra)){
+                // HACEMOS CLICK EN LA CATEGORIA SELECCIONADA
+                listaOpciones.click();
+                break;
+            }
+        }
+    }
+    public void clickBotoAplicar(By localizador) {
+        esperaExplicitaElementoClickeable(localizador);
+        encontrarElemento(localizador).click();
+    }
+
+    public void cantpasajerosTraslado(int FechaEsperada, By localizador){
+        String num =driver.findElement(localizador).getAttribute("value");
+        int numero = Integer.parseInt(num);
+        while (numero != 4){
+            if (numero > 4){
+                driver.findElement(By.cssSelector("div._pnlpk-itemRow__item a.steppers-icon.left")).click();
+                numero--;
+            }
+            else{
+                driver.findElement(By.cssSelector("div._pnlpk-itemRow__item a.steppers-icon-right.sbox-3-icon-plus")).click();
+                numero++;
+            }
+        }
+        adultos(numero,FechaEsperada);
+    }
+
+    public void seleccionarEnComprar(String compra, By localizador){
+        WebDriverWait espera = new WebDriverWait(driver, 15);
+        List<WebElement> btn= driver.findElements(localizador);
+        espera.until(ExpectedConditions.elementToBeClickable(localizador));
+        for (WebElement m: btn){
+            if(m.getText().contains(compra)){
+                m.click();
+                break;
+            }
+        }
+    }
 }
