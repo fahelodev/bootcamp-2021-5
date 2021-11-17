@@ -63,12 +63,13 @@ public class traslados {
         // CREAMOS LISTA
         List<WebElement> categorias = driver.findElements(By.cssSelector("div.header-products-container ul li a"));
         busqueda(categorias, "Traslados");
+        Thread.sleep(2000);
         driver.findElement(By.cssSelector("div.sbox-place-container input")).sendKeys("arturo");
         espera.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.ac-container span")));
         // CASILLA DESDE
         List<WebElement> busq1 = driver.findElements(By.cssSelector("div.ac-container span"));
         busqueda(busq1, "Aeropuerto Arturo Merino Benitez");
-        driver.findElement(By.cssSelector("div.sbox-second-place-container input")).sendKeys("avenida");
+        driver.findElement(By.cssSelector("div.sbox-second-place-container input")).sendKeys("avenida alemania");
         espera.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.ac-container span")));
         // CASILLA HASTA
         List<WebElement> busq2 = driver.findElements(By.cssSelector("div.ac-container span"));
@@ -123,6 +124,7 @@ public class traslados {
         Thread.sleep(2000);
         // CLICK EN BUSCAR
         driver.findElement(By.cssSelector("div.sbox-button-container a")).click();
+        Thread.sleep(3000);
         espera.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.map-container")));
         driver.findElement(By.cssSelector("div.static-map-container img")).click();
         // APARECE PANTALLA MODAL?
@@ -134,12 +136,18 @@ public class traslados {
         Select s = new Select(driver.findElement(By.id("currency-select")));
         s.selectByVisibleText("Dólares");
         Thread.sleep(2000);
-        driver.findElement(By.cssSelector("#bodyID > div.ds-transfers-wrapper > div.ng-scope > div > div.search-view-container-wrapper > main > div:nth-child(3) > div > div.search-view-items-container > div:nth-child(4) > search-item > div.eva-3-cluster-gallery.-eva-3-shadow-line.-eva-3-shadow-line-hover > div.cluster-container > div.cluster-pricebox-container > div > div.pricebox-top-container > div.pricebox-action > button")).click();
-        // driver.findElement(By.cssSelector("div.eva-3-cluster-gallery.-eva-3-shadow-line.-eva-3-shadow-line-hover button")).click();
+
+        espera.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#bodyID > div.ds-transfers-wrapper > div.ng-scope > div > div.search-view-container-wrapper > main > div:nth-child(3) > div > div.search-view-items-container > div:nth-child(3) > search-item > div.eva-3-cluster-gallery.-eva-3-shadow-line.-eva-3-shadow-line-hover > div.cluster-container > div.cluster-pricebox-container > div > div.pricebox-top-container > div.pricebox-action > button > em")));
+        driver.findElement(By.cssSelector("#bodyID > div.ds-transfers-wrapper > div.ng-scope > div > div.search-view-container-wrapper > main > div:nth-child(3) > div > div.search-view-items-container > div:nth-child(3) > search-item > div.eva-3-cluster-gallery.-eva-3-shadow-line.-eva-3-shadow-line-hover > div.cluster-container > div.cluster-pricebox-container > div > div.pricebox-top-container > div.pricebox-action > button > em")).click();
+        //driver.findElement(By.cssSelector("div.eva-3-cluster-gallery.-eva-3-shadow-line.-eva-3-shadow-line-hover button")).click();
+
+        //larga lista de botones comprar, más de un resultado xpath con el mismo nombre misma clase.
+        //List<WebElement> compraAuto = driver.findElements(By.xpath("//button[@class= 'eva-3-btn -md -secondary -eva-3-fwidth ng-scope']"));
+        //System.out.print(compraAuto);
+
         Thread.sleep(10000);
-        espera.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#checkout-content > div.checkout-details.-fl-sm.col.-sm-12.-lg-4.desktop-qa > div > purchase-detail-component > div > products-detail-component-v2 > div > div > product-description-v2 > div > div > span")));
-        WebElement Frase = driver.findElement(By.cssSelector("#checkout-content > div.checkout-details.-fl-sm.col.-sm-12.-lg-4.desktop-qa > div > purchase-detail-component > div > products-detail-component-v2 > div > div > product-description-v2 > div > div > span"));
-        WebElement Frase2 = driver.findElement(By.cssSelector("#checkout-content > div.checkout-details.-fl-sm.col.-sm-12.-lg-4.desktop-qa > div > purchase-detail-component > div > products-detail-component-v2 > div > div > product-title-v2 > div > div.dm-title-container > div"));
+        WebElement Frase = driver.findElement(By.cssSelector("//div[@class='dm-d-text eva-3-p -eva-3-tc-gray-2 -eva-3-mb-xsm']//child::span"));
+        WebElement Frase2 = driver.findElement(By.cssSelector("//div[@class='dm-title-container']//child::div"));
         // String Frase = driver.findElement(By.cssSelector("div.product-description-v2 div div span")).getText();
         System.out.println("Frase:"+Frase.getText());
         int contador = 0;
@@ -158,7 +166,10 @@ public class traslados {
         }
         Assert.assertEquals(2, contador);
         Assert.assertEquals(2, contador2);
+
+
     }
+
 
     @Test
     public void CdP05_busquedaTraslado() throws InterruptedException {
@@ -169,6 +180,7 @@ public class traslados {
         // CREAMOS LISTA
         List<WebElement> categorias = driver.findElements(By.cssSelector("div.header-products-container ul li a"));
         busqueda(categorias, "Traslados");
+        Thread.sleep(3000);
         driver.findElement(By.cssSelector("div.sbox-place-container input")).sendKeys("arturo");
         espera.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.ac-container span")));
         // Thread.sleep(2000);
@@ -207,13 +219,30 @@ public class traslados {
         }
         // CLICK EN BUSCAR
         driver.findElement(By.cssSelector("div.sbox-button")).click();
-        Thread.sleep(2000);
-        driver.findElement(By.cssSelector("#bodyID > div.ds-transfers-wrapper > div.ng-scope > div > div.search-view-container-wrapper > main > div:nth-child(3) > div > div.search-view-items-container > div:nth-child(3) > search-item > div.eva-3-cluster-gallery.-eva-3-shadow-line.-eva-3-shadow-line-hover > div.cluster-container > div.cluster-pricebox-container > div > div.pricebox-top-container > div.pricebox-action > button > em")).click();
+        Thread.sleep(3000);
+
+        //Click en Comprar
+        List<WebElement> btn= driver.findElements(By.cssSelector(".eva-3-btn .btn-text"));
+        System.out.println(btn);
+        espera.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".eva-3-btn .btn-text")));
+        for (WebElement m: btn){
+            if(m.getText().contains("Comprar")){
+                m.click();
+                break;
+            }
+
+        }
+        //Thread.sleep(3000);
+        //driver.findElement(By.xpath("//button[@class= 'eva-3-btn -md -secondary -eva-3-fwidth ng-scope']")).click();
         Thread.sleep(2000);
         espera.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.-eva-3-mt-xlg")));
-        String Minivan = driver.findElement(By.cssSelector("#checkout-content > div.checkout-details.-fl-sm.col.-sm-12.-lg-4.desktop-qa > div > purchase-detail-component > div > products-detail-component-v2 > div > div > product-description-v2 > div > div > span")).getText();
+        String Minivan = driver.findElement(By.xpath("//*[@class='dm-d-text eva-3-p -eva-3-tc-gray-2 -eva-3-mb-xsm']//child::span")).getText();
         Assert.assertTrue("True",Minivan.contains("Minivan"));
+
+
     }
+
+
 
     @Test
     public void CdP06_busquedaTraslado() throws InterruptedException {
@@ -224,11 +253,13 @@ public class traslados {
         // CREAMOS LISTA
         List<WebElement> categorias = driver.findElements(By.cssSelector("div.header-products-container ul li a"));
         busqueda(categorias, "Traslados");
+        Thread.sleep(5000);
         driver.findElement(By.cssSelector("div.sbox-place-container input")).sendKeys("arturo");
         espera.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.ac-container span")));
-        // Thread.sleep(2000);
+        Thread.sleep(2000);
         List<WebElement> busq1 = driver.findElements(By.cssSelector("div.ac-container span"));
         busqueda(busq1, "Aeropuerto Arturo Merino Benitez");
+        Thread.sleep(5000);
         driver.findElement(By.cssSelector("div.sbox-second-place-container input")).sendKeys("sheraton");
         espera.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.ac-container span")));
         // Thread.sleep(2000);
@@ -259,6 +290,8 @@ public class traslados {
         }
         driver.findElement(By.cssSelector("div.sbox-button")).click();
         Thread.sleep(2000);
+
+        //larga dos xpatch con el mismo nombre, misma clase.
         String Private = driver.findElement(By.cssSelector("#bodyID > div.ds-transfers-wrapper > div.ng-scope > div > div.search-view-container-wrapper > main > div:nth-child(3) > div > div.search-view-items-container > div:nth-child(2) > search-item > div.eva-3-cluster-gallery.-eva-3-shadow-line.-eva-3-shadow-line-hover > div.cluster-container > div.cluster-content > div > div.col.-sm-12.-md-7 > div > span > h1 > strong")).getText();
         String Minivan = driver.findElement(By.cssSelector("#bodyID > div.ds-transfers-wrapper > div.ng-scope > div > div.search-view-container-wrapper > main > div:nth-child(3) > div > div.search-view-items-container > div:nth-child(2) > search-item > div.eva-3-cluster-gallery.-eva-3-shadow-line.-eva-3-shadow-line-hover > div.cluster-container > div.cluster-content > div > div.col.-sm-12.-md-7 > div > span > h1 > span:nth-child(3)")).getText();
         Private = Private + " " + Minivan;
@@ -268,7 +301,7 @@ public class traslados {
     @After
     public void close(){
         if(driver != null){
-            driver.close();
+            //driver.close();
         }
     }
 

@@ -2,10 +2,12 @@ package pom.equipo4.base;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
@@ -75,5 +77,26 @@ public class SeleniumBase {
     public void dormir(int mseconds) throws InterruptedException {
         Thread.sleep(mseconds);
     }
+
+    public void ingresarKeyEnter(By localizador){
+        encontrarElemento(localizador).sendKeys(Keys.ENTER);
+    }
+
+
+    public int obtenerTamañoLista(By localizador){
+        return encontrarElementos(localizador).size();
+    }
+
+    public void recorrerLista(By localizador){
+        for (int i = 0; i < obtenerTamañoLista(localizador); i++) {
+            encontrarElementos(localizador).get(i).click();
+        }
+    }
+
+    public void assertComparaString(By localizador,String strEsperado){
+        Assert.assertEquals(strEsperado,obtenerTexto(localizador));
+    }
+
+
 
 }

@@ -1,7 +1,7 @@
 package viajesfalabella.equipo4;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.apache.xpath.operations.Bool;
+//import org.apache.xpath.operations.Bool;
 import org.junit.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
