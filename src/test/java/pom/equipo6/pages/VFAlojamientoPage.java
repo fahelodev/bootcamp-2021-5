@@ -6,10 +6,8 @@ import pom.equipo6.base.SeleniumBase;
 
 public class VFAlojamientoPage extends SeleniumBase {
 
-    public VFAlojamientoPage(WebDriver driver) {
-        super(driver);
-    }
-    //Atributos - objeto a guardar caso de prueba 001
+    public VFAlojamientoPage(WebDriver driver) {super(driver);}
+    //Atributos - objeto a guardar
     By btnAlojamiento = By.xpath("//label[.='Alojamientos']");
     By textFieldDestino = By.cssSelector("[placeholder='Ingresa una ciudad, alojamiento o atracción']");
     By selectFirtsDestino = By.xpath("//li[.='Córdoba, Córdoba, Argentina']");

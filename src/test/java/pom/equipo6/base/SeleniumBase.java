@@ -20,6 +20,7 @@ public class SeleniumBase {
         return driver.findElement(locator);
     }
 
+
     public void goUrl(String URL){
         driver.get(URL);
     }
@@ -96,4 +97,19 @@ public class SeleniumBase {
     public void loadEmergent(By locator) throws InterruptedException {
         findItem(locator);
         Thread.sleep(30);}
+
+
+    public WebElement waitExplicitVisibility(By locator, int time){
+        WebDriverWait espera;
+        espera = new WebDriverWait(driver,time);
+        return espera.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+
+    public void waitExplicitInvisibility(WebElement locator, int time){
+        WebDriverWait espera;
+        espera = new WebDriverWait(driver,time);
+        espera.until(ExpectedConditions.invisibilityOf(locator));
+    }
+
 }
+

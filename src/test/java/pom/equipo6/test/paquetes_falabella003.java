@@ -12,7 +12,7 @@ public class paquetes_falabella003 extends TestBase {
     @Test
     public void paqueteCompletoConVueloDosAlojamientos(){
         pageHome = new VFHomePage(driver);
-        pageHome.goHomePage();
+        pageHome.goToHomePage();
         pagePaquetes = new VFPaquetesPage(driver);
         pagePaquetes.goPaquetesToHome();
         pagePaquetes.optionVueloDosAlojamientos();

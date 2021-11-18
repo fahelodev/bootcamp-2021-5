@@ -12,7 +12,7 @@ public class paquetes_falabella002 extends TestBase {
     @Test
     public void paqueteCompletoBuscandoMenorCosto(){
         pageHome = new VFHomePage(driver);
-        pageHome.goHomePage();
+        pageHome.goToHomePage();
         pagePaquetes = new VFPaquetesPage(driver);
         pagePaquetes.goPaquetesToHome();
         pagePaquetes.selectCiudadOrigen();
