@@ -37,6 +37,8 @@ public class SeleniumBase {
         encontrarElemento(localizador).click();
     }
 
+    //Selecciona la lista de destino y origen
+
     public void seleccionarTextoLista(By localizador, String texto) {
         List<WebElement> listaAlojamientos = encontrarElementos(localizador);
 
@@ -61,11 +63,7 @@ public class SeleniumBase {
         esperae.until(ExpectedConditions.elementToBeClickable(localizador));
     }
 
-    public void esperaExplicitaElementoClick(By localizador, int time){
-        WebDriverWait espera;
-        espera = new WebDriverWait(driver,time);
-        espera.until(ExpectedConditions.elementToBeClickable(localizador));
-    }
+
 
     public void seleccionarElementoPorTexto(By localizador, String texto) {
         Select selector = new Select(encontrarElemento(localizador));
@@ -93,14 +91,7 @@ public class SeleniumBase {
 
     }
 
-    public void selectPestana(int index)
-    {
-        ArrayList<String> tabsAbiertas;
-        tabsAbiertas = new ArrayList<String>(driver.getWindowHandles());
-        driver.switchTo().window(tabsAbiertas.get(index));
-    }
-
-    public void dormir(int mseconds) throws InterruptedException {
+  public void dormir(int mseconds) throws InterruptedException {
         Thread.sleep(mseconds);
     }
 

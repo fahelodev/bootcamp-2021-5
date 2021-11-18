@@ -9,8 +9,8 @@ public class VFTrasladosPage extends SeleniumBase  {
     public VFTrasladosPage(WebDriver driver) {super(driver);}
 
     By btnTraslados = By.xpath("//label[contains(text(),'Traslados')]");
-    By btnCheckHaciaAeropuerto = By.xpath("//*[@id=\"searchbox\"]/div/div/div/div[3]/div[2]/div[1]/div[2]/span[2]/label/i\n");
-    By btnCheckAgregarRegreso = By.xpath("//*[@id=\"searchbox\"]/div/div/div/div[3]/div[2]/div[2]/div/div[3]/span/label");
+    By btnCheckHaciaAeropuerto = By.xpath("//span[contains(text(),' Hacia el aeropuerto')]");
+    By btnCheckAgregarRegreso = By.cssSelector("span.sbox-3-checkbox.-md");
     By btnBuscar = By.cssSelector("a.sbox-search");
     //Hacia el Aeropuerto
     By btnDesde = By.xpath("//input[@placeholder='Ingresa un hotel o dirección adónde quieras ir']");
@@ -27,14 +27,13 @@ public class VFTrasladosPage extends SeleniumBase  {
     By listaHora = By.cssSelector("select.select-tag.sbox-time-departure");
     By btnPasajeros = By.cssSelector(".sbox-distri-input > div:nth-child(1)");
     By btnAgregarPasajero = By.xpath("//div[@class='number-picker sbox-3-steppers -md']//child::a[@class='steppers-icon-right sbox-3-icon-plus']");
-    By btnMenores = By.xpath("//*[@id=\"searchbox\"]/div/div/div/div[3]/div[2]/div[4]/div/div/div[2]/div/div\n");
-    By btnAgregarMenores = By.xpath("/html/body/div[1]/div/div[1]/div[2]/div/div[1]/div/div[2]/div[2]/div/a[2]");
+
+    By btnAgregarMenores = By.cssSelector("._pnlpk-stepper-minors .sbox-3-icon-plus");
     By btnBuscarVuelosAlojamientos = By.xpath("//em[contains(text(),'Buscar')]");
-    By agregarEdad = By.xpath("select[class='select-tag']");
-    By listaEdad = By.xpath("/html/body/div[1]/div/div[1]/div[2]/div/div[1]/div/div[3]/div[1]/div[2]/div/div/select");
-    By btnDestinoAlojamiento = By.xpath("//label[contains(text(),'Segundo destino')]/following::input");
-    By btnListaMoneda = By.xpath("//*[@id=\"currency-select\"]");
-    By btnDolares = By.xpath("//*[@id=\"currency-select\"]/option[2]");
+
+    By listaEdad = By.cssSelector("._pnlpk-minors-age-select-wrapper select");
+    By btnListaMoneda = By.xpath("//*[@id='currency-select']");
+    By btnDolares = By.xpath("//*[@id='currency-select']/option[2]");
 
 
     //Funciones que se usan en todos los tests de Traslados
@@ -65,7 +64,7 @@ public class VFTrasladosPage extends SeleniumBase  {
     }
 
     public void agregarMenores() {
-        clickear(btnMenores);
+        clickear(btnPasajeros);
         for (int j = 0; j < 1; j++){
 
             clickear(btnAgregarMenores);
