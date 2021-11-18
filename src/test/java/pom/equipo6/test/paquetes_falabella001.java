@@ -12,7 +12,7 @@ public class paquetes_falabella001 extends TestBase {
     @Test
     public void paqueteSinFechaDefinida(){
         pageHome = new VFHomePage(driver);
-        pageHome.goHomePage();
+        pageHome.goToHomePage();
         pagePaquetes = new VFPaquetesPage(driver);
         pagePaquetes.goPaquetesToHome();
         pagePaquetes.selectCiudadOrigen();

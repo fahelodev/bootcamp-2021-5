@@ -12,7 +12,7 @@ public class alojamiento_falabella003 extends TestBase {
     @Test
     public void alojamientoHotelConReservaAeroPuerto() throws InterruptedException {
         pageHome = new VFHomePage(driver);
-        pageHome.goHomePage();
+        pageHome.goToHomePage();
         pageAlojamiento = new VFAlojamientoPage(driver);
         pageAlojamiento.goAlojamientoToHome();
         pageAlojamiento.selectHotel();

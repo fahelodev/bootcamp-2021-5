@@ -12,7 +12,7 @@ public class alojamiento_falabella001 extends TestBase {
     @Test
     public void alojamientoFechaNoDefinida(){
         pageHome = new VFHomePage(driver);
-        pageHome.goHomePage();
+        pageHome.goToHomePage();
         pageAlojamiento = new VFAlojamientoPage(driver);
         pageAlojamiento.goAlojamientoToHome();
         pageAlojamiento.selectDestino();

@@ -9,7 +9,7 @@ public class VFHomePage extends SeleniumBase {
         super(driver);
     }
     //Metodo KeywordDriven
-    public void goHomePage(){
+    public void goToHomePage(){
         goUrl("https://www.viajesfalabella.cl");
     }
 }
