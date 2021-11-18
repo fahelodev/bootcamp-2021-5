@@ -32,6 +32,13 @@ public class VFalojamientosPage extends SeleniumBase {
     By opcionesOrdenarPor= By.xpath("//aloha-select[@class='sorting-select']//select[@class='select-tag']/option");
     By mensajeLugar=By.xpath("//span[@class='-eva-3-tc-gray-2']");
     By mensajeDias=By.xpath("//p[@class='eva-3-p -eva-3-tc-gray-2 first-message']");
+    By verDetallePrimeraOpcionBusquedaPorFitro =By.xpath("//button[@class='eva-3-btn -md -primary -eva-3-fwidth']");
+    By clickVerHabitaciones=By.xpath("//div[@class='pricebox-top-container']//button");
+    By clickReservarAhoraPrimeraOpcion=By.xpath("//div[@class='-eva-3-mb-lg']//button");
+    By clickSiguiente=By.xpath("//div[@class='pricebox-content-container']//button");
+    By mensajeFelicitaciones=By.xpath("//div[@class='eva-3-message -success -eva-3-mb-md -eva-3-mt-md']//span");
+    By iconoSiguientesMes= By.xpath("//div[@class='_dpmg2--controls-next']//i");
+
 
 
     By darClickVuelo1Alojamiento = By.xpath("//input[@value='vh']");
@@ -66,7 +73,7 @@ public class VFalojamientosPage extends SeleniumBase {
 
     public void seleccionarFechas(int fecha1, int fecha2){
         darClick(clickEntrada);
-        buscarEnCalendario(fecha1,fecha2,calendario);
+        buscarEnCalendario(fecha1,fecha2,calendario,iconoSiguientesMes);
     }
 
     public void seleccionarCantidadOcupantesHabitacion(int numero){
@@ -88,6 +95,48 @@ public class VFalojamientosPage extends SeleniumBase {
     public String validarDias(String dias){
         esperaImplicita();
         return validarDatos(dias,mensajeDias);
+    }
+
+    public void selecionarFiltroReservaFlexible(String labelAFiltrar,String opcionAClickear){
+        buscarPorFiltro(labelAFiltrar,opcionAClickear);
+
+    }
+
+    public void darClickPrimerResultadoBusquedaPorFiltro(){
+        esperaExplicitaElementoClickeable(verDetallePrimeraOpcionBusquedaPorFitro);
+        darClick(verDetallePrimeraOpcionBusquedaPorFitro);
+    }
+
+    public void cambiarANuevaPestaña(){
+        cambiarPestaña();
+    }
+
+    public void darClickVerHabitaciones(){
+       // esperaExplicitaElementoClickeable(clickHabitaciones);
+        darClick(clickVerHabitaciones);
+    }
+
+    public void darClickReservarAhora(){
+        // esperaExplicitaElementoClickeable(clickHabitaciones);
+        darClick(clickReservarAhoraPrimeraOpcion);
+    }
+
+    public void darClickEnSiguiente(){
+        //esperaExplicitaElementoClickeable();
+        darClick(clickSiguiente);
+    }
+
+    public String validarMensajeFelicitaciones(String mensaje){
+        esperaImplicita();
+        return validarDatos(mensaje,mensajeFelicitaciones);
+    }
+
+    public void cerrarPestañaSecundaria(){
+        cerrarPestaña();
+    }
+
+    public void volverPestañaInicial(){
+        cambiarPestañaInicial();
     }
 
 

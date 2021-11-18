@@ -3,6 +3,7 @@ package pom.equipo2.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import pom.equipo2.base.SeleniumBase;
+
 import static org.junit.Assert.assertTrue;
 
 public class VFBusquedaAlojamientoPage extends SeleniumBase {
@@ -22,12 +23,9 @@ public class VFBusquedaAlojamientoPage extends SeleniumBase {
     Integer totalCentro;
 
 
-    public void confirmarCentro(){
-        clickear(etiquetaCentro);
-    }
-
 
     public void confirmarMoneda (){
+        esperaExplicitaElementoClickeable(campoMinimo,7);
         seleccionarElementoPorValor(listaMoneda,"USD");
         esperaExplicitaPrecenciaElementos(campoMinimo,7);
         ingresarTexto(campoMinimo,"110");
@@ -36,13 +34,23 @@ public class VFBusquedaAlojamientoPage extends SeleniumBase {
 
     }
 
+    public void confirmarCentro(){
+        esperaExplicitaElementoClickeable(etiquetaCentro,7);
+        clickear(etiquetaCentro);
+    }
     public void verificarAlMenosUnResultado(){
         totalAlojamiento= Integer.parseInt(obtenerTexto(etiquetaCantidadAlojamiento));
         assertTrue(totalAlojamiento >= 1);
     }
 
     public void verificarBusquedaConDosFiltros(){
+        esperaExplicitaPrecenciaElementos(etiquetaCantidadCentro,7);
         totalCentro= Integer.valueOf(obtenerTexto(etiquetaCantidadCentro));
         assertTrue(totalCentro > 1);
     }
+
+
+
+   
 }
+
