@@ -52,6 +52,10 @@ public class VFalojamientosPage extends SeleniumBase {
         return contarElementos(busqueda);
     }
 
+    public void busquedaPorFiltros(String nombre, String filtro){
+        buscarPorFiltro(nombre,filtro);
+    }
+
     public void seleccionarFechas(int fecha1, int fecha2){
         darClick(clickEntrada);
         buscarEnCalendario(fecha1,fecha2,calendario,iconoSiguientesMes);

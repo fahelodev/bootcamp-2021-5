@@ -68,9 +68,9 @@ public class testalojamientos extends TestBase {
         paginaAlojamientos.seleccionarFechas(7,17);
         paginaAlojamientos.seleccionarCantidadOcupantesHabitacion(2);
         paginaAlojamientos.darClickBotonBuscar();
-        paginaAlojamientos.buscarPorFiltro("Reserva flexible","reserva flexible");
+        paginaAlojamientos.busquedaPorFiltros("Reserva flexible","reserva flexible");
         Thread.sleep(2000);
-        paginaAlojamientos.buscarPorFiltro("Tipo de Alojamiento","Departamentos");
+        paginaAlojamientos.busquedaPorFiltros("Tipo de Alojamiento","Departamentos");
         Thread.sleep(2000);
         paginaAlojamientos.darClickPrimerResultadoBusquedaPorFiltro();
         paginaAlojamientos.cambiarANuevaPestaña();
