@@ -20,7 +20,7 @@ public class testTraslados extends TestBase {
         paginaTraslado.irPaquetesDesdeHome();
         paginaTraslado.llenarCasillaOrigen("arturo", "Aeropuerto Arturo Merino Benitez");
         paginaTraslado.llenarCasillaDestino("sheraton","Sheraton Miramar");
-        paginaTraslado.seleccionarFecha(20);
+        paginaTraslado.seleccionarFecha(2);
         paginaTraslado.seleccionarCantidadPasajeros(4);
         paginaTraslado.darClickBotonBuscar();
         paginaTraslado.clickComprar("Comprar");

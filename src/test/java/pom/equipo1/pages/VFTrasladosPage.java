@@ -60,7 +60,7 @@ public class VFTrasladosPage extends SeleniumBase {
 
     public void seleccionarFecha(int fecha1){
         darClick(darClickCampoFechaIda);
-        seleccionarEnfechaArriedo(fecha1,calendario);
+        ingresarUnaFecha(fecha1,calendario);
     }
 
     public void seleccionarCantidadPasajeros(int numero){
