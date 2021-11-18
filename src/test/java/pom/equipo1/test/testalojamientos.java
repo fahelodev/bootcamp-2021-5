@@ -37,7 +37,7 @@ public class testalojamientos extends TestBase {
     }
 
     @Test
-    public void CdP08_busquedaAlojamiento() throws InterruptedException {
+    public void CdP08_busquedaAlojamiento() {
         paginaHome = new VFHomePage(driver);
         paginaHome.irHomePage();
         paginaAlojamientos = new VFalojamientosPage(driver);
@@ -48,7 +48,6 @@ public class testalojamientos extends TestBase {
         paginaAlojamientos.seleccionarCantidadOcupantesHabitacion(1);
         paginaAlojamientos.darClickBotonBuscar();
         paginaAlojamientos.seleccionarFiltroOrdenarPor("Precio: menor a mayor");
-        Thread.sleep(2000);
         String validarLugar = paginaAlojamientos.validarLugar("Dubái");
         String validarDias = paginaAlojamientos.validarDias("6");
 
@@ -82,9 +81,7 @@ public class testalojamientos extends TestBase {
         Thread.sleep(5000);
         String validarMensajeFelicitaciones=paginaAlojamientos.validarMensajeFelicitaciones("¡Felicitaciones! Seleccionaste la habitación más económica");
         assertEquals("true",validarMensajeFelicitaciones);
-        //paginaAlojamientos.cerrarPestañaSecundaria();
-       //paginaAlojamientos.volverPestañaInicial();
-
+        // paginaAlojamientos.cerrarPestañaSecundaria();
+        // paginaAlojamientos.volverPestañaInicial();
     }
-
 }

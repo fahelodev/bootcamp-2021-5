@@ -226,7 +226,7 @@ public class SeleniumBase {
         driver.findElement(By.cssSelector("div.distpicker.distpicker-rooms-packages.sbox-v4-components div._pnlpk-itemRow__item._pnlpk-stepper-minors.-medium-down-to-lg a.steppers-icon-right.sbox-3-icon-plus")).click();
         // CLICK EN EDAD
         driver.findElement(By.cssSelector("div.distpicker.distpicker-rooms-packages.sbox-v4-components div._pnlpk-itemRow__item._pnlpk-select-minor-age select")).click();
-        List <WebElement> edades = driver.findElements(By.cssSelector("div.distpicker.distpicker-rooms-packages.sbox-v4-components select option"));
+        List <WebElement> edades = generarLista(By.cssSelector("div.distpicker.distpicker-rooms-packages.sbox-v4-components select option"));
         String dia = Integer.toString(edad);
         busquedaElemento(edades,dia);
     }
@@ -238,6 +238,8 @@ public class SeleniumBase {
         List <WebElement> options = driver.findElements(By.cssSelector(clase+" select option"));
         // CAMBIAMOS A DÓLARES ESTADOUNIDENSES
         busquedaElemento(options,palabra);
+        esperaExplicitaElementoVisible(By.cssSelector(clase+" select option"));
+        // <div class="loader-modal-content">
         Thread.sleep(2000);
     }
 
@@ -245,24 +247,15 @@ public class SeleniumBase {
         WebDriverWait espera = new WebDriverWait(driver, 15);
         List<WebElement> optionsTO = driver.findElements(localizador);
         espera.until(ExpectedConditions.elementToBeClickable(localizador));
-        for (WebElement l : optionsTO) {
-            if (l.getText().contains(filtro)) {
-                l.click();
-                break;
-            }
-
-        }
+        busquedaElemento(optionsTO,filtro);
     }
 
     public void buscarPorFiltro(String labelAFiltrar,String opcionAClickear){
         esperaExplicitaElementoVisible(By.cssSelector("div.eva-3-filters-vertical.-eva-3-mb-lg.-show-filters"));
         List<WebElement> optionsTO = driver.findElements(By.xpath("//li[contains(.,'"+labelAFiltrar+"')]//em"));
-        for (WebElement dep : optionsTO) {
-            if (dep.getText().contains(opcionAClickear)) {
-                dep.click();
-                break;
-            }
-        }
+        busquedaElemento(optionsTO,opcionAClickear);
+        esperaExplicitaElementoVisible(By.cssSelector("div.eva-3-filters-vertical.-eva-3-mb-lg.-show-filters"));
+        esperaImplicita();
     }
 
    public void cambiarPestaña(){
@@ -275,10 +268,11 @@ public class SeleniumBase {
                 newTab = actual;
             }
         }
+        esperaImplicita();
     }
 
     public void cerrarPestaña(){
-        driver.close();
+        driver.quit();
     }
 
     public void cambiarPestañaInicial(){
@@ -288,14 +282,7 @@ public class SeleniumBase {
 
     public void cambiarPesos(String palabra, By localizador) {
         List<WebElement> lista = driver.findElements(localizador);
-        for (WebElement listaOpciones: lista){
-            // RECORREMOS LA LISTA HASTA ENCONTRAR LA PALABRA REQUERIDA
-            if (listaOpciones.getText().contains(palabra)){
-                // HACEMOS CLICK EN LA CATEGORIA SELECCIONADA
-                listaOpciones.click();
-                break;
-            }
-        }
+        busquedaElemento(lista,palabra);
     }
     public void clickBotoAplicar(By localizador) {
         esperaExplicitaElementoClickeable(localizador);
@@ -322,11 +309,6 @@ public class SeleniumBase {
         WebDriverWait espera = new WebDriverWait(driver, 15);
         List<WebElement> btn= driver.findElements(localizador);
         espera.until(ExpectedConditions.elementToBeClickable(localizador));
-        for (WebElement m: btn){
-            if(m.getText().contains(compra)){
-                m.click();
-                break;
-            }
-        }
+        busquedaElemento(btn,compra);
     }
 }

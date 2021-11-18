@@ -11,12 +11,6 @@ public class VFalojamientosPage extends SeleniumBase {
     public VFalojamientosPage(WebDriver driver) {
         super(driver);
     }
-    // atributos - objeto a guardar
-    By btnAlojamiento = By.xpath("//label[contains(text(),'Alojamientos')]");
-    By desplegableHabitaciones = By.cssSelector("div.sbox-distri-container");
-    By btnHabitaciones = By.cssSelector("div.sbox-distri-container");
-    By btnMasHabitaciones = By.cssSelector("div._pnlpk-itemRow__item._pnlpk-stepper-minors.-medium-down-to-lg  a.steppers-icon-right.sbox-3-icon-plus");
-    By btnAplicar = By.xpath("//a[contains(text(),'Aplicar')]");
     // Equipo 1 By:
     By categorias = By.cssSelector("div.header-products-container ul li a");
     By darClickNoHeDecidoFecha=By.cssSelector("label.checkbox-label");
@@ -38,19 +32,6 @@ public class VFalojamientosPage extends SeleniumBase {
     By clickSiguiente=By.xpath("//div[@class='pricebox-content-container']//button");
     By mensajeFelicitaciones=By.xpath("//div[@class='eva-3-message -success -eva-3-mb-md -eva-3-mt-md']//span");
     By iconoSiguientesMes= By.xpath("//div[@class='_dpmg2--controls-next']//i");
-
-
-
-    By darClickVuelo1Alojamiento = By.xpath("//input[@value='vh']");
-    By campoOrigen = By.cssSelector("div.sbox-place-container input");
-    By esperaCampoOrigen = By.cssSelector("div.ac-container span");
-   // By campoDestino = By.cssSelector("div.sbox-second-place-container input");
-   //By esperaCampoDestino = By.cssSelector("div.ac-container span");
-    By darClickCampoFechaIda = By.cssSelector("[placeholder='Ida']");
-    By darClickPasajeros = By.cssSelector("div.sbox-distri-input-container");
-    By pasajeros = By.cssSelector("div.sbox-distri-container div.sbox-passengers-container input");
-    By btnBuscar = By.cssSelector("div.sbox-button-container a");
-    By contenedorResultados = By.cssSelector("div.results-cluster-container");
 
     public void irAlojamientosDesdeHome(){
         // generar la lista categorias
@@ -83,8 +64,11 @@ public class VFalojamientosPage extends SeleniumBase {
 
     public void seleccionarFiltroOrdenarPor(String filtro){
         esperaImplicita();
+        esperaExplicitaElementoClickeable(clikOrdenarPor);
         darClick(clikOrdenarPor);
         filtrar(filtro,opcionesOrdenarPor);
+        esperaExplicitaElementoClickeable(clikOrdenarPor);
+        esperaImplicita();
     }
 
     public String validarLugar(String lugar){
@@ -97,11 +81,6 @@ public class VFalojamientosPage extends SeleniumBase {
         return validarDatos(dias,mensajeDias);
     }
 
-    public void selecionarFiltroReservaFlexible(String labelAFiltrar,String opcionAClickear){
-        buscarPorFiltro(labelAFiltrar,opcionAClickear);
-
-    }
-
     public void darClickPrimerResultadoBusquedaPorFiltro(){
         esperaExplicitaElementoClickeable(verDetallePrimeraOpcionBusquedaPorFitro);
         darClick(verDetallePrimeraOpcionBusquedaPorFitro);
@@ -112,18 +91,21 @@ public class VFalojamientosPage extends SeleniumBase {
     }
 
     public void darClickVerHabitaciones(){
-       // esperaExplicitaElementoClickeable(clickHabitaciones);
+        // esperaExplicitaElementoClickeable(clickHabitaciones);
         darClick(clickVerHabitaciones);
+        esperaImplicita();
     }
 
     public void darClickReservarAhora(){
-        // esperaExplicitaElementoClickeable(clickHabitaciones);
+        // esperaExplicitaElementoClickeable(clickReservarAhoraPrimeraOpcion);
         darClick(clickReservarAhoraPrimeraOpcion);
+        esperaImplicita();
     }
 
     public void darClickEnSiguiente(){
-        //esperaExplicitaElementoClickeable();
+        // esperaExplicitaElementoClickeable(clickSiguiente);
         darClick(clickSiguiente);
+        esperaImplicita();
     }
 
     public String validarMensajeFelicitaciones(String mensaje){
@@ -137,41 +119,5 @@ public class VFalojamientosPage extends SeleniumBase {
 
     public void volverPestañaInicial(){
         cambiarPestañaInicial();
-    }
-
-
-
-
-
-
-
-    public void seleccionarVuelo1Alojamiento(){
-        darClick(darClickVuelo1Alojamiento);
-    }
-
-    public void llenarCasillaOrigen(String origen, String seleccion){
-        // llenar la casilla Origen
-        ingresarDestino(origen,seleccion,campoOrigen,esperaCampoOrigen);
-    }
-
-    /*public void llenarCasillaDestino(String destino, String seleccion){
-        //llenar la casilla Destino
-        ingresarDestino(destino,seleccion,campoDestino,esperaCampoDestino);
-    }*/
-
-
-
-    public void darClickBuscar(){
-        darClick(btnBuscar);
-        esperaImplicita();
-    }
-
-    public int resultadosBusqueda(){
-        return contarElementos(contenedorResultados);
-    }
-
-
-    public void confirmarSeleccionHabitacionMenor(){
-        darClick(btnAplicar);
     }
 }
