@@ -1,0 +1,143 @@
+{
+	"info": {
+		"_postman_id": "2db32217-8957-4742-b847-d81c6d1b81de",
+		"name": "Weather",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CovidTest",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							"pm.environment.set(\"variable_key\", \"variable_value\");\r",
+							"\r",
+							"pm.test(\"Test-00-Respuesta valida\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test-01-Tipo de dato\", () =>{\r",
+							"    pm.expect(jsonData).to.be.an(\"array\");\r",
+							"    pm.expect(jsonData[0].country).to.be.a(\"string\");\r",
+							"    pm.expect(jsonData[0].latitude).to.be.an(\"number\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test-02-Dato Exacto\", () =>{\r",
+							"    pm.expect(jsonData[0].country).eql('USA');\r",
+							"    pm.expect(jsonData[0].provinces[4].province).eql(\"California\");\r",
+							"    pm.expect(jsonData[0].provinces[4].deaths).eql(199);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test-03-Estructura\", () =>{\r",
+							"    pm.expect(jsonData[0]).to.have.keys('country','provinces','latitude','longitude','date').and.be.an(\"object\");\r",
+							"    pm.expect(jsonData[0].provinces[0]).to.have.keys('province','confirmed','recovered','deaths','active').and.be.an(\"object\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Test-05-N-Propiedades\", () => {\r",
+							"pm.expect(Object.keys(jsonData[0].provinces[0]).length).to.be.above(1)\r",
+							"pm.expect(Object.keys(jsonData[0].provinces[9]).length).equals(5)\r",
+							"pm.expect(Object.keys(jsonData[0]).length).lessThan(6)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test-04-Respuesta Json\", () => {\r",
+							"var schema = {\r",
+							"    \"required\": [\r",
+							"        \"province\",\r",
+							"        \"confirmed\",\r",
+							"        \"recovered\",\r",
+							"        \"deaths\",\r",
+							"        \"active\"\r",
+							"    ],\r",
+							"    \"properties\": {\r",
+							"        \"province\": {\r",
+							"            \"$id\": \"#/properties/province\",\r",
+							"            \"type\": \"string\"\r",
+							"        },\r",
+							"        \"confirmed\": {\r",
+							"            \"$id\": \"#/properties/confirmed\",\r",
+							"            \"type\": \"integer\"\r",
+							"        },\r",
+							"        \"recovered\": {\r",
+							"            \"$id\": \"#/properties/recovered\",\r",
+							"            \"type\": \"integer\"\r",
+							"        },\r",
+							"        \"deaths\": {\r",
+							"            \"$id\": \"#/properties/deaths\",\r",
+							"            \"type\": \"integer\"\r",
+							"        },\r",
+							"        \"active\": {\r",
+							"            \"$id\": \"#/properties/active\",\r",
+							"            \"type\": \"integer\"\r",
+							"        }\r",
+							"    },\r",
+							"    \"$id\": \"http://example.org/root.json#\",\r",
+							"    \"type\": \"object\",\r",
+							"    \"definitions\": {},\r",
+							"    \"$schema\": \"http://json-schema.org/draft-07/schema#\"\r",
+							"};\r",
+							"\r",
+							"pm.variables.set(\"schema\", schema);\r",
+							"\r",
+							"try {\r",
+							"    var schema = pm.variables.get(\"schema\");\r",
+							"    if(schema){\r",
+							"        const jsonData = pm.response.json();\r",
+							"        if(jsonData){\r",
+							"            var Ajv = require('ajv'),\r",
+							"            ajv = new Ajv({logger: console, allErrors: true});\r",
+							"            pm.test('Schema es valido', function() {\r",
+							"                var validate = ajv.validate(schema, jsonData[0].provinces[0]);\r",
+							"                console.log(ajv.errors);\r",
+							"                pm.expect(validate, JSON.stringify(ajv.errors)).to.be.true;\r",
+							"            });\r",
+							"        }\r",
+							"    }\r",
+							"}\r",
+							"catch(e){\r",
+							"    console.log(e);\r",
+							"}\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-rapidapi-key",
+						"value": "65c3a8ec1emsh38db88917d7c333p1cd20ajsn923976797f86",
+						"type": "text"
+					},
+					{
+						"key": "x-rapidapi-host",
+						"value": "covid-19-data.p.rapidapi.com",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{ENDPOINT}}?name=USA&date=2020-04-01",
+					"host": [
+						"{{ENDPOINT}}"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "USA"
+						},
+						{
+							"key": "date",
+							"value": "2020-04-01"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

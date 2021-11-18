@@ -78,7 +78,7 @@ public class VFpaquetesPage extends SeleniumBase {
         fechasLejanas(mes,fechaInicio,fechaFin, calendario);
         darClick(darClickVuelo2Alojamientos);
         darClick(darClickCampoFechaHasta);
-        ingresarFechaHasta(fechaParada);
+        ingresarUnaFechaEspecifica(fechaParada,calendario);
     }
 
     public void seleccionarCantidadPasajeros(int numero){

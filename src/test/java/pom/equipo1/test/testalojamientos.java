@@ -37,7 +37,7 @@ public class testalojamientos extends TestBase {
     }
 
     @Test
-    public void CdP08_busquedaAlojamiento() throws InterruptedException {
+    public void CdP08_busquedaAlojamiento() {
         paginaHome = new VFHomePage(driver);
         paginaHome.irHomePage();
         paginaAlojamientos = new VFalojamientosPage(driver);
@@ -48,7 +48,6 @@ public class testalojamientos extends TestBase {
         paginaAlojamientos.seleccionarCantidadOcupantesHabitacion(1);
         paginaAlojamientos.darClickBotonBuscar();
         paginaAlojamientos.seleccionarFiltroOrdenarPor("Precio: menor a mayor");
-        Thread.sleep(2000);
         String validarLugar = paginaAlojamientos.validarLugar("Dubái");
         String validarDias = paginaAlojamientos.validarDias("6");
 
@@ -69,9 +68,9 @@ public class testalojamientos extends TestBase {
         paginaAlojamientos.seleccionarFechas(7,17);
         paginaAlojamientos.seleccionarCantidadOcupantesHabitacion(2);
         paginaAlojamientos.darClickBotonBuscar();
-        paginaAlojamientos.buscarPorFiltro("Reserva flexible","reserva flexible");
+        paginaAlojamientos.busquedaPorFiltros("Reserva flexible","reserva flexible");
         Thread.sleep(2000);
-        paginaAlojamientos.buscarPorFiltro("Tipo de Alojamiento","Departamentos");
+        paginaAlojamientos.busquedaPorFiltros("Tipo de Alojamiento","Departamentos");
         Thread.sleep(2000);
         paginaAlojamientos.darClickPrimerResultadoBusquedaPorFiltro();
         paginaAlojamientos.cambiarANuevaPestaña();
@@ -82,9 +81,7 @@ public class testalojamientos extends TestBase {
         Thread.sleep(5000);
         String validarMensajeFelicitaciones=paginaAlojamientos.validarMensajeFelicitaciones("¡Felicitaciones! Seleccionaste la habitación más económica");
         assertEquals("true",validarMensajeFelicitaciones);
-        //paginaAlojamientos.cerrarPestañaSecundaria();
-       //paginaAlojamientos.volverPestañaInicial();
-
+        // paginaAlojamientos.cerrarPestañaSecundaria();
+        // paginaAlojamientos.volverPestañaInicial();
     }
-
 }

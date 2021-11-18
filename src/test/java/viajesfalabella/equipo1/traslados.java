@@ -166,8 +166,6 @@ public class traslados {
         }
         Assert.assertEquals(2, contador);
         Assert.assertEquals(2, contador2);
-
-
     }
 
 
@@ -238,8 +236,6 @@ public class traslados {
         espera.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.-eva-3-mt-xlg")));
         String Minivan = driver.findElement(By.xpath("//*[@class='dm-d-text eva-3-p -eva-3-tc-gray-2 -eva-3-mb-xsm']//child::span")).getText();
         Assert.assertTrue("True",Minivan.contains("Minivan"));
-
-
     }
 
 
