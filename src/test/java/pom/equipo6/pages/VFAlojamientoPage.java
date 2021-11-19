@@ -18,8 +18,8 @@ public class VFAlojamientoPage extends SeleniumBase {
     //Atributos - objeto a guardar caso de prueba 002
     By btnFechaIda = By.cssSelector("[placeholder='Entrada']");
     By btnFechaVuelta = By.cssSelector("[placeholder='Salida']");
-    By selectFirstFechaIda = By.xpath("//div[@class='_dpmg2--dates']/child::span[18]");
-    By selectFirstFechaVuelta = By.xpath("//span[.='25NocheNoches']");
+    By selectFirstFechaIda = By.xpath("//div[@class='_dpmg2--dates']/child::span[20]");
+    By selectFirstFechaVuelta = By.xpath("//span[.='27NocheNoches']");
     By btnApplyFechas = By.xpath("//em[contains(text(),'Aplicar')]");
     By btnApplyFechasHotel = By.cssSelector("._dpmg2--desktopFooter-button-apply");
     By textFieldSecondDestino = By.cssSelector("[placeholder='Ingresá una ciudad, alojamiento o atracción']");
@@ -28,11 +28,11 @@ public class VFAlojamientoPage extends SeleniumBase {
     By verifyText002 = By.xpath("//h1[@id='landingsTitle']");
     //Atributos - objeto a guardar caso de prueba 003
     By btnSecondSearch = By.cssSelector(".sbox5-box-button-ovr");
-    By btnHotel = By.xpath("//div[.='qp Hotels Lima']");
+    By btnHotel = By.xpath("//div[.='Row NYC']");
     By btnSecondHotel = By.cssSelector("[index='0'] .eva-3-btn");
     By btnReservarAhora = By.xpath("//em[contains(text(),'Reservar ahora')]");
     By btnSelectAeroPuerto = By.id("select-test");
-    By selectAeroPuerto = By.xpath("//option[.='LIM, Aeropuerto Internacional Jorge Chavez']");
+    By selectAeroPuerto = By.xpath("//option[.='LGA, Aeropuerto La Guardia']");
     By btnVueloDestino = By.id("arrivalTime");
     By selectHoraDestino = By.xpath("//select[@id='arrivalTime']/option[.='01:30']");
     By btnVueloRegreso = By.id("departureTime");
