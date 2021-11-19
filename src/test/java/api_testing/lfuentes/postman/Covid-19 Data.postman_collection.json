@@ -1,0 +1,108 @@
+{
+	"info": {
+		"_postman_id": "350541c7-d469-4709-83be-c29d85a6e9f7",
+		"name": "Covid-19 Data",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Test - API Covid19 Data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							"/*\r",
+							"ID: ATC-Respuesta valida del servicio\r",
+							"Descripción: Cuando se envían datos validos se obtiene un status 200.\r",
+							"*/\r",
+							"pm.test(\"ATC-01-Respuesta valida\", function () {\r",
+							"\r",
+							"    pm.response.to.have.status(200);\r",
+							"\r",
+							"});\r",
+							"pm.test(\"ATC-02-Provincias es un array\", function(){\r",
+							"    pm.expect(jsonData[0].provinces).to.be.a(\"array\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"ATC-03-Trae el pais solicitado\", function(){\r",
+							"    pm.expect(jsonData[0].country).to.eq(\"USA\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"ATC-04-La respuesta debe tener al menos 5 keys\", () => {\r",
+							"    const keys = Object.keys(jsonData[0]);\r",
+							"    pm.expect(keys.length).to.be.gte(5);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-rapidapi-key",
+						"value": "65c3a8ec1emsh38db88917d7c333p1cd20ajsn923976797f86",
+						"type": "text"
+					},
+					{
+						"key": "x-rapidapi-host",
+						"value": "covid-19-data.p.rapidapi.com",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{ENDPOINT}}?name=USA&date=2020-04-01",
+					"host": [
+						"{{ENDPOINT}}"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "USA"
+						},
+						{
+							"key": "date",
+							"value": "2020-04-01"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pais sin provincias",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-rapidapi-key",
+						"value": "65c3a8ec1emsh38db88917d7c333p1cd20ajsn923976797f86",
+						"type": "text"
+					},
+					{
+						"key": "x-rapidapi-host",
+						"value": "covid-19-data.p.rapidapi.com",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "?name=CANADA&date=2020-04-01",
+					"query": [
+						{
+							"key": "name",
+							"value": "CANADA"
+						},
+						{
+							"key": "date",
+							"value": "2020-04-01"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
