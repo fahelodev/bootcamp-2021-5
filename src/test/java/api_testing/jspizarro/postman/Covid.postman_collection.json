@@ -1,0 +1,194 @@
+{
+	"info": {
+		"_postman_id": "632df84d-7f5a-45de-bd0b-0cc47f406a94",
+		"name": "Covid",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Pais con varias provincias",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"var data = jsonData[0];\r",
+							"\r",
+							"pm.test(\"ATC-Pais_String\", function () {\r",
+							"   pm.expect(data.country).to.be.a(\"string\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"ATC-Nombres_Provincias_Exacto\", function () {\r",
+							"    pm.expect(data.provinces[0].province).equals('Alabama');\r",
+							"    pm.expect(data.provinces[1].province).equals('Alaska');\r",
+							"    pm.expect(data.provinces[2].province).equals('Arizona');\r",
+							"    pm.expect(data.provinces[3].province).equals('Arkansas');\r",
+							"    pm.expect(data.provinces[4].province).equals('California');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"ATC-Estructura_Provincias\", function () {\r",
+							"    var provinces = data.provinces;\r",
+							"\r",
+							"    for(let i =0; i < provinces.length; i++){\r",
+							"        pm.expect(provinces[i].province).to.be.a(\"string\");\r",
+							"        pm.expect(provinces[i].confirmed).to.be.a(\"number\");\r",
+							"        pm.expect(provinces[i].recovered).to.be.a(\"number\");\r",
+							"        pm.expect(provinces[i].deaths).to.be.a(\"number\");\r",
+							"        pm.expect(provinces[i].active).to.be.a(\"number\");\r",
+							"    }\r",
+							"\r",
+							"});\r",
+							"\r",
+							"pm.test(\"ATC-Respuesta_JSON\", function () {\r",
+							"   pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"ATC-Atributos_Locacion\", function () {\r",
+							"    pm.expect(data).to.have.property('latitude');\r",
+							"    pm.expect(data).to.have.property('longitude');\r",
+							"    pm.expect(data).to.have.property('date');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-rapidapi-key",
+						"value": "65c3a8ec1emsh38db88917d7c333p1cd20ajsn923976797f86",
+						"type": "text"
+					},
+					{
+						"key": "x-rapidapi-host",
+						"value": "covid-19-data.p.rapidapi.com",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://covid-19-data.p.rapidapi.com/report/country/name?name=USA&date=2020-04-01",
+					"protocol": "https",
+					"host": [
+						"covid-19-data",
+						"p",
+						"rapidapi",
+						"com"
+					],
+					"path": [
+						"report",
+						"country",
+						"name"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "USA"
+						},
+						{
+							"key": "date",
+							"value": "2020-04-01"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pais sin provincias",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"var data = jsonData[0];\r",
+							"\r",
+							"pm.test(\"ATC-Pais_String\", function () {\r",
+							"   pm.expect(data.country).to.be.a(\"string\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"ATC-Nombre_Provincia_Exacto\", function () {\r",
+							"    pm.expect(data.provinces[0].province).equals('Chile');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"ATC-Estructura\", function () {\r",
+							"        pm.expect(data.provinces[0].province).to.be.a(\"string\");\r",
+							"        pm.expect(data.provinces[0].confirmed).to.be.a(\"number\");\r",
+							"        pm.expect(data.provinces[0].recovered).to.be.a(\"number\");\r",
+							"        pm.expect(data.provinces[0].deaths).to.be.a(\"number\");\r",
+							"        pm.expect(data.provinces[0].active).to.be.a(\"number\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"ATC-Respuesta_JSON\", function () {\r",
+							"   pm.expect(pm.response.headers.get('Content-Type')).to.equals('application/json');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"ATC-Atributos_Locacion\", function () {\r",
+							"    pm.expect(data).to.have.property('latitude');\r",
+							"    pm.expect(data).to.have.property('longitude');\r",
+							"    pm.expect(data).to.have.property('date');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-rapidapi-key",
+						"value": "65c3a8ec1emsh38db88917d7c333p1cd20ajsn923976797f86",
+						"type": "text"
+					},
+					{
+						"key": "x-rapidapi-host",
+						"value": "covid-19-data.p.rapidapi.com",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://covid-19-data.p.rapidapi.com/report/country/name?name=CHILE&date=2020-04-01",
+					"protocol": "https",
+					"host": [
+						"covid-19-data",
+						"p",
+						"rapidapi",
+						"com"
+					],
+					"path": [
+						"report",
+						"country",
+						"name"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "CHILE"
+						},
+						{
+							"key": "date",
+							"value": "2020-04-01"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
