@@ -14,6 +14,7 @@ public class VFPaquetePage extends SeleniumBase {
 
     //atributos - objeto a guardar
     By btnBuscar = By.xpath("//*[@id='searchbox']//*[text()='Buscar']");
+    By txtIdaYVuelta = By.xpath("//div[contains(text(),'Vuelo ida y vuelta')]");
     By inputOrigen = By.xpath("//label[contains(text(),'Origen')]/following-sibling::input");
     By inputDestino = By.xpath("//label[contains(text(),'Destino')]/following-sibling::input");
     By inputSegundoDestino = By.xpath("//label[contains(text(),'Segundo destino')]/following-sibling::input");
@@ -39,6 +40,7 @@ public class VFPaquetePage extends SeleniumBase {
 
     public void rellenarFormularioDosAlojamientos(){
         clickear(btnDosAlojamientos);
+        esperarPresenciaElemento(txtIdaYVuelta, 15);
         escribirEnInput(inputOrigen, origen);
         clickear(primeraSugerencia);
         escribirEnInput(inputDestino, destino);

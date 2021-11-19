@@ -27,6 +27,5 @@ public class Alojamiento03_BusquedaYFiltros extends TestBase {
         paginaResultadoHoteles.filtrarHotelConWifi();
         paginaResultadoHoteles.ordenarPorCalificacion();
         paginaResultadoHoteles.verificarFiltrosSeleccionados();
-        Thread.sleep(10000);
     }
 }

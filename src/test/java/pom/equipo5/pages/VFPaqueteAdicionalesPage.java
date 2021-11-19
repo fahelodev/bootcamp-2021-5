@@ -14,14 +14,15 @@ public class VFPaqueteAdicionalesPage extends SeleniumBase {
 
     //atributos - objeto a guardar
     By btnAgregarTraslado = By.cssSelector("div.highlight-card-container.TRANSFER");
-    By btnAgregarAuto = By.xpath("//app-car-card//button/em");
-    By btnAgregarActividad = By.cssSelector("div.highlight-card-container.ACTIVITY button em");
+    By btnAgregarAuto = By.cssSelector("div.highlight-card-container.CAR");
+    By btnAgregarActividad = By.cssSelector("div.highlight-card-container.ACTIVITY");
     By btnPago = By.xpath("//*[@id=\"pricebox-overlay\"]//em");
     By btnConfirmarModalTraslado = By.xpath("//a/em[contains(text(),'Agregar')]");
+    By btnConfirmarModalAuto = By.xpath("//app-car-modal//a/em");
+    By btnConfirmarActividad = By.xpath("//app-activity-modal//a/em[contains(text(),'Agregar')]");
     By txtTraslado = By.cssSelector("app-transfer-highlight-card .added-product-title");
-    By txtAuto = By.cssSelector("app-car-card .added-product-title");
+    By txtAuto = By.cssSelector("app-car-highlight-card .added-product-title");
     By txtActividad = By.cssSelector("app-activity-highlight-card .added-product-title");
-    By btnConfirmarModalAuto = By.xpath("//app-car-modal//a");
     By vuelos = By.cssSelector("wizard-step-content-flight .title span");
 
     //Datos obtenidos
@@ -29,24 +30,26 @@ public class VFPaqueteAdicionalesPage extends SeleniumBase {
     private String auto;
     private String vueloSalida;
     private String vueloDestino;
+    private String traslado;
 
     //Acciones
     public void seleccionarActividad(){
-        esperarElementoClickeable(btnAgregarActividad, 15);
+        esperarElementoClickeable(btnAgregarActividad, 20);
         clickear(btnAgregarActividad);
+        clickear(btnConfirmarActividad);
         actividad = obtenerTexto(txtActividad);
     }
 
     public void seleccionarTraslado(){
-        esperarElementoClickeable(btnAgregarTraslado, 15);
+        esperarElementoClickeable(btnAgregarTraslado, 20);
         clickear(btnAgregarTraslado);
         clickear(btnConfirmarModalTraslado);
+        traslado = obtenerTexto(txtTraslado);
     }
 
     public void seleccionarAuto(){
-        esperarElementoClickeable(btnAgregarAuto, 15);
+        esperarElementoClickeable(btnAgregarAuto, 20);
         clickear(btnAgregarAuto);
-        esperarElementoClickeable(btnConfirmarModalAuto, 15);
         clickear(btnConfirmarModalAuto);
         auto = obtenerTexto(txtAuto);
     }

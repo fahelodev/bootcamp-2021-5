@@ -24,7 +24,7 @@ public class VFResultadosTrasladosPage extends SeleniumBase {
     By marcadores = By.cssSelector("div.marker-container");
     By descripcionDeMarcador = By.cssSelector(".gm-style-iw .bold");
     By descripcionMapa = By.xpath("//div/span[contains(text(),'"+ destinoModificado + "')]");
-    By btnComprar = By.xpath("//em[contains(text(),'Comprar')]");
+    By btnComprar = By.xpath("//div[contains(@class, 'search-cluster') and not(contains(@class, 'ng-hide'))]//button");
 
     //Acciones
     public void realizarLaBusqueda(){
@@ -39,7 +39,6 @@ public class VFResultadosTrasladosPage extends SeleniumBase {
     }
 
     public void seleccionarPrimerTraslado(){
-        esperarPresenciaElemento(resultados, 15);
         clickear(btnComprar);
     }
 
