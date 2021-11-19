@@ -1,0 +1,222 @@
+{
+	"info": {
+		"_postman_id": "499c3c1d-9a18-477c-bd06-fae781499fbb",
+		"name": "Bootcamp - COVID",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "COVID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-rapidapi-host",
+						"value": "covid-19-data.p.rapidapi.com",
+						"type": "text"
+					},
+					{
+						"key": "x-rapidapi-key",
+						"value": "65c3a8ec1emsh38db88917d7c333p1cd20ajsn923976797f86",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://covid-19-data.p.rapidapi.com/report/country/name?name=USA&date=2020-04-01",
+					"protocol": "https",
+					"host": [
+						"covid-19-data",
+						"p",
+						"rapidapi",
+						"com"
+					],
+					"path": [
+						"report",
+						"country",
+						"name"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "USA"
+						},
+						{
+							"key": "date",
+							"value": "2020-04-01"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "COVID19-Datos_Invalidos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": []
+		},
+		{
+			"name": "COVID19- Datos_Validos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							"\r",
+							"/*\r",
+							"ID: ATC-Respuesta valida del servicio\r",
+							"Descripción: Cuando se envían datos validos se obtiene un status 200.\r",
+							"*/\r",
+							"pm.test(\"ATC-01-Respuesta valida\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"/*\r",
+							"ID: ATC - Valido N Propiedades\r",
+							"Descripcion: el test debe contener al menos 5 propiedades\r",
+							"*/\r",
+							"pm.test(\"ATC - Valido N Propiedades\", () => {\r",
+							"    const keys = Object.keys(jsonData[0]);\r",
+							"    pm.expect(keys.length).to.be.gte(5);\r",
+							"})\r",
+							"\r",
+							"\r",
+							"/*\r",
+							"ID: ATC - Estructura\r",
+							"Descripcion: El mensaje debe cumplir con lo siguiente:\r",
+							"          \r",
+							"*/\r",
+							"pm.test(\"ATC ESTRUCTURA\", () =>{\r",
+							"    pm.expect(jsonData).to.be.a(\"array\");\r",
+							"    //pm.expect(jsonData[0].provinces).to.be.a(\"String\");\r",
+							"    pm.expect(jsonData[0]).to.have.property(\"country\");\r",
+							"\r",
+							"});\r",
+							"\r",
+							"/*\r",
+							"ID: ATC-Country\r",
+							"Descripcion: cuando se envia los datos debe verificar que el country sea el correcto.\r",
+							"*/\r",
+							"\r",
+							"pm.test(\"ATC-Country\",()=>{\r",
+							"    pm.expect(jsonData[0].country).equals(\"USA\")\r",
+							"});\r",
+							"/*\r",
+							"ID: VALIDO JSON\r",
+							"Descripcion: Utilizo el siguiente metodo par validar que el array de respuesta sea un JSON.\r",
+							"*/\r",
+							"var Ajv = require('ajv'),\r",
+							"    ajv = new Ajv({ logger: console, allErrors: true }),\r",
+							"    schema = {\r",
+							"   \"type\":\"array\",\r",
+							"   \"required\":[\r",
+							"      \"province\",\r",
+							"      \"confirmed\",\r",
+							"      \"recovered\",\r",
+							"      \"deaths\",\r",
+							"      \"active\",\r",
+							"   ],\r",
+							"   \"properties\":{\r",
+							"      \"province\":{\r",
+							"         \"$id\":\"#/properties/province\",\r",
+							"         \"type\":\"string\"\r",
+							"      },\r",
+							"      \"confirmed\":{\r",
+							"         \"$id\":\"#/properties/confirmed\",\r",
+							"         \"type\":\"integer\"\r",
+							"      },\r",
+							"      \"recovered\":{\r",
+							"         \"$id\":\"#/properties/recovered\",\r",
+							"         \"type\":\"integer\"\r",
+							"      },\r",
+							"      \"deaths\":{\r",
+							"         \"$id\":\"#/properties/deaths\",\r",
+							"         \"type\":\"integer\"\r",
+							"      },\r",
+							"      \"active\":{\r",
+							"         \"$id\":\"#/properties/active\",\r",
+							"         \"type\":\"integer\"\r",
+							"      },\r",
+							"   }\r",
+							"};\r",
+							"\r",
+							"pm.test('ATC VALIDO JSON', function() {\r",
+							"    pm.expect(ajv.validate(schema, pm.response.json()), JSON.stringify(ajv.errors)).to.be.true;\r",
+							"});\r",
+							"\r",
+							"/*\r",
+							"ID: ATC-VALIDO PROVINCE COUNTRY\r",
+							"Descripcion: con la siguiente funcion verificamos que el country tenga la provincia correcta.\r",
+							"*/\r",
+							"var Ajv = require('ajv');\r",
+							"\r",
+							"var ajv = new Ajv({logger: console, allErrors: true});\r",
+							"\r",
+							"var data = {\r",
+							"    \"country\": \"USA\",\r",
+							"    \"provinces\": \r",
+							"        {\r",
+							"            \"province\": \"Alabama\"\r",
+							"        }\r",
+							"    \r",
+							"};\r",
+							"var esquema = {\r",
+							"   \"type\":\"array\",\r",
+							"   \"required\":[\r",
+							"      \"province\",\r",
+							"   ],\r",
+							"   \"properties\":{\r",
+							"      \"province\":{\r",
+							"         \"$id\":\"#/properties/province\",\r",
+							"         \"type\":\"string\"\r",
+							"      }\r",
+							"   }\r",
+							"};\r",
+							"pm.test('ATC VALIDO ', function() {\r",
+							"    pm.expect(ajv.validate(esquema, data)).to.be.true;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-rapidapi-host",
+						"value": "covid-19-data.p.rapidapi.com",
+						"type": "text"
+					},
+					{
+						"key": "x-rapidapi-key",
+						"value": "65c3a8ec1emsh38db88917d7c333p1cd20ajsn923976797f86",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{ENDPOINT}}?name=USA&date=2020-04-01",
+					"host": [
+						"{{ENDPOINT}}"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "USA"
+						},
+						{
+							"key": "date",
+							"value": "2020-04-01"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
