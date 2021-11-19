@@ -1,0 +1,123 @@
+{
+	"info": {
+		"_postman_id": "d3cd5340-0962-4bf7-b1a2-eb78254b955d",
+		"name": "Bootcamp COVID",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "COVID Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							"const {expect} = pm;\r",
+							"\r",
+							"const buscarEstado = (estado) =>\r",
+							"{\r",
+							"let i=0;\r",
+							"while (i<jsonData[0].provinces.length)\r",
+							"{\r",
+							"    if(jsonData[0].provinces[i].province == estado)\r",
+							"    {\r",
+							"        return i;\r",
+							"    } else\r",
+							"        i++;\r",
+							"}\r",
+							"};\r",
+							"\r",
+							"pm.test(\"ATC_01 USA_ValidarCasosEnNuevaYork\", () => {\r",
+							"    \r",
+							"    //console.log(jsonData[0]); // Me di cuenta que era un array\r",
+							"    expect(jsonData).to.be.an(\"array\"); // Valido que es un array\r",
+							"    expect(jsonData[0]).to.be.an(\"object\"); // Valido que en la seccion donde ingreso el pais cuenta como un objeto \r",
+							"    expect(jsonData[0]).to.have.property(\"country\"); // Valido si existe el atributo country\r",
+							"    expect(jsonData[0].country).to.be.a(\"string\"); // Valido si la entrada en country es un str\r",
+							"    expect(jsonData[0].country).equals(\"USA\"); // Valido si el dato que devuelve es de USA\r",
+							"    expect(jsonData[0]).to.have.property(\"date\"); // Valido si existe el atributo date\r",
+							"    expect(jsonData[0].date).to.be.a(\"string\"); // Valido si la entrada en date es un str\r",
+							"    expect(jsonData[0].date).equals(\"2020-04-01\"); // Valido si el dato que devuelve es la fecha ingresada\r",
+							"    //La respuesta sea un JSON?\r",
+							"    expect(jsonData[0]).to.have.property(\"provinces\");\r",
+							"    expect(jsonData[0]).to.have.property(\"latitude\");\r",
+							"    expect(jsonData[0]).to.have.property(\"longitude\");\r",
+							"    //Lo que se pide en cada test\r",
+							"    const estadoABuscar = \"New York\";\r",
+							"    expect(buscarEstado(estadoABuscar)).exist; //Valida la existencia un estado, por ejemplo New York\r",
+							"\r",
+							"\r",
+							"    pm.expect(jsonData[0].provinces[buscarEstado(estadoABuscar)].province).equals(\"New York\"); //Valida la existencia un estado (no se si es distinto al primero)\r",
+							"    pm.expect(jsonData[0].provinces[buscarEstado(estadoABuscar)]).to.have.property(\"confirmed\");\r",
+							"    pm.expect(jsonData[0].provinces[buscarEstado(estadoABuscar)].confirmed).to.be.a(\"number\"); // Valida si hubo algun ingreso en el atributo confirmed\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"ATC_02 PaisUSAValidar\", () => {\r",
+							"       //console.log(jsonData[0]); // Me di cuenta que era un array\r",
+							"    pm.expect(jsonData).to.be.an(\"array\"); // Valido que es un array\r",
+							"    pm.expect(jsonData[0]).to.be.an(\"object\"); // Valido que en la seccion donde ingreso el pais cuenta como un objeto \r",
+							"    pm.expect(jsonData[0]).to.have.property(\"country\"); // Valido si existe el atributo country\r",
+							"    pm.expect(jsonData[0].country).to.be.a(\"string\"); // Valido si la entrada en country es un str\r",
+							"    pm.expect(jsonData[0].country).equals(\"USA\"); // Valido si el dato que devuelve es de USA\r",
+							"    pm.expect(jsonData[0]).to.have.property(\"date\"); // Valido si existe el atributo date\r",
+							"    pm.expect(jsonData[0].date).to.be.a(\"string\"); // Valido si la entrada en date es un str\r",
+							"    pm.expect(jsonData[0].date).equals(\"2020-04-01\"); // Valido si el dato que devuelve es la fecha ingresada\r",
+							"    //La respuesta sea un JSON?\r",
+							"    pm.expect(jsonData[0]).to.have.property(\"provinces\");\r",
+							"    pm.expect(jsonData[0]).to.have.property(\"latitude\");\r",
+							"    pm.expect(jsonData[0]).to.have.property(\"longitude\");\r",
+							"    //Lo que se pide en cada test\r",
+							"\r",
+							"    const estadoABuscar = \"Ohio\";\r",
+							"    pm.expect(buscarEstado(estadoABuscar)).exist; //Valida la existencia un estado\r",
+							"\r",
+							"    pm.expect(jsonData[0].provinces[buscarEstado(estadoABuscar)].province).equals(\"Ohio\"); //Valida la existencia un estado (no se si es distinto al primero)\r",
+							"    pm.expect(jsonData[0].provinces[buscarEstado(estadoABuscar)]).to.have.property(\"recovered\");\r",
+							"    pm.expect(jsonData[0].provinces[buscarEstado(estadoABuscar)].recovered).to.be.a(\"number\"); // Valida si hubo algun ingreso en el atributo recovered\r",
+							"    pm.expect(jsonData[0].provinces[buscarEstado(estadoABuscar)]).to.have.property(\"deaths\");\r",
+							"    pm.expect(jsonData[0].provinces[buscarEstado(estadoABuscar)].recovered).to.be.a(\"number\");\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-rapidapi-host",
+						"value": "covid-19-data.p.rapidapi.com",
+						"type": "text"
+					},
+					{
+						"key": "x-rapidapi-key",
+						"value": "65c3a8ec1emsh38db88917d7c333p1cd20ajsn923976797f86",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{ENDPOINTCOVID}}?name={{PAISCOVID}}&date={{DATE}}",
+					"host": [
+						"{{ENDPOINTCOVID}}"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "{{PAISCOVID}}"
+						},
+						{
+							"key": "date",
+							"value": "{{DATE}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
