@@ -1,0 +1,177 @@
+{
+	"info": {
+		"_postman_id": "1e0c1d62-9f88-4439-91b8-d12f3005db4d",
+		"name": "Bootcamp-weather",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "test latitud",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							"/*\r",
+							"\r",
+							"ID: ATC-Respuesta valida del servicio\r",
+							"\r",
+							"Descripción: Cuando se envían datos validos se obtiene un status 200.\r",
+							"\r",
+							"*/\r",
+							"pm.test(\"ATC-01-Respuesta valida\", function () {\r",
+							"\r",
+							"    pm.response.to.have.status(200);\r",
+							"\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"pm.test(\"Latitud = 51.52\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.location.lat).to.eql(51.52);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"atc-region\",()=> {\r",
+							"    pm.expect(jsonData.location.region).equals('Florida');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"atc-estructura\",()=> {\r",
+							"    pm.expect(jsonData).to.be.a(\"object\");\r",
+							"    pm.expect(jsonData.location.name).to.be.a(\"string\");\r",
+							"    pm.expect(jsonData).to.have.property(\"location\");\r",
+							"    pm.expect(jsonData).to.have.property(\"current\");\r",
+							"    pm.expect(jsonData).to.have.property(\"forecast\");\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-rapidapi-host",
+						"value": "weatherapi-com.p.rapidapi.com",
+						"type": "text"
+					},
+					{
+						"key": "x-rapidapi-key",
+						"value": "65c3a8ec1emsh38db88917d7c333p1cd20ajsn923976797f86",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{ENDPOINT}}?q={{CITY}}",
+					"host": [
+						"{{ENDPOINT}}"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "{{CITY}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Covid 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"ATC-01-covid\", function () {\r",
+							"    pm.expect(jsonData[0].provinces).to.be.a(\"array\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"atc-Country\",()=> {\r",
+							"    pm.expect(jsonData[0].country).to.eq(\"USA\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"atc\",()=> {\r",
+							"    pm.expect(jsonData[0].provinces[0].province).to.eq(\"Alabama\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"atc-estructura\",()=> {\r",
+							"    pm.expect(jsonData[0].provinces[0]).to.have.property(\"confirmed\");\r",
+							"    pm.expect(jsonData[0].provinces[0]).to.have.property(\"province\");\r",
+							"    pm.expect(jsonData[0].provinces[0]).to.have.property(\"recovered\");\r",
+							"    pm.expect(jsonData[0].provinces[0]).to.have.property(\"deaths\");\r",
+							"    pm.expect(jsonData[0].provinces[0]).to.have.property(\"active\");\r",
+							"    \r",
+							"\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"formato json\", function () {\r",
+							"    pm.expect(jsonData[0].provinces).to.be.a(\"json\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"respuesta de 5 keys\", () => {\r",
+							"    const keys = Object.keys(jsonData[0]);\r",
+							"    pm.expect(keys.length).to.be.gte(5);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-rapidapi-key",
+						"value": "65c3a8ec1emsh38db88917d7c333p1cd20ajsn923976797f86",
+						"type": "text"
+					},
+					{
+						"key": "x-rapidapi-host",
+						"value": "covid-19-data.p.rapidapi.com",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{COVID}}?name=usa&date=2020-04-01",
+					"host": [
+						"{{COVID}}"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "usa"
+						},
+						{
+							"key": "date",
+							"value": "2020-04-01"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
