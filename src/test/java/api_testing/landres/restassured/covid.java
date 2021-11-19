@@ -1,4 +1,4 @@
-/*package api_testing.landres.restassured;
+package api_testing.landres.restassured;
 import org.junit.*;
 
 import java.io.File;
@@ -12,7 +12,7 @@ import static io.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.*;
 import static io.restassured.module.jsv.JsonSchemaValidator.*;
 
-public class Covid
+public class covid
 {
     //variables del encabezado
     String key;
@@ -24,10 +24,10 @@ public class Covid
 
     @Before
     public void init(){
-        baseURI = "https://weatherapi-com.p.rapidapi.com/forecast.json";
+        baseURI = "https://covid-19-data.p.rapidapi.com";
 
         //parametros
-        this.name = "usa";
+        this.name = "USA";
         this.date = "2020-04-01";
 
         //encabezados
@@ -37,65 +37,90 @@ public class Covid
     }
 
     @Test
-    public void ATC_Impresion_Respuesta()
+    public void ATC_Body()
     {
         String respuesta = given().header("x-rapidapi-key",this.key).
                 and().header("x-rapidapi-host",this.host).
                 param("name",this.name).
                 param("date", this.date).
-                get("/forecast.json").asPrettyString();
+                get("/report/country/name.json").asPrettyString();
 
         System.out.println(respuesta);
     }
 
     @Test
-    public void ATC_Respuesta_Valida()
+    public void ATC_Respuesta_200()
     {
         given().header("x-rapidapi-key",this.key).
                 and().header("x-rapidapi-host",this.host).
                 param("name",this.name).
                 param("date", this.date).
                 when().
-                get("/forecast.json").
+                get("/report/country/name").
                 then().assertThat().statusCode(200);
 
     }
 
     @Test
-    public void ATC_Ubicacion_Original()
+    public void ATC_json()
     {
         given().header("x-rapidapi-key",this.key).
                 and().header("x-rapidapi-host",this.host).
                 param("name",this.name).
                 param("date", this.date).
                 when().
-                get("/forecast.json").
-                then().
-                assertThat().statusCode(200).
-                body("location.name",enameualTo("Miami"));
+                get("/report/country/name").
+                then().assertThat().header("Content-type","application/json");;
 
     }
 
     @Test
-    public void ATC_Estructura()
+    public void ATC_alabama()
     {
-        File file = new File("src/test/java/api_testing/fluzon/restassured/weather-schema.json");
-        FileInputStream fileInputStream = null;
-        try {
-            fileInputStream = new FileInputStream(file);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
         given().header("x-rapidapi-key",this.key).
                 and().header("x-rapidapi-host",this.host).
                 param("name",this.name).
                 param("date", this.date).
                 when().
-                get("/forecast.json").
+                get("/report/country/name").
                 then().
-                assertThat().body(matchesJsonSchema(fileInputStream));
+                assertThat().statusCode(200).
+                body("provinces[0].province[0]",equalTo("Alabama"));
+    }
+
+    @Test
+    public void ATC_USA()
+    {
+        given().header("x-rapidapi-key",this.key).
+                and().header("x-rapidapi-host",this.host).
+                param("name",this.name).
+                param("date", this.date).
+                when().
+                get("/report/country/name").
+                then().
+                assertThat().statusCode(200).
+                body("country[0]",equalTo("USA"));
+    }
+
+
+
+    @Test
+    public void ATC_ESTRUCTURA()
+    {
+        given().header("x-rapidapi-key",this.key).
+                and().header("x-rapidapi-host",this.host).
+                param("name",this.name).
+                param("date", this.date).
+                when().
+                get("/report/country/name").
+                then().
+                body("[0]", hasKey("country")).
+                body("[0]", hasKey("provinces")).
+                body("[0]", hasKey("latitude")).
+                body("[0]", hasKey("longitude")).
+                body("[0]", hasKey("date"));
+
 
     }
+
 }
-*/
