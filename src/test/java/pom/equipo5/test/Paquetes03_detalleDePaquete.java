@@ -16,7 +16,7 @@ public class Paquetes03_detalleDePaquete extends TestBase {
 
 
     @Test
-    public void detalleDePaquete() {
+    public void detalleDePaquete(){
         paginaHome = new VFHomePage(driver);
         paginaPaquete = new VFPaquetePage(driver);
         paginaCheckout = new VFCheckoutPage(driver);
@@ -38,6 +38,7 @@ public class Paquetes03_detalleDePaquete extends TestBase {
         paginaPaqueteAdicionales.obtenerVuelos();
         paginaPaqueteAdicionales.confirmarPaquete();
         paginaCheckout.obtenerDetallesDePaquete();
+
         Assert.assertTrue(paginaCheckout.getVuelo().contains(paginaPaqueteAdicionales.getVueloDestino()));
         Assert.assertTrue(paginaCheckout.getVuelo().contains(paginaPaqueteAdicionales.getVueloSalida()));
         Assert.assertEquals(paginaCheckout.getAlojamiento(), paginaPaqueteAlojamiento.getAlojamiento());

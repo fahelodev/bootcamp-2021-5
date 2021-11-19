@@ -28,5 +28,5 @@ public class Paquetes01_paqueteRecomendado extends TestBase {
 
         Assert.assertEquals("VUELO", paginaPaqueteRecomendadoDetalle.getVuelo());
         Assert.assertEquals("ALOJAMIENTO", paginaPaqueteRecomendadoDetalle.getAlojamiento());
-}
+    }
 }
