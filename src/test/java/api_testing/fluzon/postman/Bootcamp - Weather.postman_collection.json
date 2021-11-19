@@ -1,0 +1,170 @@
+{
+	"info": {
+		"_postman_id": "603e4605-926c-4656-b657-cc784d9ee474",
+		"name": "Bootcamp - Weather",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Forecast - Valores de Entrada Invalidos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							"\r",
+							"\r",
+							"/*\r",
+							"ID: ATC-01-Respuesta invalida\r",
+							"Objetivo: Cuando se envían datos invalidos se obtiene un status 400.\r",
+							"*/\r",
+							"pm.test(\"ATC-01-Respuesta invalida\",  () => {\r",
+							"    console.log(\"Hola\");\r",
+							"    //pm.response.to.have.status(400);\r",
+							"    \r",
+							"});\r",
+							"\r",
+							"/*\r",
+							"ID: ATC-02-Devuelve objeto error\r",
+							"Objetivo: Cuando se envía un parametro con dato invalido se espera un objeto error.\r",
+							"*/\r",
+							"pm.test(\"ATC-02-Devuelve objeto error\", () => {\r",
+							"  pm.expect(jsonData).to.be.an(\"object\");\r",
+							"  pm.expect(jsonData.error).to.be.a(\"object\");\r",
+							"});\r",
+							"\r",
+							"/*\r",
+							"ID: ATC-03-Devuelve código de error 1006\r",
+							"Objetivo: Cuando se envía un parametro con dato invalido se espera un objeto error con código 1006.\r",
+							"*/\r",
+							"pm.test(\"ATC-03-Devuelve código de error 1006\", () => {\r",
+							"  pm.expect(jsonData.error.code).to.eql(1006);\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-rapidapi-key",
+						"value": "65c3a8ec1emsh38db88917d7c333p1cd20ajsn923976797f86",
+						"type": "text"
+					},
+					{
+						"key": "x-rapidapi-host",
+						"value": "weatherapi-com.p.rapidapi.com",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://weatherapi-com.p.rapidapi.com/forecast.json?q=-1&days=50",
+					"protocol": "https",
+					"host": [
+						"weatherapi-com",
+						"p",
+						"rapidapi",
+						"com"
+					],
+					"path": [
+						"forecast.json"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "-1"
+						},
+						{
+							"key": "days",
+							"value": "50"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Forecast - Valores de Entrada Validos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							"\r",
+							"\r",
+							"/*\r",
+							"ID: ATC-01-Respuesta valida\r",
+							"Objetivo: Cuando se envían datos validos se obtiene un status 200.\r",
+							"*/\r",
+							"pm.test(\"ATC-01-Respuesta valida\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-rapidapi-key",
+						"value": "65c3a8ec1emsh38db88917d7c333p1cd20ajsn923976797f86",
+						"type": "text"
+					},
+					{
+						"key": "x-rapidapi-host",
+						"value": "weatherapi-com.p.rapidapi.com",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://weatherapi-com.p.rapidapi.com/forecast.json?q={{CIUDAD}}&days=4",
+					"protocol": "https",
+					"host": [
+						"weatherapi-com",
+						"p",
+						"rapidapi",
+						"com"
+					],
+					"path": [
+						"forecast.json"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "{{CIUDAD}}"
+						},
+						{
+							"key": "days",
+							"value": "4"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
