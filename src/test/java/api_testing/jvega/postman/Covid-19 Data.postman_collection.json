@@ -1,0 +1,351 @@
+{
+	"info": {
+		"_postman_id": "b76c41c7-3882-4d32-8920-8cd42d5a42ec",
+		"name": "Covid-19 Data",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Pais-Varias Provinicas",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							"\r",
+							"/*\r",
+							"ID: ATC-Respuesta valida del servicio\r",
+							"Descripción: Cuando se envían datos validos se obtiene un status 200.\r",
+							"*/\r",
+							"\r",
+							"pm.test(\"ATC-01-Respuesta valida\", function () {\r",
+							"\r",
+							"    pm.response.to.have.status(200);\r",
+							"\r",
+							"});\r",
+							"/*\r",
+							"\r",
+							"ID: ATC-Date String, Longitude number y El Mensaje de tipo array\r",
+							"\r",
+							"Descripción: El mensaje de respuesta debe cumplir con lo siguiente\r",
+							"    El Mensaje de respuesta es de tipo Array\r",
+							"    La propiedad date es de tipo string\r",
+							"    La propiedad Longitude es de tipo number\r",
+							"  */\r",
+							"\r",
+							"pm.test(\"ATC-02-Date es String, Longitude number y Mensaje Array\", function () {\r",
+							"pm.expect(jsonData).to.be.a(\"array\");\r",
+							"pm.expect(jsonData[0].date).to.be.a(\"string\");\r",
+							"pm.expect(jsonData[0].longitude).to.be.a(\"number\");\r",
+							"});\r",
+							"/*\r",
+							"\r",
+							"ID: ATC-Propiedades  del Mensaje\r",
+							"\r",
+							"Descripción: El mensaje de respuesta debe cumplir con lo siguiente\r",
+							"    Tiene las siguientes propiedades: \r",
+							"    country, provinces, latitude,longnitude, date\r",
+							"   */\r",
+							"\r",
+							"pm.test(\"ATC-03-Estructura\", function () {\r",
+							" \r",
+							"pm.expect(jsonData[0]).to.have.property(\"country\");\r",
+							"pm.expect(jsonData[0]).to.have.property(\"provinces\");\r",
+							"pm.expect(jsonData[0]).to.have.property(\"latitude\");\r",
+							"pm.expect(jsonData[0]).to.have.property(\"longitude\");\r",
+							"pm.expect(jsonData[0]).to.have.property(\"date\");\r",
+							"\r",
+							"});\r",
+							"\r",
+							"/*\r",
+							"\r",
+							"ID: ATC-03-Estructura-Varias Provincias\r",
+							"\r",
+							"Descripción: El mensaje de respuesta debe cumplir con el siguiente esquema\r",
+							"El mensaje es de tipo array, Cuenta con las siguiente propiedades con sus respectivos tipos \r",
+							"    country: string, provinces: array, latitude:number, longitud:number y date: string\r",
+							"       */\r",
+							"var schema= {\r",
+							"     \"type\": \"array\",\r",
+							"     \"items\": { \"$ref\": \"itemSchema\"\r",
+							"     }\r",
+							"     };\r",
+							"\r",
+							"var itemSchema ={\r",
+							"\"properties\": {\r",
+							"\"country\": {\"type\":\"string\"},\r",
+							"\"provinces\" : {\"type\":\"object\", \r",
+							"\"$ref\" :\"provinciaSchema\"\r",
+							"},\r",
+							"\"latitude\" : {\"type\": \"number\"},\r",
+							"\"longitude\": {\"type\": \"number\"},\r",
+							"\"date\": {\"type\":\"string\"}\r",
+							"}};\r",
+							"\r",
+							"var provinciaSchema ={\r",
+							"  \"type\":\"array\",  \r",
+							"   \"items\": { \"$ref\": \"itemProvinciaSchema\"\r",
+							"     }\r",
+							"};\r",
+							"var itemProvinciaSchema ={\r",
+							" \"properties\": {\r",
+							"\"province\": {\"type\":\"string\"},\r",
+							"\"confirmed\":{\"type\": \"number\"},\r",
+							"\"recovered\": {\"type\": \"number\"},\r",
+							"\"deaths\" :{\"type\": \"number\"},\r",
+							"\"active\": {\"type\": \"number\"}\r",
+							"\r",
+							"}};\r",
+							"\r",
+							"\r",
+							"tv4.addSchema('itemSchema',itemSchema);\r",
+							"tv4.addSchema('provinciaSchema',provinciaSchema);\r",
+							"tv4.addSchema('itemProvinciaSchema',itemProvinciaSchema);\r",
+							"\r",
+							"\r",
+							"pm.test(\"ATC-03- Schema es valido \", function () {\r",
+							" \r",
+							"pm.expect(tv4.validate(jsonData,schema)).to.be.true;\r",
+							"});\r",
+							"\r",
+							"/*\r",
+							"\r",
+							"ID: ATC-Provincia-Dato Exacto\r",
+							"\r",
+							"Descripción: La Respuesta debe obtener el nombre de la provincia que se pasa por parametro \"Alaska\", el pais \"USa\" y el numero de confirmados \"132\"\r",
+							" */\r",
+							"pm.test(\"ATC-04 Encontrar Provincia Por Parametro Alaska\",  function ()  {\r",
+							"pm.expect(jsonData[0].country).to.eql(\"USA\");\r",
+							" pm.expect(jsonData[0].provinces[1].province).to.eql(\"Alaska\");\r",
+							" pm.expect(jsonData[0].provinces[1].confirmed).to.eql(132);\r",
+							" \r",
+							"});\r",
+							"\r",
+							"\r",
+							"/*\r",
+							"\r",
+							"ID: ATC- Nro de propeidaes\r",
+							"\r",
+							"Descripción: La Respuesta debe obtener al menos 5 propiedades para el arreglo\r",
+							" y 5 propiedades para el arreglo de provincias\r",
+							"\r",
+							"*/\r",
+							"pm.test(\"ATC Propiedades\",  function () {\r",
+							"    \r",
+							"    const KeysArray = Object.keys(jsonData[0]);\r",
+							"    const keysProvinicas= Object.keys(jsonData[0].provinces[0]);\r",
+							"    console.log(Object.keys(jsonData[0]));\r",
+							"    console.log(Object.keys(jsonData[0].provinces[0]));\r",
+							"  \r",
+							"    pm.expect(KeysArray.length).to.be.eql(5);\r",
+							"    pm.expect(keysProvinicas.length).to.be.eql(5);\r",
+							"});\r",
+							"\r",
+							"/*\r",
+							"\r",
+							"ID: ATC- Respuesta Json\r",
+							"\r",
+							"Descripción: La Respuesta debe ser de tipo JSON\r",
+							"\r",
+							"*/\r",
+							"pm.test(\"ATC Respuesta Json\",  function ()  {\r",
+							"\r",
+							"    pm.expect(pm.response.headers.get('Content-type')).to.eql('application/json');\r",
+							"   \r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-rapidapi-key",
+						"value": "65c3a8ec1emsh38db88917d7c333p1cd20ajsn923976797f86",
+						"type": "text"
+					},
+					{
+						"key": "x-rapidapi-host",
+						"value": "covid-19-data.p.rapidapi.com",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{ENDPOINT2}}?date=2020-04-01&name=USA",
+					"host": [
+						"{{ENDPOINT2}}"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "{{PROVINCE}}",
+							"disabled": true
+						},
+						{
+							"key": "date",
+							"value": "2020-04-01"
+						},
+						{
+							"key": "name",
+							"value": "USA"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pais no valido",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							"\r",
+							" \r",
+							"/*\r",
+							"\r",
+							"ID: ATC-Respuesta valida del servicio\r",
+							"\r",
+							"Descripción: Cuando se envían datos validos se obtiene un status 200.\r",
+							"\r",
+							"*/\r",
+							"\r",
+							"pm.test(\"ATC-01-Respuesta es objeto\", function () {\r",
+							"\r",
+							"    pm.response.to.have.status(200);\r",
+							"    pm.expect(jsonData).to.be.a(\"object\")\r",
+							"\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-rapidapi-key",
+						"value": "65c3a8ec1emsh38db88917d7c333p1cd20ajsn923976797f86",
+						"type": "text"
+					},
+					{
+						"key": "x-rapidapi-host",
+						"value": "covid-19-data.p.rapidapi.com",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{ENDPOINT2}}?name=ARG&date=2020-01-03",
+					"host": [
+						"{{ENDPOINT2}}"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "ARG"
+						},
+						{
+							"key": "date",
+							"value": "2020-01-03"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pais sin provincias",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							"\r",
+							" \r",
+							"/*\r",
+							"\r",
+							"ID: ATC-Respuesta valida del servicio\r",
+							"\r",
+							"Descripción: Cuando se envían datos validos se obtiene un status 200.\r",
+							"\r",
+							"*/\r",
+							"\r",
+							"pm.test(\"ATC-01-Respuesta valida\", function () {\r",
+							"\r",
+							"    pm.response.to.have.status(200);\r",
+							"\r",
+							"});\r",
+							"\r",
+							"/*\r",
+							"\r",
+							"ID: ATC-02-Estruvtura sin provincia\r",
+							"\r",
+							"Descripción: El mensaje de respuesta debe cumplir con lo siguiente\r",
+							"    El Mensaje de respuesta es de tipo Array\r",
+							"     Dado que no hay provincias, el temañaño de  su  array debe ser 1\r",
+							"    Dado que no hay provincias, en provincia debe mostrar solo el nombre del pais \r",
+							"\r",
+							"  */\r",
+							"\r",
+							"\r",
+							"pm.test(\"ATC-02-Estructura sin provincias\", () => {\r",
+							" \r",
+							"pm.expect(jsonData).to.be.a(\"array\");\r",
+							"pm.expect(jsonData[0].provinces).to.be.a(\"array\");\r",
+							"pm.expect(jsonData[0].provinces.length).to.eql(1);\r",
+							"pm.expect(jsonData[0].provinces[0].province).to.eql(\"Argentina\");\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-rapidapi-key",
+						"value": "65c3a8ec1emsh38db88917d7c333p1cd20ajsn923976797f86",
+						"type": "text"
+					},
+					{
+						"key": "x-rapidapi-host",
+						"value": "covid-19-data.p.rapidapi.com",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{ENDPOINT2}}?name=ARGENTINA&date=2020-04-01",
+					"host": [
+						"{{ENDPOINT2}}"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "ARGENTINA"
+						},
+						{
+							"key": "date",
+							"value": "2020-04-01"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
