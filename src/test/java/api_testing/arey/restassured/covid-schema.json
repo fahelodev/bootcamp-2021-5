@@ -1,0 +1,72 @@
+{
+  "items": {
+    "required": [
+      "country",
+      "provinces",
+      "latitude",
+      "longitude",
+      "date"
+    ],
+    "properties": {
+      "country": {
+        "$id": "#/items/properties/country",
+        "type": "string"
+      },
+      "provinces": {
+        "items": {
+          "required": [
+            "province",
+            "confirmed",
+            "recovered",
+            "deaths",
+            "active"
+          ],
+          "properties": {
+            "province": {
+              "$id": "#/items/properties/provinces/items/properties/province",
+              "type": "string"
+            },
+            "confirmed": {
+              "$id": "#/items/properties/provinces/items/properties/confirmed",
+              "type": "integer"
+            },
+            "recovered": {
+              "$id": "#/items/properties/provinces/items/properties/recovered",
+              "type": "integer"
+            },
+            "deaths": {
+              "$id": "#/items/properties/provinces/items/properties/deaths",
+              "type": "integer"
+            },
+            "active": {
+              "$id": "#/items/properties/provinces/items/properties/active",
+              "type": "integer"
+            }
+          },
+          "$id": "#/items/properties/provinces/items",
+          "type": "object"
+        },
+        "$id": "#/items/properties/provinces",
+        "type": "array"
+      },
+      "latitude": {
+        "$id": "#/items/properties/latitude",
+        "type": "number"
+      },
+      "longitude": {
+        "$id": "#/items/properties/longitude",
+        "type": "number"
+      },
+      "date": {
+        "$id": "#/items/properties/date",
+        "type": "string"
+      }
+    },
+    "$id": "#/items",
+    "type": "object"
+  },
+  "$id": "http://example.org/root.json#",
+  "type": "array",
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}
