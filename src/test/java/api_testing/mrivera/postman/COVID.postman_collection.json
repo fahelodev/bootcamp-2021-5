@@ -1,0 +1,227 @@
+{
+	"info": {
+		"_postman_id": "d52024f6-6e13-4bad-9d07-c6629256e667",
+		"name": "COVID",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "COVID - Se esperan propiedades",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							"const { expect } = pm;\r",
+							"\r",
+							"/*\r",
+							"ID: ATC01-Se esperan propiedades\r",
+							"Descripción: Cuando se realiza una consulta, la respuesta contiene al menos las propiedades country, provinces, latitude, longitude y date.\r",
+							"*/\r",
+							"pm.test(\"ATC01-EsperanPropiedades\", () => {\r",
+							"    const data = jsonData.first();\r",
+							"    expect(data).to.have.property('country');\r",
+							"    expect(data).to.have.property('provinces');\r",
+							"    expect(data).to.have.property('latitude');\r",
+							"    expect(data).to.have.property('longitude');\r",
+							"    expect(data).to.have.property('date');\r",
+							"})\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-rapidapi-key",
+						"value": "65c3a8ec1emsh38db88917d7c333p1cd20ajsn923976797f86",
+						"type": "text"
+					},
+					{
+						"key": "x-rapidapi-host",
+						"value": "covid-19-data.p.rapidapi.com",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ENDPOINT}}/?name=USA&date=2020-04-01",
+					"host": [
+						"{{ENDPOINT}}"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "USA"
+						},
+						{
+							"key": "date",
+							"value": "2020-04-01"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "COVID - Estructura de la Respuesta",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							"\r",
+							"/*\r",
+							"ID: ATC01-Estructura de la respuesta\r",
+							"Descripción: Cuando se solicita un país, la estructura de la respuesta debe contener un array de objetos los cuales tienen las propiedades country(string), provinces(array de objetos con propiedades string, number, number, number y number), latitude(number), longitude(number) y date(string).\r",
+							"*/\r",
+							"\r",
+							"/* const data1 = \r",
+							"[\r",
+							"    {\r",
+							"        country:\"aa\",\r",
+							"        provinces:\r",
+							"            [\r",
+							"                {\r",
+							"                    province: \"aa\", \r",
+							"                    confirmed:2231, \r",
+							"                    recovered:2121,\r",
+							"                    deaths:2232,\r",
+							"                    active:22323\r",
+							"                }\r",
+							"            ],\r",
+							"        latitude:211,\r",
+							"        longitude:2323,\r",
+							"        date:\"aaaaa\"\r",
+							"    }\r",
+							"]; */\r",
+							"\r",
+							"//Estructura\r",
+							"const schema = {\r",
+							"\"type\":\"array\",\r",
+							"\"minItems\":1,\r",
+							"\"items\": {\r",
+							"    \"type\": \"object\",\r",
+							"    \"required\": [ \"country\",\"provinces\",\"latitude\",\"longitude\",\"date\"],\r",
+							"    \"properties\":{\r",
+							"        \"country\":{\r",
+							"            \"type\":\"string\"\r",
+							"        },\r",
+							"        \"provinces\":{\r",
+							"            \"type\":\"array\",\r",
+							"            \"minItems\":1,\r",
+							"            \"items\":{\r",
+							"                \"type\":\"object\",\r",
+							"                \"required\":[\"province\",\"confirmed\",\"recovered\",\"deaths\",\"active\"],\r",
+							"                 \"properties\":{\r",
+							"                     \"province\":{\r",
+							"                        \"type\":\"string\"\r",
+							"                     },\r",
+							"                    \"confirmed\":{\r",
+							"                        \"type\":\"number\"\r",
+							"                    },\r",
+							"                    \"recovered\":{\r",
+							"                        \"type\":\"number\"\r",
+							"                    },\r",
+							"                    \"deaths\":{\r",
+							"                        \"type\":\"number\"\r",
+							"                    },\r",
+							"                    \"active\":{\r",
+							"                        \"type\":\"number\"\r",
+							"                    }\r",
+							"                    \r",
+							"                 }\r",
+							"            }\r",
+							"        },\r",
+							"        \"latitude\":{\r",
+							"            \"type\":\"number\"\r",
+							"        },\r",
+							"        \"longitude\":{\r",
+							"            \"type\":\"number\"\r",
+							"        },\r",
+							"        \"date\":{\r",
+							"            \"type\":\"string\"\r",
+							"        }\r",
+							"    }\r",
+							" }\r",
+							"};\r",
+							"\r",
+							"pm.test('ATC01-EstructuraRespuesta', function() {\r",
+							" pm.expect(tv4.validate(jsonData, schema)).to.be.true;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-rapidapi-key",
+						"value": "65c3a8ec1emsh38db88917d7c333p1cd20ajsn923976797f86",
+						"type": "text"
+					},
+					{
+						"key": "x-rapidapi-host",
+						"value": "covid-19-data.p.rapidapi.com",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ENDPOINT}}/?name=USA&date=2020-04-01",
+					"host": [
+						"{{ENDPOINT}}"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "USA"
+						},
+						{
+							"key": "date",
+							"value": "2020-04-01"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
