@@ -21,9 +21,9 @@ public class atc03_Alojamientos extends TestBase {
         paginaAlojamiento.confirmarBusqueda();
         paginaAlojamiento.filtrarMejorPuntuacion();
         paginaAlojamiento.filtrarMonedaDolarPorLista();
-        paginaAlojamiento.selectAlojamiento("The Chelsea Harbour Hotel");
+        paginaAlojamiento.selectAlojamiento("London Hilton on Park Lane");
         paginaAlojamiento.mostrarFAQ();
-        paginaAlojamiento.checkTituloText("The Chelsea Harbour Hotel");
+        paginaAlojamiento.checkTituloText("London Hilton on Park Lane");
     }
 
 
@@ -60,13 +60,13 @@ public class atc03_Alojamientos extends TestBase {
         paginaAlojamiento.agregarTresMenoresDeCuatroAnios();
         paginaAlojamiento.confirmarBusqueda();
         paginaAlojamiento.filtroPrecioADolar();
-        //falta ultima parte
-
-
+        paginaAlojamiento.filtrarPrecioMaximo5000US();
+        paginaAlojamiento.goAlojamiento("Iberostar Rose Hall Beach");
+        paginaAlojamiento.reservarAlojamiento();
+        paginaAlojamiento.cambioAeropuerto("OCJ, Aeropuerto Boscobel");
+        paginaAlojamiento.chkErrorMsjIngreseUnaHora("Ingresa una hora");
 
     }
-
-
 
 }
 

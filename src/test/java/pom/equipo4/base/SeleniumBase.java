@@ -83,17 +83,17 @@ public class SeleniumBase {
     }
 
 
-    public int obtenerTamañoLista(By localizador){
+    public int obtenerTamanioLista(By localizador){
         return encontrarElementos(localizador).size();
     }
 
     public void recorrerLista(By localizador){
-        for (int i = 0; i < obtenerTamañoLista(localizador); i++) {
+        for (int i = 0; i < obtenerTamanioLista(localizador); i++) {
             encontrarElementos(localizador).get(i).click();
         }
     }
 
-    public void assertComparaString(By localizador,String strEsperado){
+    public void assertComparaString(String strEsperado, By localizador){
         Assert.assertEquals(strEsperado,obtenerTexto(localizador));
     }
 
@@ -108,14 +108,14 @@ public class SeleniumBase {
 
     public void busquedaFecha(By localizadorCalendar, By localizadorAplicar ,String fechaEntrada, String fechaSalida){
 
-        for (int i = 0; i < obtenerTamañoLista(localizadorCalendar); i++) {
+        for (int i = 0; i < obtenerTamanioLista(localizadorCalendar); i++) {
             if(obtenerTextList(localizadorCalendar,i).equals(fechaEntrada)){
                 clickearList(localizadorCalendar,i);
                 break;
             }
         }
 
-        for (int i = Integer.parseInt(fechaEntrada); i < obtenerTamañoLista(localizadorCalendar); i++) {
+        for (int i = Integer.parseInt(fechaEntrada); i < obtenerTamanioLista(localizadorCalendar); i++) {
             if (obtenerTextList(localizadorCalendar,i).equals(fechaSalida)){
                 clickearList(localizadorCalendar,i);
                 clickear(localizadorAplicar);
@@ -134,6 +134,12 @@ public class SeleniumBase {
         }
         clickear(localizadorAplicar);
     }
+
+        public void precioMaximoDolar (By localizador, String precio){
+
+        encontrarElementos(localizador).get(1).sendKeys(precio);
+
+        }
 
 
 

@@ -41,7 +41,14 @@ public class VFAlojamientosPage extends SeleniumBase {
     By seccionEdad = By.xpath("//div[@class='_pnlpk-minors-age-select-wrapper']//select[@class='select-tag']");
     By edadCuatro = By.xpath("//select[@class='select-tag'] //option[@value='4']");
     By cbCambioDeMonedaFiltroIzquierdo = By.xpath("//div[@class='currency-selection'] //select[@class='select-tag']");
-
+    By sboxPrecio = By.xpath("//input[@class='input-tag' and @type='number']");
+    By btnAplicarFiltroPrecio = By.xpath("//button[@class='eva-3-btn -md -primary']//following::em[1]");
+    By ventanaEmergente = By.xpath("//div[contains(@class,'tooltip-container -eva-3-shadow-1')]");
+    By closeVentanaEmergente = By.xpath("//i[contains(@class,'tooltip-close eva-3-icon-close')]");
+    By seccionAlojamiento = By.xpath("//div[contains(@class,'results-cluster-container')]");
+    By btnReservarAhora = By.xpath("//button[@class='eva-3-btn -md -secondary -eva-3-fwidth']//following::em[1]");
+    By sboxAeropuestoLlegada = By.id("select-test");
+    By textIngresoHora = By.xpath("//span[text()='Ingresa una hora']");
     //By btnAplicar = By.xpath("//a[contains(text(),'Aplicar')]");
 
     public void irAlojamientoDesdeHome(){
@@ -81,7 +88,7 @@ public class VFAlojamientosPage extends SeleniumBase {
     }
 
     public void checkTituloText(String titulo){
-        assertComparaString(tituloAlojamientoSelect,titulo);
+        assertComparaString(titulo, tituloAlojamientoSelect);
     }
 
 
@@ -140,8 +147,7 @@ public class VFAlojamientosPage extends SeleniumBase {
     }
 
 
-    public void checkComentarioSolitario(String comentario){
-        assertComparaString(comentarioSolitario, comentario );
+    public void checkComentarioSolitario(String comentario){assertComparaString(comentario, comentarioSolitario);
     }
 
     public void ingresoDeFechaEntradaYSalida (String fechaEntrada,String fechaSalida){
@@ -176,11 +182,42 @@ public class VFAlojamientosPage extends SeleniumBase {
 
 
 
+    public void filtrarPrecioMaximo5000US(){
+
+        precioMaximoDolar(sboxPrecio, "5000");
+        clickear(btnAplicarFiltroPrecio);
+    }
 
 
+      public void cerrarVentanaEmergente(){
+          esperaExplicitaPrescenciaElemento(chkfiltros, 10);
 
+         if(encontrarElemento(ventanaEmergente)!= null) {
+           clickear(closeVentanaEmergente);
+        }
+    }
 
+    public void goAlojamiento(String alojamiento) throws InterruptedException{
+        cerrarVentanaEmergente();
+        esperaExplicitaPrescenciaElemento(seccionAlojamiento, 10);
+        busquedaAlojamientoGlobal(alojamiento);
 
+    }
 
+    public void reservarAlojamiento(){
+     clickear(btnReservarAhora);
+    }
+
+    public void cambioAeropuerto(String Aeropuerto){
+        Select s = new Select(encontrarElemento(sboxAeropuestoLlegada)) ;
+        s.selectByVisibleText(Aeropuerto);
+        clickear(btnBuscar);
+    }
+
+    public void chkErrorMsjIngreseUnaHora(String MsjErrorHora){
+      assertComparaString(MsjErrorHora, textIngresoHora);
+
+   }
 }
+
 
