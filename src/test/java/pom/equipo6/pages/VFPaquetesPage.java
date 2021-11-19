@@ -19,8 +19,8 @@ public class VFPaquetesPage extends SeleniumBase {
     By verifyText001 = By.cssSelector(".eva-3-h1");
     //Atributos - objeto a guardar caso de prueba 002
     By btnFechaIda = By.cssSelector("[placeholder='Ida']");
-    By selectFechaIda = By.xpath("//div[@class='_dpmg2--wrapper _dpmg2--roundtrip _dpmg2--show-info _dpmg2--show']//div[@class='_dpmg2--month _dpmg2--o-1 _dpmg2--month-active']//span[@class='_dpmg2--date _dpmg2--available']/span[.='18']");
-    By selectFechaVuelta = By.xpath("//div[@class='_dpmg2--month _dpmg2--o-1 _dpmg2--has-start-range _dpmg2--month-active']//span[.='25NocheNoches']");
+    By selectFechaIda = By.xpath("//div[@class='_dpmg2--wrapper _dpmg2--roundtrip _dpmg2--show-info _dpmg2--show']//div[@class='_dpmg2--month _dpmg2--o-1 _dpmg2--month-active']//span[@class='_dpmg2--date _dpmg2--available']/span[.='22']");
+    By selectFechaVuelta = By.xpath("//div[@class='_dpmg2--month _dpmg2--o-1 _dpmg2--has-start-range _dpmg2--month-active']//span[.='26NocheNoches']");
     By btnApplyFecha = By.xpath("//em[contains(text(),'Aplicar')]//following::em[8]");
     By btnHabitaciones = By.cssSelector(".sbox-distri-input > .input-container");
     By btnAddAdult = By.xpath("//a[@class='steppers-icon-right sbox-3-icon-plus']//following::a[6]");
