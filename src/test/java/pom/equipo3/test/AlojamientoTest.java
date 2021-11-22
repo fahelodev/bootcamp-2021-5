@@ -13,7 +13,7 @@ public class AlojamientoTest extends TestBase {
     protected VFAlojamientosPage paginaAlojamiento = null;
 
     @Test
-    public void act01(){
+    public void act01() throws InterruptedException {
         paginaHome = new VFHomePage(driver);
         paginaHome.irHomePage();
         paginaAlojamiento = new VFAlojamientosPage(driver);
@@ -22,6 +22,7 @@ public class AlojamientoTest extends TestBase {
         paginaAlojamiento.cargarFechas();
         paginaAlojamiento.botonBuscar();
         paginaAlojamiento.filtroOfertas();
+        paginaAlojamiento.dormir(2000);
         paginaAlojamiento.filtro4estrellas();
         paginaAlojamiento.ValidacioOferta();
 
@@ -30,17 +31,19 @@ public class AlojamientoTest extends TestBase {
 
 
     @Test
-    public void act02(){
+    public void act02() throws InterruptedException {
         paginaHome = new VFHomePage(driver);
         paginaHome.irHomePage();
         paginaAlojamiento = new VFAlojamientosPage(driver);
         paginaAlojamiento.irAlojamiento();
         paginaAlojamiento.cargarDestinoBSAS();
         paginaAlojamiento.cargarFechas();
-        paginaAlojamiento.AgregarPasajero();
+        paginaAlojamiento.agregarMenores();
         paginaAlojamiento.botonBuscar();
         paginaAlojamiento.filtroOfertas();
+        paginaAlojamiento.dormir(2000);
         paginaAlojamiento.filtro5estrellas();
+        paginaAlojamiento.dormir(2000);
         paginaAlojamiento.filtroOrdenar();
         paginaAlojamiento.Hotel();
         paginaAlojamiento.ValidacionHotel();

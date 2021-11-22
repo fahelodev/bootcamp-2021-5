@@ -12,8 +12,8 @@ public class VFPaquetesPage extends SeleniumBase {
     By divDatosViaje = By.xpath("//div[@class='sbox-show-hide-container -sbox-3-shadow-static']");
     By btnCheckVueloAutos = By.cssSelector("input[class='sbox-bundle-input sbox-radio-va sbox-radio-selected-box'] ");
     By btnBuscar = By.cssSelector("a.sbox-search");
-    By btnOrigen = By.cssSelector("input[class='input-tag sbox-main-focus sbox-origin sbox-primary sbox-places-first sbox-origin-container places-inline']");
-    By btnDestino = By.cssSelector("input[class='input-tag sbox-main-focus sbox-destination sbox-secondary sbox-places-second places-inline']");
+    By btnOrigen = By.xpath("//input[contains(@class,'sbox-places-first')]");
+    By btnDestino = By.xpath("//input[contains(@class,'sbox-places-second')]");
     By listaViajes = By.xpath("//div[@class='ac-group-container']//child::ul/li[1]");
     By btnfechaIda = By.xpath("//input[@placeholder='Ida']");
     By listaFechas= By.xpath("//span[@class='_dpmg2--date-number']");
@@ -27,11 +27,14 @@ public class VFPaquetesPage extends SeleniumBase {
 
     //Funciones que se usan en todos los tests de paquetes
 
+
+
     public void irPaquetesDesdeHome(){
         clickear(btnPaquetes);
         esperaExplicitaElementoClickeable(divDatosViaje,5);
 
     }
+
     public void irVuelosAutos(){
         clickear(btnCheckVueloAutos);
 
@@ -93,6 +96,8 @@ public class VFPaquetesPage extends SeleniumBase {
         clickear(listaViajes);
 
     }
+
+
 
 
 

@@ -1,0 +1,195 @@
+{
+	"info": {
+		"_postman_id": "9fab6645-0723-45e1-aa3f-74f42cb2114e",
+		"name": "COVID",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "COVIDTEST1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"const jsonData = pm.response.json();\r",
+							"// validar si la respuesta es valida\r",
+							"pm.test(\"ACT00- Respuesta Valida\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"//validar tipo de dato\r",
+							"pm.test(\"ACT01 Tipo de dato\" , ()=>{\r",
+							"    pm.expect(jsonData).to.be.a(\"array\");\r",
+							"    pm.expect(jsonData[0].country).to.be.a(\"string\");\r",
+							"});\r",
+							"\r",
+							"//Validar dato exacto\r",
+							"pm.test(\"ACT02\",()=> {\r",
+							"    pm.expect(jsonData[0].provinces[0].province).to.eq(\"Alabama\");\r",
+							"    pm.expect(jsonData[0].country).to.eq(\"USA\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"ACT03-Estructura\",()=> {\r",
+							"    \r",
+							"    pm.expect(jsonData[0].provinces[0]).to.have.property(\"province\");\r",
+							"    pm.expect(jsonData[0].provinces[0]).to.have.property(\"confirmed\");\r",
+							"    pm.expect(jsonData[0].provinces[0]).to.have.property(\"recovered\");\r",
+							"    pm.expect(jsonData[0].provinces[0]).to.have.property(\"deaths\");\r",
+							"    pm.expect(jsonData[0].provinces[0]).to.have.property(\"active\");\r",
+							"    \r",
+							"\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"ATC04-Respuesta JSON\",()=>{\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"ATC05-Respuesta N Propiedades\",()=>{\r",
+							"    pm.expect(Object.keys(jsonData[0].provinces[0]).length).to.be.above(1);\r",
+							"    pm.expect(Object.keys(jsonData[0].provinces[9]).length).to.be.equals(5);\r",
+							"    pm.expect(Object.keys(jsonData[0]).length).to.be.lessThan(6);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-rapidapi-key",
+						"value": "65c3a8ec1emsh38db88917d7c333p1cd20ajsn923976797f86",
+						"type": "text"
+					},
+					{
+						"key": "x-rapidapi-host",
+						"value": "covid-19-data.p.rapidapi.com",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://covid-19-data.p.rapidapi.com/report/country/name?name=USA&date=2020-04-01",
+					"protocol": "https",
+					"host": [
+						"covid-19-data",
+						"p",
+						"rapidapi",
+						"com"
+					],
+					"path": [
+						"report",
+						"country",
+						"name"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "USA"
+						},
+						{
+							"key": "date",
+							"value": "2020-04-01"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "COVIDTEST2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							"// validar si la respuesta es valida\r",
+							"pm.test(\"ACT00- Respuesta Valida\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"//validar tipo de dato\r",
+							"pm.test(\"ACT01 Tipo de dato\" , ()=>{\r",
+							"    pm.expect(jsonData).to.be.a(\"array\");\r",
+							"    pm.expect(jsonData[0].country).to.be.a(\"string\");\r",
+							"});\r",
+							"pm.test(\"ACT02\",()=> {\r",
+							"    pm.expect(jsonData[0].provinces[0].province).to.eq(\"Mexico\");\r",
+							"    pm.expect(jsonData[0].country).to.eq(\"Mexico\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"ACT03-Estructura\",()=> {\r",
+							"    \r",
+							"    pm.expect(jsonData[0].provinces[0]).to.have.property(\"province\");\r",
+							"    pm.expect(jsonData[0].provinces[0]).to.have.property(\"confirmed\");\r",
+							"    pm.expect(jsonData[0].provinces[0]).to.have.property(\"recovered\");\r",
+							"    pm.expect(jsonData[0].provinces[0]).to.have.property(\"deaths\");\r",
+							"    pm.expect(jsonData[0].provinces[0]).to.have.property(\"active\");\r",
+							"    \r",
+							"\r",
+							"});\r",
+							"pm.test(\"ATC04-Respuesta JSON\",()=>{\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"ATC05- Provincias\", ()=>{\r",
+							"pm.expect(Object.keys(jsonData[0].provinces).length).to.be.equals(1);\r",
+							"\r",
+							"\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-rapidapi-key",
+						"value": "65c3a8ec1emsh38db88917d7c333p1cd20ajsn923976797f86",
+						"type": "text"
+					},
+					{
+						"key": "x-rapidapi-host",
+						"value": "covid-19-data.p.rapidapi.com",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://covid-19-data.p.rapidapi.com/report/country/name?name=Mexico&date=2020-05-01",
+					"protocol": "https",
+					"host": [
+						"covid-19-data",
+						"p",
+						"rapidapi",
+						"com"
+					],
+					"path": [
+						"report",
+						"country",
+						"name"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Mexico"
+						},
+						{
+							"key": "date",
+							"value": "2020-05-01"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

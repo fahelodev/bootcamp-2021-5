@@ -23,6 +23,8 @@ public class PaquetesTest extends TestBase {
         paginaPaquetes.ingresarFechas();
         paginaPaquetes.dormir(2000);
         paginaPaquetes.buscarPaquete();
+
+
         //validar que muestre vuelos disponibles a Miami
         String esperado = driver.findElement(By.xpath("//div[@class='itinerary-info-title']//child::span[contains(text(),'Tu viaje a Miami')]")).getText();
 

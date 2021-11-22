@@ -34,7 +34,7 @@ public class TestBase {
     @After
     public void close(){
         if(driver != null){
-            driver.quit();
+           driver.quit();
         }
     }
 
